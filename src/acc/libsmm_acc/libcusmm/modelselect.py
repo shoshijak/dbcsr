@@ -183,7 +183,6 @@ def main(argv):
     from itertools import chain
     from sklearn.tree import DecisionTreeRegressor
     from sklearn.model_selection import GridSearchCV
-    from sklearn.metrics import make_scorer
 
     # Parameters
     step = 2
@@ -250,33 +249,6 @@ def main(argv):
             cv = GroupShuffleSplit(n_splits=n_splits, test_size=test_size)
 
             ############################################################################################################
-            # Scorers
-            worse_case_scorer_top1 = make_scorer(
-                score_func=worse_rel_perf_loss_of_k,
-                greater_is_better=False,
-                top_k=1, X_mnk=X_mnk_train, )
-            mean_scorer_top1       = make_scorer(
-                score_func=mean_rel_perf_loss_of_k,
-                greater_is_better=False,
-                top_k=1, X_mnk=X_mnk_train)
-            worse_case_scorer_top3 = make_scorer(
-                score_func=worse_rel_perf_loss_of_k,
-                greater_is_better=False,
-                top_k=3, X_mnk=X_mnk_train)
-            mean_scorer_top3       = make_scorer(
-                score_func=mean_rel_perf_loss_of_k,
-                greater_is_better=False,
-                top_k=3, X_mnk=X_mnk_train)
-            worse_case_scorer_top5 = make_scorer(
-                score_func=worse_rel_perf_loss_of_k,
-                greater_is_better=False,
-                top_k=5, X_mnk=X_mnk_train)
-            mean_scorer_top5       = make_scorer(
-                score_func=mean_rel_perf_loss_of_k,
-                greater_is_better=False,
-                top_k=5, X_mnk=X_mnk_train)
-
-            ############################################################################################################
             # Feature selection
             from sklearn.feature_selection import RFECV
             rfecv = RFECV(estimator=model, step=1, verbose=2, n_jobs=-1, cv=cv, scoring=mean_scorer_top3)
@@ -309,14 +281,14 @@ def main(argv):
             param_grid = [{'max_depth': list(max_depth)}]
 
             # Grid search
+            from sklearn.metrics import mean_absolute_error
+            from sklearn.metrics import mean_squared_error
             model_DT_hpo = GridSearchCV(
                 estimator=model_DT,
                 param_grid=param_grid,
                 cv=cv,
                 scoring={
-                    'worse_top-1': worse_case_scorer_top1, 'mean_top-1': mean_scorer_top1,
-                    'worse_top-3': worse_case_scorer_top3, 'mean_top-3': mean_scorer_top3,
-                    'worse_top-5': worse_case_scorer_top5, 'mean_top-5': mean_scorer_top5
+                    'mean-absolute': mean_absolute_error, 'mean-squared': mean_squared_error
                 },
                 pre_dispatch=8,
                 n_jobs=-1,
