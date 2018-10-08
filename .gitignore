@@ -10,6 +10,11 @@ install/
 examples/*.x
 *.callgraph
 
+# SHOSHIJAK TMP
+*.html
+*.ipynb
+*/tune*/
+
 # The following covers some more,
 # Created by https://www.gitignore.io/api/vim,emacs,python,fortran
 
