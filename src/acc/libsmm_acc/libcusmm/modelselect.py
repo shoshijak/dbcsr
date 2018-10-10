@@ -9,12 +9,32 @@ import pandas as pd
 import os
 import sys
 import pickle
+import datetime
 
+
+########################################################################################################################
+# Flags
+########################################################################################################################
 from absl import flags, app
 flags.DEFINE_string('in_folder', 'tune_big/', 'Folder from which to read data')
 flags.DEFINE_string('algo', 'tiny', 'Algorithm to train on')
 flags.DEFINE_string('tune', 'DT', 'Model to tune (Options: DT, RF, all)')
+flags.DEFINE_integer('nruns', '10', '#times to run train-test split, variable selection and GridSearch on model')
+flags.DEFINE_integer('splits', '5', 'number of cross-validation splits used in GridSearchCV')
 FLAGS = flags.FLAGS
+
+
+########################################################################################################################
+# Optimized Hyperparameters
+########################################################################################################################
+optimized_hyperparameters = {
+    'tiny': {'max_depth': np.NaN, 'min_samples_split': np.NaN, 'min_samples_leaf': np.NaN},
+    'small': {'max_depth': np.NaN, 'min_samples_split': np.NaN, 'min_samples_leaf': np.NaN},
+    'medium': {'max_depth': np.NaN, 'min_samples_split': np.NaN, 'min_samples_leaf': np.NaN},
+    'largeDB1': {'max_depth': np.NaN, 'min_samples_split': np.NaN, 'min_samples_leaf': np.NaN},
+    'largeDB2': {'max_depth': np.NaN, 'min_samples_split': np.NaN, 'min_samples_leaf': np.NaN}
+}
+
 
 ########################################################################################################################
 # Formatting and printing helpers
@@ -40,80 +60,85 @@ def safe_pickle(data, file):
             count += 1
 
 
-########################################################################################################################
-# Fitting (helper function)
-########################################################################################################################
-def plot_feat_importance(X, model):
-    import matplotlib.pyplot as plt
-    importances = model.feature_importances_
-    names = X.columns
-    # std = np.std([tree.feature_importances_ for tree in model.estimators_], axis=0)
-    indices = np.argsort(importances)[::-1]
-
-    print("Feature ranking:")
-    for f in range(X.shape[1]):
-        print("%d. feature %s (%f)" % (f + 1, names[indices[f]], importances[indices[f]]))
-
-    plt.rcdefaults()
-    fig, ax = plt.subplots()
-
-    ax.set_title("Feature importances")
-    ax.barh(range(X.shape[1]), importances[indices],
-            color="g",
-            # yerr=std[indices],
-            align="center")
-    ax.set_yticks(np.arange(len(importances)))
-    ax.set_yticklabels(names[indices])
-    ax.invert_yaxis()
-    # plt.set_ylim([-1, X.shape[1]])
-    plt.show()
-
-
-def n_features_vs_cv_score(rfecv):
-    import matplotlib.pyplot as plt
-    # Plot number of features VS. cross-validation scores
-    plt.figure()
-    plt.xlabel("Number of features selected")
-    plt.ylabel("Cross validation score (nb of correct classifications)")
-    plt.plot(range(1, len(rfecv.grid_scores_) + 1), rfecv.grid_scores_)
-    plt.show()
+def print_and_log(msg, log):
+    log += '\n' + msg
+    print(msg)
 
 
 ########################################################################################################################
 # Custom loss functions
 ########################################################################################################################
+def _num_samples(x):
+    """
+    Return number of samples in array-like x.
+    TAKEN VERBATIM FROM SKLEARN code !!
+    """
+    if hasattr(x, 'fit') and callable(x.fit):
+        # Don't get num_samples from an ensembles length!
+        raise TypeError('Expected sequence or array-like, got '
+                        'estimator %s' % x)
+    if not hasattr(x, '__len__') and not hasattr(x, 'shape'):
+        if hasattr(x, '__array__'):
+            x = np.asarray(x)
+        else:
+            raise TypeError("Expected sequence or array-like, got %s" %
+                            type(x))
+    if hasattr(x, 'shape'):
+        if len(x.shape) == 0:
+            raise TypeError("Singleton array %r cannot be considered"
+                            " a valid collection." % x)
+        return x.shape[0]
+    else:
+        return len(x)
+
+
+def check_consistent_length(*arrays):
+    """Check that all arrays have consistent first dimensions.
+
+    Checks whether all objects in arrays have the same shape or length.
+
+    Parameters
+    ----------
+    *arrays : list or tuple of input objects.
+        Objects that will be checked for consistent length.
+
+    TAKEN VERBATIM FROM SKLEARN code !!
+    """
+
+    lengths = [_num_samples(X) for X in arrays if X is not None]
+    uniques = np.unique(lengths)
+    if len(uniques) > 1:
+        raise ValueError("Found input variables with inconsistent numbers of"
+                         " samples: %r" % [int(l) for l in lengths])
+
+
 def perf_loss(y_true, y_pred, top_k, X_mnk):
-    y_true_squared = np.copy(y_true)
+    """
+    Compute the relative performance losses per mnk if one were to
+    :param y_true: ground truth
+    :param y_pred: estimated performances
+    :param top_k: #top performances to consider
+    :param X_mnk: corresponding mnks
+    :return: perf_losses: array of relative performance losses (in %), one element per mnk
+    """
+    check_consistent_length(y_true, y_pred, X_mnk)
     y_true = np.sqrt(y_true)
     y_pred = np.sqrt(y_pred)
     perf_losses = list()
 
     mnks = np.unique(X_mnk['mnk'].values)
     for mnk in mnks:
+
+        # Get performances per mnk
         idx_mnk = np.where(X_mnk == mnk)[0].tolist()
         assert (len(idx_mnk) > 0), "idx_mnk is empty"
-        #idx_mnk = list(set(range(len(y_true))).intersection(set(idx_mnk)))
-        #if len(idx_mnk) <= 0:
-        #    continue
-        #else:
-
-        # Find rows in y_true where element = X_mnk['perf_squared'] elements -> keep those indices
-        idx_mnk_for_y = list()
-        for idx in idx_mnk:
-            found = np.where(y_true_squared == X_mnk['perf_squared'].iloc[idx])[0].tolist()
-            if len(found) != 1:
-                print('shit')
-                assert len(found) == 1, "Found indices:\n" + str(found)
-            idx_mnk_for_y.append(found[0])
-
-        idx_mnk = np.array(idx_mnk_for_y)
-        y_mnk = y_true.iloc[idx_mnk]
+        y_true_mnk = y_true.iloc[idx_mnk]
         y_pred_mnk = y_pred[idx_mnk]
         top_k_idx = np.argpartition(-y_pred_mnk, top_k)[:top_k]
-        y_correspmax = y_mnk.iloc[top_k_idx]
+        y_correspmax = y_true_mnk.iloc[top_k_idx]
 
         # Max. performances
-        maxperf = float(y_mnk.max(axis=0))  # true max. performance
+        maxperf = float(y_true_mnk.max(axis=0))  # true max. performance
         assert maxperf > 0, "Found non-positive value for maxperf: " + str(maxperf)
         maxperf_chosen = np.amax(y_correspmax)  # chosen max perf. among predicted max performances
 
@@ -134,12 +159,132 @@ def mean_rel_perf_loss_of_k(y_true, y_pred, top_k, X_mnk):
     return float(y.mean(axis=0))
 
 
+########################################################################################################################
+# Custom Scorers
+# Ref: http://scikit-learn.org/stable/modules/model_evaluation.html#implementing-your-own-scoring-object
+########################################################################################################################
+def worse_case_scorer(estimator, X, y, top_k):
+    """
+    :param estimator: the model that should be evaluated
+    :param X: validation data
+    :param y: ground truth target for X
+    :return: score: a floating point number that quantifies the estimator prediction quality on X, with reference to y
+    """
+    mnk = pd.DataFrame()
+    mnk['mnk'] = X['mnk'].copy()
+    y_pred = estimator.predict(X.drop(['mnk'], axis=1))
+    score = worse_rel_perf_loss_of_k(y, y_pred, top_k, mnk)
+    return -score  # by scikit-learn convention, higher numbers are better, so the value should be negated
+
+
+def worse_case_scorer_top1(estimator, X, y):
+    return worse_case_scorer(estimator, X, y, 1)
+
+
+def worse_case_scorer_top3(estimator, X, y):
+    return worse_case_scorer(estimator, X, y, 3)
+
+
+def worse_case_scorer_top5(estimator, X, y):
+    return worse_case_scorer(estimator, X, y, 5)
+
+
+def mean_scorer(estimator, X, y, top_k):
+    """
+    :param estimator: the model that should be evaluated
+    :param X: validation data
+    :param y: ground truth target for X
+    :return: score: a floating point number that quantifies the estimator prediction quality on X, with reference to y
+    """
+    mnk = pd.DataFrame()
+    mnk['mnk'] = X['mnk'].copy()
+    y_pred = estimator.predict(X.drop(['mnk'], axis=1))
+    score = mean_rel_perf_loss_of_k(y, y_pred, top_k, mnk)
+    return -score  # by scikit-learn convention, higher numbers are better, so the value should be negated
+
+
+def mean_scorer_top1(estimator, X, y):
+    return mean_scorer(estimator, X, y, 1)
+
+
+def mean_scorer_top3(estimator, X, y):
+    return mean_scorer(estimator, X, y, 3)
+
+
+def mean_scorer_top5(estimator, X, y):
+    return mean_scorer(estimator, X, y, 5)
+
+
+########################################################################################################################
+# Helper functions for displaying errors
+########################################################################################################################
 def print_error(y_true, y_pred, X_mnk):
-    result_line = "top-{}: worse: {0:>.3f} mean: {0:>.3f}"
+    result_line = "top-{}: worse: {:>.3f} mean: {:>.3f}"
     for top_k in [1, 3, 5]:
         print(result_line.format(top_k,
                                  worse_rel_perf_loss_of_k(y_true, y_pred, top_k, X_mnk),
                                  mean_rel_perf_loss_of_k(y_true, y_pred, top_k, X_mnk)))
+
+
+def plot_loss_histogram(y_true, y_pred, X_mnk, folder, model_name, decisive_score):
+    import matplotlib.pyplot as plt
+
+    # Get losses
+    top_k = 3
+    y = np.array(perf_loss(y_true, y_pred, top_k, X_mnk))
+
+    # Losses-histogram
+    num_bins = 50
+    plt.hist(y, num_bins, facecolor='green', alpha=0.75)
+    plt.xlabel("relative performance loss [%]")
+    plt.ylabel("# occurrences")
+    plt.title("Performance losses for top-k=" + str(top_k) + "decisive metric: " + decisive_score)
+    plt.grid(True)
+    plt.savefig(os.path.join(folder, model_name + "_result_losses.png"))
+
+
+def plot_cv_scores(param_grid, scoring, results, folder, algo, model_name):
+    # Inspired by http://scikit-learn.org/stable/auto_examples/model_selection/plot_multi_metric_evaluation.html
+    import matplotlib.pyplot as plt
+    plt.figure()
+    plt.title("CV scores (" + algo + " , " + model_name + " )")
+    for p in param_grid.keys():
+
+        plt.xlabel("parameter: " + p)
+        plt.ylabel("cv-score: relative perf loss [%] (mean over 5 folds)")
+        ax = plt.gca()
+
+        # Get the regular numpy array from the MaskedArray
+        X_axis = np.array(results['param_' + p].values, dtype=float)
+
+        for scorer, color in zip(scoring, ['b']*2 + ['g']*2 + ['k']*2):
+            #for sample, style in (('train', '--'), ('test', '-')):
+            sample = 'test'
+            style = '-'
+            sample_score_mean = results['mean_%s_%s' % (sample, scorer)]
+            sample_score_std = results['std_%s_%s' % (sample, scorer)]
+            ax.fill_between(X_axis, sample_score_mean - sample_score_std,
+                            sample_score_mean + sample_score_std,
+                            alpha=0.1 if sample == 'test' else 0, color=color)
+            ax.plot(X_axis, sample_score_mean, style, color=color,
+                    alpha=1 if sample == 'test' else 0.7,
+                    label="%s (%s)" % (scorer, sample))
+
+            best_index = np.nonzero(results['rank_test_%s' % scorer] == 1)[0][0]
+            best_score = results['mean_test_%s' % scorer][best_index]
+
+            # Plot a dotted vertical line at the best score for that scorer marked by x
+            ax.plot([X_axis[best_index], ] * 2, [0, best_score],
+                    linestyle='-.', color=color, marker='x', markeredgewidth=3, ms=8)
+
+            # Annotate the best score for that scorer
+            ax.annotate("%0.2f" % best_score,
+                        (X_axis[best_index], best_score + 0.005))
+
+        plt.legend(loc="best")
+        plt.grid(False)
+
+        plt.savefig(os.path.join(folder, "cv_results_" + algo + "_" + model_name + "_" + p))
 
 
 ########################################################################################################################
@@ -149,84 +294,134 @@ def main(argv):
     del argv  # unused
 
     ####################################################################################################################
-    # Read data
+    # Create folder to store results of this program
     read_from = FLAGS.in_folder
     algo = FLAGS.algo
-    out_folder = 'model_selection_' + algo
-    if not os.path.exists(out_folder):
-        os.makedirs(out_folder)
+    file_signature = datetime.datetime.now().strftime("%Y-%m-%d--%H-%M")
+    log = ''
+    folder_ = os.path.join("model_selection", os.path.join(algo, file_signature))
+    log_file = os.path.join(folder_, "log.txt")
+    if not os.path.exists(folder_):
+        os.makedirs(folder_)
 
-    print('Read training data X ...')
+    ####################################################################################################################
+    # Read data
+    print_and_log('Read training data X ...', log)
     X = pd.read_csv(os.path.join(read_from, 'train_all_' + algo + '_X.csv'), index_col=0)
-    print('Data size X    :', sys.getsizeof(X)/10**6, 'MB')
+    print_and_log('Data size X    : ' + str(sys.getsizeof(X)/10**6) + ' MB', log)
 
-    print('Read training data Y ...')
+    print_and_log('Read training data Y ...', log)
     Y = pd.read_csv(os.path.join(read_from, 'train_all_' + algo + '_Y.csv'), index_col=0)
-    #Y = Y['perf_squared']
-    print('Data size Y    :', sys.getsizeof(Y)/10**6, 'MB')
+    print_and_log('Data size Y    : ' + str(sys.getsizeof(Y)/10**6) + ' MB', log)
 
-    print('Read training data X_mnk ...')
+    print_and_log('Read training data X_mnk ...', log)
     X_mnk = pd.read_csv(os.path.join(read_from, 'train_all_' + algo + '_X_mnk.csv'), index_col=0)
-    X_mnk['perf_squared'] = Y['perf_squared']
-    print('Data size X_mnk:', sys.getsizeof(X_mnk)/10**6, 'MB')
+    print_and_log('Data size X_mnk: ' + str(sys.getsizeof(X_mnk)/10**6) + ' MB', log)
 
-    mnks = pickle.load(open(os.path.join(read_from, 'train_all_' + algo + '_mnks.csv'), 'rb'))
     n_features = len(list(X.columns))
     predictor_names = X.columns.values
-    maxperf = float(Y.max(axis=0))
-    print('Predictor variables: (', n_features, ')\n', X.columns)
-    print("\nOutcome variable:\n with max. value =", maxperf)
+    print_and_log('Predictor variables: (' + str(n_features) + ')', log)
+    for i, p in enumerate(predictor_names):
+        print_and_log("\t{:2}) {}".format(i+1, p), log)
 
+    with open(log_file, 'w') as f:
+        f.write(log)
 
     ####################################################################################################################
     # Decision tree
     from itertools import chain
     from sklearn.tree import DecisionTreeRegressor
-    from sklearn.model_selection import GridSearchCV
 
-    # Parameters
-    step = 2
-    model_name = "Decision_Tree"
-    splitting_criterion = "mse"  # the performances are squared already, so we use mean absolute error (prev: "mse")
-    splitter = "best"            # other option: "random"
-    max_depth = chain(range(12, n_features, step), range(n_features, n_features*2, 10))
-    min_samples_split = 3        # [to tune by CV?] (prev: min_samples_split=20)
-    min_samples_leaf = 1         # [to tune by CV?]
+    # Fixed parameters
+    model_name_DT = "Decision_Tree"
+    splitting_criterion = "mse"
+    splitter = "best"
+    max_features = None
+    max_leaf_nodes = None
+
+    # Parameters to optimize
+    step_small = 1
+    step_med = 3
+    max_depth = chain(range(4, n_features, step_small), range(n_features, n_features*3, step_med))
+    min_samples_split = chain(range(2, 5, step_small), range(8, n_features, step_med))
+    min_samples_leaf = chain(range(2, 5, step_small), range(8, n_features, step_med))
+    param_grid_DT = {
+        'max_depth': list(max_depth),
+        'min_samples_split': list(min_samples_split),
+        'min_samples_leaf': list(min_samples_leaf)
+    }
 
     # Tree model
     model_DT = DecisionTreeRegressor(
         criterion=splitting_criterion,
         splitter=splitter,
-        min_samples_split=min_samples_split,
-        min_samples_leaf=min_samples_leaf,
-        max_features=None
+        min_samples_split=3,
+        min_samples_leaf=1,
+        max_depth=n_features,
+        max_features=max_features,
+        max_leaf_nodes=max_leaf_nodes
     )
 
     ####################################################################################################################
     # Random Forest
     from sklearn.ensemble import RandomForestRegressor
 
-    # Parameters
-    n_estimators = 50
-    bootstrap = True
+    # Optimal parameters found from optimizing the DT's hyperparameters
+    max_depth_from_DT_hpo = optimized_hyperparameters[algo]['max_depth']
+    min_samples_split_from_DT_hpo = optimized_hyperparameters[algo]['min_samples_split']
+    min_samples_leaf_from_DT_hpo = optimized_hyperparameters[algo]['min_samples_leaf']
 
-    model_name = "Random Forest"
+    # Fixed parameters
+    model_name_RF = "Random Forest"
+    bootstrap = True
+    max_depth = max_depth_from_DT_hpo
+    min_samples_split = min_samples_split_from_DT_hpo
+    min_samples_leaf = min_samples_leaf_from_DT_hpo
+    max_features = 'sqrt'
+
+    # Parameters to optimize
+    step_big = 25
+    n_estimators = chain(range(1, 10, step_small), range(25, 200, step_big))
+    param_grid_RF = {'n_estimators': list(n_estimators)}
+
+    # Random Forest model
     model_RF = RandomForestRegressor(
-        n_estimators=n_estimators,
         criterion=splitting_criterion,
-        #splitter=splitter,
+        n_estimators=30,
         max_depth=max_depth,
         min_samples_split=min_samples_split,
-        max_features='sqrt',
         bootstrap=bootstrap,
+        min_samples_leaf=min_samples_leaf,
+        max_features=max_features,
         n_jobs=-1
     )
-    print(model_RF)
 
-    for model in [model_DT]: # [model_DT, model_RF]:
+    ####################################################################################################################
+    # Tune hyperparameters
+    tune = FLAGS.tune
+    if tune == "DT":
+        models_to_tune = [(model_DT, model_name_DT, param_grid_DT)]
+    elif tune == "RF":
+        models_to_tune = [(model_RF, model_name_RF, param_grid_RF)]
+    elif tune == "all":
+        models_to_tune = [(model_DT, model_name_DT, param_grid_DT), (model_RF, model_name_RF, param_grid_RF)]
+    else:
+        assert False, "Unrecognized option for tune:" + str(tune)
 
-        N_RUNS = 1
+    for model, model_name, param_grid in models_to_tune:
+
+        N_RUNS = FLAGS.nruns
         for i in range(N_RUNS):
+
+            print('\n')
+            print('###################################################################################################')
+            print("Start hyperparameter optimization for model", model_name, ", run number", i+1, "/", N_RUNS)
+            print('###################################################################################################')
+            folder = os.path.join(folder_, model_name + "_" + str(i))
+            log_file = os.path.join(folder, 'log.txt')
+            log = ''
+            if not os.path.exists(folder):
+                os.makedirs(folder)
 
             ############################################################################################################
             # Train/test split
@@ -244,89 +439,114 @@ def main(argv):
 
             ############################################################################################################
             # Cross-validation splitter
-            n_splits = 5
+            n_splits = FLAGS.splits
             test_size = 0.3
             cv = GroupShuffleSplit(n_splits=n_splits, test_size=test_size)
 
             ############################################################################################################
             # Feature selection
             from sklearn.feature_selection import RFECV
-            rfecv = RFECV(estimator=model, step=1, verbose=2, n_jobs=-1, cv=cv, scoring=mean_scorer_top3)
+            predictor_names = X_train.columns.values
+            print_and_log("Selecting optimal features among:\n" + str(predictor_names), log)
+            if 'mnk' in X_train.columns.values:
+                X_train = X_train.drop(["mnk"], axis=1)  # leftover from previous iteration (?)
+            rfecv = RFECV(estimator=model, step=1, n_jobs=-1, cv=cv)
             fit = rfecv.fit(X_train, Y_train, X_mnk_train['mnk'])
-            print("Optimal number of features : %d" % rfecv.n_features_)
-            print("Num Features to select:", fit.n_features_)
-            print("All Features:\n", predictor_names)
-            print("Feature Ranking:\n", fit.ranking_)
-            selected_features = list()
+            print_and_log("Optimal number of features : %d" % rfecv.n_features_, log)
+            #print("Feature Ranking:\n", fit.ranking)
+            selected_features_ = list()
             for i, f in enumerate(predictor_names):
                 if fit.support_[i]:
-                    selected_features.append(f)
-            print("Selected Features:\n", selected_features)
-
+                    selected_features_.append(f)
             features_by_ranking = sorted(zip(map(lambda x: round(x, 4), fit.ranking_), predictor_names), reverse=False)
-            print("Features sorted by ranking:")
-            for f in features_by_ranking:
-                print(f)
+            print_and_log("Selected Features:", log)
+            for feature in selected_features_:
+                print_and_log("\t{}".format(feature), log)
 
-            features_to_drop = [f for f in predictor_names if f not in selected_features]
-            print('Dropping features:\n', features_to_drop)
+            #print("Features sorted by ranking:")
+            #for f in features_by_ranking:
+            #    print(f)
+
+            features_to_drop = [f for f in predictor_names if f not in selected_features_]
+            #print('Dropping features:\n', features_to_drop)
             for f in features_to_drop:
                 X_train = X_train.drop([f], axis=1)
-                X_test  = X_test.drop([f], axis=1)
+                X_test = X_test.drop([f], axis=1)
 
             ############################################################################################################
             # Hyperparameter optimization
 
-            # Parameter search space
-            param_grid = [{'max_depth': list(max_depth)}]
-
             # Grid search
-            from sklearn.metrics import mean_absolute_error
-            from sklearn.metrics import mean_squared_error
-            model_DT_hpo = GridSearchCV(
-                estimator=model_DT,
+            from sklearn.model_selection import GridSearchCV
+            print_and_log('--------------------------------------------------------------------------------------', log)
+            print_and_log('Parameter grid:\n' + str(param_grid), log)
+            X_train["mnk"] = X_mnk_train['mnk']  # add to X-DataFrame (needed for scoring function)
+            scoring = {
+                'worse_top-1': worse_case_scorer_top1, 'mean_top-1': mean_scorer_top1,
+                'worse_top-3': worse_case_scorer_top3, 'mean_top-3': mean_scorer_top3,
+                'worse_top-5': worse_case_scorer_top5, 'mean_top-5': mean_scorer_top5
+            }
+            decisive_score = 'worse_top-3'  # REALLY?? Or should I choose a different one?
+            gs = GridSearchCV(
+                estimator=model,
                 param_grid=param_grid,
                 cv=cv,
-                scoring={
-                    'mean-absolute': mean_absolute_error, 'mean-squared': mean_squared_error
-                },
+                scoring=scoring,
                 pre_dispatch=8,
                 n_jobs=-1,
-                verbose=2,
-                refit=False
+                verbose=1,
+                refit=decisive_score,
+                return_train_score=False  # incompatible with ignore_in_fit
             )
-            model_DT_hpo.fit(X_train, Y_train, X_mnk_train)
+            print_and_log('--------------------------------------------------------------------------------------', log)
+            gs.fit(X_train, Y_train, X_mnk_train['mnk'], ignore_in_fit=["mnk"])
 
-            # Get results
-            print("Grid scores on development set:")
-            cv_results = pd.DataFrame(model_DT_hpo.cv_results_)
-            #cv_results = pd.DataFrame(model_DT_hpo.cv_results_.items())
-            print(cv_results)
-            print("Best estimator:")
-            print(model_DT_hpo.best_estimator_)
-            print("Best parameters set found on development set:")
-            print(model_DT_hpo.best_params_)
-            print("Best score found on development set:")
-            print(model_DT_hpo.best_score_)
+            # Get results, pickle them
+            cv_results = pd.DataFrame(gs.cv_results_)
+            safe_pickle(cv_results, os.path.join(folder, "cv_rests.p"))
 
             ############################################################################################################
             # Model evaluation
-            print("Start evaluating", model_name, "run #", i)
-            print(model)
-            model_trained_file = os.path.join(read_from, model_name + "_" + algo + "_" + str(i) + ".p")
-            model.fit(X_train, Y_train)
-            safe_pickle(model, model_trained_file)
+            print_and_log('--------------------------------------------------------------------------------------', log)
+            predictor_names = X_train.columns.values
+            print_and_log('Predictor variables:', log)
+            for p in predictor_names:
+                print_and_log("\t{}".format(p), log)
+
+            print_and_log("\nDecisive metric:", decisive_score)
+
+            print_and_log("\nBest parameters set found on development set:", log)
+            print_and_log(gs.best_params_, log)
+
+            print_and_log("\nBest estimator:", log)
+            best_estimator = gs.best_estimator_
+            print_and_log(best_estimator, log)
+            print_and_log('--------------------------------------------------------------------------------------', log)
 
             # Training error
-            y_train_pred = model.predict(X_train)
-            print('Training error:')
-            print_error(Y_train, y_train_pred, X_mnk)
+            X_train = X_train.drop(['mnk'], axis=1)
+            best_estimator.fit(X_train, Y_train)
+            y_train_pred = best_estimator.predict(X_train)
+            print_and_log('\nTraining error: (train&val)', log)
+            print_error(Y_train, y_train_pred, X_mnk_train)
 
             # Test error
-            y_test_pred = model.predict(X_test)
-            print('Testing error:')
-            print_error(Y_test, y_test_pred, X_mnk)
+            y_test_pred = best_estimator.predict(X_test)
+            print_and_log('\nTesting error:', log)
+            print_error(Y_test, y_test_pred, X_mnk_test)
 
+            # Print histogram for "best" estimator
+            print_and_log('Plot result histogram:', log)
+            plot_loss_histogram(Y_test, y_test_pred, X_mnk_test, folder, model_name, decisive_score)
+
+            # Plot CV results by evaluation metric
+            print_and_log('Plot CV scores:', log)
+            plot_cv_scores(param_grid, scoring, cv_results, folder, algo, model_name)
+
+            ############################################################################################################
+            # Print log
+            with open(log_file, 'w') as f:
+                f.write(log)
 
 ########################################################################################################################
 # Run
