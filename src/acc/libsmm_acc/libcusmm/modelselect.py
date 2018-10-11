@@ -20,7 +20,8 @@ flags.DEFINE_string('in_folder', 'tune_big/', 'Folder from which to read data')
 flags.DEFINE_string('algo', 'tiny', 'Algorithm to train on')
 flags.DEFINE_string('tune', 'DT', 'Model to tune (Options: DT, RF, all)')
 flags.DEFINE_integer('nruns', '10', '#times to run train-test split, variable selection and GridSearch on model')
-flags.DEFINE_integer('splits', '5', 'number of cross-validation splits used in GridSearchCV')
+flags.DEFINE_integer('splits', '5', 'number of cross-validation splits used in RFECV and GridSearchCV')
+flags.DEFINE_string('gs', '', 'Path to pickled GridSearchCV object to load instead of recomputing')
 FLAGS = flags.FLAGS
 
 
@@ -61,8 +62,11 @@ def safe_pickle(data, file):
 
 
 def print_and_log(msg, log):
+    if not isinstance(msg, str):
+        msg = str(msg)
     log += '\n' + msg
     print(msg)
+    return log
 
 
 ########################################################################################################################
@@ -218,12 +222,13 @@ def mean_scorer_top5(estimator, X, y):
 ########################################################################################################################
 # Helper functions for displaying errors
 ########################################################################################################################
-def print_error(y_true, y_pred, X_mnk):
-    result_line = "top-{}: worse: {:>.3f} mean: {:>.3f}"
+def print_error(y_true, y_pred, X_mnk, log):
+    result_line = "top-{}: worse: {:>6.3f} mean: {:>6.3f}"
     for top_k in [1, 3, 5]:
-        print(result_line.format(top_k,
-                                 worse_rel_perf_loss_of_k(y_true, y_pred, top_k, X_mnk),
-                                 mean_rel_perf_loss_of_k(y_true, y_pred, top_k, X_mnk)))
+        log = print_and_log(result_line.format(top_k,
+                                               worse_rel_perf_loss_of_k(y_true, y_pred, top_k, X_mnk),
+                                               mean_rel_perf_loss_of_k(y_true, y_pred, top_k, X_mnk)), log)
+    return log
 
 
 def plot_loss_histogram(y_true, y_pred, X_mnk, folder, model_name, decisive_score):
@@ -240,51 +245,56 @@ def plot_loss_histogram(y_true, y_pred, X_mnk, folder, model_name, decisive_scor
     plt.ylabel("# occurrences")
     plt.title("Performance losses for top-k=" + str(top_k) + "decisive metric: " + decisive_score)
     plt.grid(True)
-    plt.savefig(os.path.join(folder, model_name + "_result_losses.png"))
+    plt.savefig(os.path.join(folder, model_name + "_result_losses.svg"))
 
 
-def plot_cv_scores(param_grid, scoring, results, folder, algo, model_name):
+def plot_cv_scores(param_grid, scoring, results, best_pars, folder, algo, model_name):
     # Inspired by http://scikit-learn.org/stable/auto_examples/model_selection/plot_multi_metric_evaluation.html
     import matplotlib.pyplot as plt
-    plt.figure()
-    plt.title("CV scores (" + algo + " , " + model_name + " )")
     for p in param_grid.keys():
 
-        plt.xlabel("parameter: " + p)
-        plt.ylabel("cv-score: relative perf loss [%] (mean over 5 folds)")
+        plt.figure()
+        plt.title("CV scores (" + algo + " , " + model_name + " )")
+        plt.xlabel("parameter: " + p + "(best:" + str(best_pars) + ")")
+        plt.ylabel("cv-score: relative perf loss [%] (mean over " + str(FLAGS.splits) + "folds)")
         ax = plt.gca()
 
-        # Get the regular numpy array from the MaskedArray
-        X_axis = np.array(results['param_' + p].values, dtype=float)
+        # Get the regular numpy array from the dataframe
+        results_ = results.copy()
+        groups_to_fix = list(best_pars.keys())
+        groups_to_fix.remove(p)
+        for g in groups_to_fix:
+            results_ = results_.groupby('param_' + g).get_group(best_pars[g])
+        X_axis = np.array(results_['param_' + p].values, dtype=float)
+        X_axis_p = results_['param_' + p]
 
         for scorer, color in zip(scoring, ['b']*2 + ['g']*2 + ['k']*2):
-            #for sample, style in (('train', '--'), ('test', '-')):
             sample = 'test'
             style = '-'
-            sample_score_mean = results['mean_%s_%s' % (sample, scorer)]
-            sample_score_std = results['std_%s_%s' % (sample, scorer)]
+            sample_score_mean = results_['mean_%s_%s' % (sample, scorer)]
+            sample_score_std = results_['std_%s_%s' % (sample, scorer)]
             ax.fill_between(X_axis, sample_score_mean - sample_score_std,
                             sample_score_mean + sample_score_std,
-                            alpha=0.1 if sample == 'test' else 0, color=color)
+                            alpha=0.05 if sample == 'test' else 0, color=color)
             ax.plot(X_axis, sample_score_mean, style, color=color,
                     alpha=1 if sample == 'test' else 0.7,
                     label="%s (%s)" % (scorer, sample))
 
-            best_index = np.nonzero(results['rank_test_%s' % scorer] == 1)[0][0]
-            best_score = results['mean_test_%s' % scorer][best_index]
+            best_index = np.argmin(results_['rank_test_%s' % scorer])
+            best_score = results_['mean_test_%s' % scorer][best_index]
 
             # Plot a dotted vertical line at the best score for that scorer marked by x
-            ax.plot([X_axis[best_index], ] * 2, [0, best_score],
+            ax.plot([X_axis_p[best_index], ] * 2, [0, best_score],
                     linestyle='-.', color=color, marker='x', markeredgewidth=3, ms=8)
 
             # Annotate the best score for that scorer
             ax.annotate("%0.2f" % best_score,
-                        (X_axis[best_index], best_score + 0.005))
+                        (X_axis_p[best_index], best_score + 0.005))
 
         plt.legend(loc="best")
         plt.grid(False)
 
-        plt.savefig(os.path.join(folder, "cv_results_" + algo + "_" + model_name + "_" + p))
+        plt.savefig(os.path.join(folder, "cv_results_" + algo + "_" + model_name + "_" + p + ".svg"))
 
 
 ########################################################################################################################
@@ -306,23 +316,24 @@ def main(argv):
 
     ####################################################################################################################
     # Read data
-    print_and_log('Read training data X ...', log)
+    log = print_and_log('Read training data X ...', log)
     X = pd.read_csv(os.path.join(read_from, 'train_all_' + algo + '_X.csv'), index_col=0)
-    print_and_log('Data size X    : ' + str(sys.getsizeof(X)/10**6) + ' MB', log)
+    log = print_and_log('X    : {:>8} x {:>8} ({:>2} MB)'.format(X.shape[0], X.shape[1], sys.getsizeof(X)/10**6), log)
 
-    print_and_log('Read training data Y ...', log)
+    log = print_and_log('Read training data Y ...', log)
     Y = pd.read_csv(os.path.join(read_from, 'train_all_' + algo + '_Y.csv'), index_col=0)
-    print_and_log('Data size Y    : ' + str(sys.getsizeof(Y)/10**6) + ' MB', log)
+    log = print_and_log('Y    : {:>8} x {:>8} ({:>2} MB)'.format(Y.shape[0], Y.shape[1], sys.getsizeof(Y)/10**6), log)
 
-    print_and_log('Read training data X_mnk ...', log)
+    log = print_and_log('Read training data X_mnk ...', log)
     X_mnk = pd.read_csv(os.path.join(read_from, 'train_all_' + algo + '_X_mnk.csv'), index_col=0)
-    print_and_log('Data size X_mnk: ' + str(sys.getsizeof(X_mnk)/10**6) + ' MB', log)
+    log = print_and_log('X_mnk: {:>8} x {:>8} ({:>2} MB)'.format(X_mnk.shape[0], X_mnk.shape[1],
+                                                                 sys.getsizeof(X_mnk)/10**6), log)
 
     n_features = len(list(X.columns))
     predictor_names = X.columns.values
-    print_and_log('Predictor variables: (' + str(n_features) + ')', log)
+    log = print_and_log('Predictor variables: (' + str(n_features) + ')', log)
     for i, p in enumerate(predictor_names):
-        print_and_log("\t{:2}) {}".format(i+1, p), log)
+        log = print_and_log("\t{:2}) {}".format(i+1, p), log)
 
     with open(log_file, 'w') as f:
         f.write(log)
@@ -343,12 +354,12 @@ def main(argv):
     step_small = 1
     step_med = 3
     max_depth = chain(range(4, n_features, step_small), range(n_features, n_features*3, step_med))
-    min_samples_split = chain(range(2, 5, step_small), range(8, n_features, step_med))
+    min_samples_split = range(2, 5, step_small)#chain(range(2, 5, step_small), range(8, n_features, step_med))
     min_samples_leaf = chain(range(2, 5, step_small), range(8, n_features, step_med))
     param_grid_DT = {
         'max_depth': list(max_depth),
         'min_samples_split': list(min_samples_split),
-        'min_samples_leaf': list(min_samples_leaf)
+        #'min_samples_leaf': list(min_samples_leaf)
     }
 
     # Tree model
@@ -413,140 +424,148 @@ def main(argv):
         N_RUNS = FLAGS.nruns
         for i in range(N_RUNS):
 
-            print('\n')
-            print('###################################################################################################')
-            print("Start hyperparameter optimization for model", model_name, ", run number", i+1, "/", N_RUNS)
-            print('###################################################################################################')
+            ############################################################################################################
+            # Setup folder and log
             folder = os.path.join(folder_, model_name + "_" + str(i))
             log_file = os.path.join(folder, 'log.txt')
             log = ''
             if not os.path.exists(folder):
                 os.makedirs(folder)
+            decisive_score = 'worse_top-3'
+            if len(FLAGS.gs) > 0:
 
-            ############################################################################################################
-            # Train/test split
-            from sklearn.model_selection import GroupShuffleSplit
-            cv = GroupShuffleSplit(n_splits=2, test_size=0.2)
-            train, test = cv.split(X, Y, groups=X_mnk['mnk'])
-            train = train[0]
-            test = test[0]
-            X_train = X.iloc[train, :]  # train: use for hyperparameter optimization (via CV) and training
-            X_mnk_train = X_mnk.iloc[train, :]
-            Y_train = Y.iloc[train, :]
-            X_test  = X.iloc[test,  :]  # test : use for evaluation of 'selected/final' model
-            X_mnk_test = X_mnk.iloc[test, :]
-            Y_test  = Y.iloc[test,  :]
+                log = print_and_log("Reading GridSearCV from " + FLAGS.gs, log)
+                X_train, Y_train, X_mnk_train, X_test, Y_test, X_mnk_test, gs = pickle.load(open(FLAGS.gs, 'rb'))
+                scoring = gs.scoring
 
-            ############################################################################################################
-            # Cross-validation splitter
-            n_splits = FLAGS.splits
-            test_size = 0.3
-            cv = GroupShuffleSplit(n_splits=n_splits, test_size=test_size)
+            else:
 
-            ############################################################################################################
-            # Feature selection
-            from sklearn.feature_selection import RFECV
-            predictor_names = X_train.columns.values
-            print_and_log("Selecting optimal features among:\n" + str(predictor_names), log)
-            if 'mnk' in X_train.columns.values:
-                X_train = X_train.drop(["mnk"], axis=1)  # leftover from previous iteration (?)
-            rfecv = RFECV(estimator=model, step=1, n_jobs=-1, cv=cv)
-            fit = rfecv.fit(X_train, Y_train, X_mnk_train['mnk'])
-            print_and_log("Optimal number of features : %d" % rfecv.n_features_, log)
-            #print("Feature Ranking:\n", fit.ranking)
-            selected_features_ = list()
-            for i, f in enumerate(predictor_names):
-                if fit.support_[i]:
-                    selected_features_.append(f)
-            features_by_ranking = sorted(zip(map(lambda x: round(x, 4), fit.ranking_), predictor_names), reverse=False)
-            print_and_log("Selected Features:", log)
-            for feature in selected_features_:
-                print_and_log("\t{}".format(feature), log)
+                print('\n')
+                print('###############################################################################################')
+                print("Start hyperparameter optimization for model", model_name, ", run number", i+1, "/", N_RUNS)
+                print('###############################################################################################')
 
-            #print("Features sorted by ranking:")
-            #for f in features_by_ranking:
-            #    print(f)
+                ########################################################################################################
+                # Train/test split
+                from sklearn.model_selection import GroupShuffleSplit
+                cv = GroupShuffleSplit(n_splits=2, test_size=0.2)
+                train, test = cv.split(X, Y, groups=X_mnk['mnk'])
+                train = train[0]
+                test = test[0]
+                X_train = X.iloc[train, :]  # train: use for hyperparameter optimization (via CV) and training
+                X_mnk_train = X_mnk.iloc[train, :]
+                Y_train = Y.iloc[train, :]
+                X_test  = X.iloc[test,  :]  # test : use for evaluation of 'selected/final' model
+                X_mnk_test = X_mnk.iloc[test, :]
+                Y_test  = Y.iloc[test,  :]
 
-            features_to_drop = [f for f in predictor_names if f not in selected_features_]
-            #print('Dropping features:\n', features_to_drop)
-            for f in features_to_drop:
-                X_train = X_train.drop([f], axis=1)
-                X_test = X_test.drop([f], axis=1)
+                ########################################################################################################
+                # Cross-validation splitter
+                n_splits = FLAGS.splits
+                test_size = 0.3
+                cv = GroupShuffleSplit(n_splits=n_splits, test_size=test_size)
 
-            ############################################################################################################
-            # Hyperparameter optimization
+                ########################################################################################################
+                # Feature selection
+                from sklearn.feature_selection import RFECV
+                predictor_names = X_train.columns.values
+                log = print_and_log("Selecting optimal features among:\n" + str(predictor_names), log)
+                if 'mnk' in X_train.columns.values:
+                    X_train = X_train.drop(["mnk"], axis=1)  # leftover from previous iteration (?)
+                rfecv = RFECV(estimator=model, step=1, n_jobs=-1, cv=cv)
+                fit = rfecv.fit(X_train, Y_train, X_mnk_train['mnk'])
+                log = print_and_log("Optimal number of features : %d" % rfecv.n_features_, log)
+                selected_features_ = list()
+                for i, f in enumerate(predictor_names):
+                    if fit.support_[i]:
+                        selected_features_.append(f)
+                log = print_and_log("Selected Features:", log)
+                for feature in selected_features_:
+                    log = print_and_log("\t{}".format(feature), log)
 
-            # Grid search
-            from sklearn.model_selection import GridSearchCV
-            print_and_log('--------------------------------------------------------------------------------------', log)
-            print_and_log('Parameter grid:\n' + str(param_grid), log)
-            X_train["mnk"] = X_mnk_train['mnk']  # add to X-DataFrame (needed for scoring function)
-            scoring = {
-                'worse_top-1': worse_case_scorer_top1, 'mean_top-1': mean_scorer_top1,
-                'worse_top-3': worse_case_scorer_top3, 'mean_top-3': mean_scorer_top3,
-                'worse_top-5': worse_case_scorer_top5, 'mean_top-5': mean_scorer_top5
-            }
-            decisive_score = 'worse_top-3'  # REALLY?? Or should I choose a different one?
-            gs = GridSearchCV(
-                estimator=model,
-                param_grid=param_grid,
-                cv=cv,
-                scoring=scoring,
-                pre_dispatch=8,
-                n_jobs=-1,
-                verbose=1,
-                refit=decisive_score,
-                return_train_score=False  # incompatible with ignore_in_fit
-            )
-            print_and_log('--------------------------------------------------------------------------------------', log)
-            gs.fit(X_train, Y_train, X_mnk_train['mnk'], ignore_in_fit=["mnk"])
+                features_to_drop = [f for f in predictor_names if f not in selected_features_]
+                for f in features_to_drop:
+                    X_train = X_train.drop([f], axis=1)
+                    X_test = X_test.drop([f], axis=1)
 
-            # Get results, pickle them
-            cv_results = pd.DataFrame(gs.cv_results_)
-            safe_pickle(cv_results, os.path.join(folder, "cv_rests.p"))
+                ########################################################################################################
+                # Hyperparameter optimization
+
+                # Grid search
+                from sklearn.model_selection import GridSearchCV
+                log = print_and_log('----------------------------------------------------------------------------', log)
+                log = print_and_log('Parameter grid:\n' + str(param_grid), log)
+                X_train["mnk"] = X_mnk_train['mnk']  # add to X-DataFrame (needed for scoring function)
+                scoring = {
+                    'worse_top-1': worse_case_scorer_top1, 'mean_top-1': mean_scorer_top1,
+                    'worse_top-3': worse_case_scorer_top3, 'mean_top-3': mean_scorer_top3,
+                    'worse_top-5': worse_case_scorer_top5, 'mean_top-5': mean_scorer_top5
+                }
+                gs = GridSearchCV(
+                    estimator=model,
+                    param_grid=param_grid,
+                    cv=cv,
+                    scoring=scoring,
+                    pre_dispatch=8,
+                    n_jobs=-1,
+                    verbose=1,
+                    refit=decisive_score,
+                    return_train_score=False  # incompatible with ignore_in_fit
+                )
+                log = print_and_log('----------------------------------------------------------------------------', log)
+                gs.fit(X_train, Y_train, X_mnk_train['mnk'], ignore_in_fit=["mnk"])
+
+                # Get results, pickle them
+                safe_pickle([X_train, Y_train, X_mnk_train, X_test, Y_test, X_mnk_test, gs],
+                            os.path.join(folder, "cv.p"))
 
             ############################################################################################################
             # Model evaluation
-            print_and_log('--------------------------------------------------------------------------------------', log)
+            log = print_and_log('----------------------------------------------------------------------------', log)
+            cv_results = pd.DataFrame(gs.cv_results_)
             predictor_names = X_train.columns.values
-            print_and_log('Predictor variables:', log)
+            log = print_and_log('Predictor variables:', log)
             for p in predictor_names:
-                print_and_log("\t{}".format(p), log)
+                log = print_and_log("\t{}".format(p), log)
 
-            print_and_log("\nDecisive metric:", decisive_score)
+            log = print_and_log("\nDecisive metric:" + str(decisive_score), log)
 
-            print_and_log("\nBest parameters set found on development set:", log)
-            print_and_log(gs.best_params_, log)
+            log = print_and_log("\nBest parameters set found on development set:", log)
+            log = print_and_log(gs.best_params_, log)
 
-            print_and_log("\nBest estimator:", log)
+            log = print_and_log("\nBest estimator:", log)
             best_estimator = gs.best_estimator_
-            print_and_log(best_estimator, log)
-            print_and_log('--------------------------------------------------------------------------------------', log)
+            log = print_and_log(best_estimator, log)
+            log = print_and_log('----------------------------------------------------------------------------', log)
 
             # Training error
             X_train = X_train.drop(['mnk'], axis=1)
             best_estimator.fit(X_train, Y_train)
             y_train_pred = best_estimator.predict(X_train)
-            print_and_log('\nTraining error: (train&val)', log)
-            print_error(Y_train, y_train_pred, X_mnk_train)
+            log = print_and_log('\nTraining error: (train&val)', log)
+            log = print_error(Y_train, y_train_pred, X_mnk_train, log)
 
             # Test error
             y_test_pred = best_estimator.predict(X_test)
-            print_and_log('\nTesting error:', log)
-            print_error(Y_test, y_test_pred, X_mnk_test)
+            log = print_and_log('\nTesting error:', log)
+            log = print_error(Y_test, y_test_pred, X_mnk_test, log)
 
             # Print histogram for "best" estimator
-            print_and_log('Plot result histogram:', log)
+            log = print_and_log('\nPlot result histogram:', log)
             plot_loss_histogram(Y_test, y_test_pred, X_mnk_test, folder, model_name, decisive_score)
 
             # Plot CV results by evaluation metric
-            print_and_log('Plot CV scores:', log)
-            plot_cv_scores(param_grid, scoring, cv_results, folder, algo, model_name)
+            log = print_and_log('\nPlot CV scores:', log)
+            plot_cv_scores(param_grid, scoring, cv_results, gs.best_params_, folder, algo, model_name)
 
             ############################################################################################################
             # Print log
             with open(log_file, 'w') as f:
                 f.write(log)
+
+            if len(FLAGS.gs) > 0:
+                break
+
 
 ########################################################################################################################
 # Run
