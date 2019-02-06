@@ -66,6 +66,7 @@ def main():
         s = s.replace("]", "\n]")
         f.write(s)
 
+<<<<<<< HEAD
     print("\n")
     print("Wrote", new_file)
 
@@ -109,6 +110,12 @@ def get_log_list(tuning_dir, mnk):
             ), "No tune_mxnxk/tune_mxnxk_*main.cu nor jobfile found, cannot determine the list of log files to parse"
 
     return log_list
+||||||| merged common ancestors
+    print("Wrote parameters.json")
+=======
+    print("\n")
+    print("Wrote", new_file)
+>>>>>>> libcusmm/tune: print parameters in consistent order
 
 
 # ===============================================================================
