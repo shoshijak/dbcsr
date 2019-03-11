@@ -396,7 +396,6 @@ if __name__ == "__main__":
         type=int,
         help="Maximum number of nodes an slurm allocation can get. 0: not a limiting factor"
         + "(choose this option if you can allocate jobs of 20-30 nodes without a problem.",
-    )
     parser.add_argument(
         "blocksizes",
         metavar="BLOCKSIZE",
