@@ -23,7 +23,9 @@ from kernels.cusmm_predict import (
 
 
 # ===============================================================================
-def main(param_fn, cpus_per_node, max_num_nodes, blocksizes, blocks_from_param_file, tune_dir):
+def main(
+    param_fn, cpus_per_node, max_num_nodes, blocksizes, blocks_from_param_file, tune_dir
+):
 
     # Read existing parameters
     assert param_fn in arch_number.keys(), (
@@ -45,9 +47,11 @@ def main(param_fn, cpus_per_node, max_num_nodes, blocksizes, blocks_from_param_f
     )
 
     # Get blocksizes to be autotuned
-    if blocks_from_param_file: # open and read file
+    if blocks_from_param_file:  # open and read file
         with open(blocksizes) as f:
-            all_kernels_ref = [params_dict_to_kernel(**params) for params in json.load(f)]
+            all_kernels_ref = [
+                params_dict_to_kernel(**params) for params in json.load(f)
+            ]
         print("Reading to parameters to autotune from %s" % blocksizes)
         triples = [(k.m, k.n, k.k) for k in all_kernels_ref if k.autotuned]
     else:
@@ -359,21 +363,22 @@ if __name__ == "__main__":
         This script is part of the workflow for autotuning optimal libcusmm parameters.
         For more details, see README.md#autotuning-procedure.
         """,
-<<<<<<< HEAD
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
-||||||| merged common ancestors
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-=======
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument("-d", "--dir", metavar="tune_directory", default=".", type=str, help="Path to already-existing tune-folders")
->>>>>>> libcusmm/tune: add option to provide custom path to tune folders
+    parser.add_argument(
+        "-d",
+        "--dir",
+        metavar="tune_directory",
+        default=".",
+        type=str,
+        help="Path to already-existing tune-folders",
+    )
     parser.add_argument(
         "-p",
         "--params",
         metavar="parameters_GPU.json",
         default="parameters_P100.json",
-        help="Parameter file to extend by this autotuning (pick the right GPU)",
+        help="Parameter file that this autotuning should extend (pick the right GPU)",
     )
     parser.add_argument(
         "-c",
@@ -399,18 +404,26 @@ if __name__ == "__main__":
         type=str,
         help='Blocksize(s) to autotune. They can be provided as a list of integers (eg. "23",'
         + ' "4 5 13", "32 45") or provide a parameter file from which to read the blocksizes '
-        + 'to autotune, of the format parameters_GPU.json.')
+        + "to autotune, of the format parameters_GPU.json.",
+    )
 
     args = parser.parse_args()
 
     # ==========
     # Blocksizes from parameter file or as list of integers
     blocksizes_from_param_file = False
-    if args.blocksizes[0].isdigit(): # blocksizes is a sequence of strings
+    if args.blocksizes[0].isdigit():  # blocksizes is a sequence of strings
         args.blocksizes = [int(b) for b in args.blocksizes]
-    else: # blocksizes is a file name
+    else:  # blocksizes is a file name
         blocksizes_from_param_file = True
         args.blocksizes = args.blocksizes[0]
 
     # ==========
-    main(args.params, args.cpus_per_node, args.nodes, args.blocksizes, blocksizes_from_param_file, args.dir)
+    main(
+        args.params,
+        args.cpus_per_node,
+        args.nodes,
+        args.blocksizes,
+        blocksizes_from_param_file,
+        args.dir,
+    )
