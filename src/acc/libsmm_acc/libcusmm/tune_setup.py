@@ -23,7 +23,7 @@ from kernels.cusmm_predict import (
 
 
 # ===============================================================================
-def main(param_fn, cpus_per_node, max_num_nodes, blocksizes, blocks_from_param_file):
+def main(param_fn, cpus_per_node, max_num_nodes, blocksizes, blocks_from_param_file, tune_dir):
 
     # Read existing parameters
     assert param_fn in arch_number.keys(), (
@@ -66,7 +66,7 @@ def main(param_fn, cpus_per_node, max_num_nodes, blocksizes, blocks_from_param_f
             )
             continue
 
-        outdir = "tune_%dx%dx%d/" % (m, n, k)
+        outdir = os.path.join(tune_dir, "tune_%dx%dx%d/" % (m, n, k))
         if os.path.exists(outdir):
             print("Directory %s exists already, skipping." % outdir)
             continue
@@ -359,8 +359,15 @@ if __name__ == "__main__":
         This script is part of the workflow for autotuning optimal libcusmm parameters.
         For more details, see README.md#autotuning-procedure.
         """,
+<<<<<<< HEAD
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
+||||||| merged common ancestors
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+=======
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument("-d", "--dir", metavar="tune_directory", default=".", type=str, help="Path to already-existing tune-folders")
+>>>>>>> libcusmm/tune: add option to provide custom path to tune folders
     parser.add_argument(
         "-p",
         "--params",
@@ -406,4 +413,4 @@ if __name__ == "__main__":
         args.blocksizes = args.blocksizes[0]
 
     # ==========
-    main(args.params, args.cpus_per_node, args.nodes, args.blocksizes, blocksizes_from_param_file)
+    main(args.params, args.cpus_per_node, args.nodes, args.blocksizes, blocksizes_from_param_file, args.dir)
