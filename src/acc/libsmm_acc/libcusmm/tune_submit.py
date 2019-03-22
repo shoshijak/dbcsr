@@ -18,7 +18,7 @@ from subprocess import Popen, PIPE
 
 
 # ===============================================================================
-def main(submit_jobs, num_jobs):
+def main(submit_jobs, num_jobs, submit_unstarted):
 
     cmd = ["squeue", "--user", os.environ["USER"], "--format=%j", "--nohead"]
     p = Popen(cmd, stdout=PIPE)
@@ -31,8 +31,23 @@ def main(submit_jobs, num_jobs):
             continue
 
         if len(glob(d + "/slurm-*.out")) > 0:
+            # Found slurm files, check whether their tuning is completed
             print("%20s: Found slurm file(s)" % d)
-            continue
+            slurm_files = glob(d + "/slurm-*.out")
+            tuning_completed = False
+            for slurm_file in slurm_files:
+                with open(slurm_file, "r") as f:
+                    for line in f:
+                        if "WINNER" in line:
+                            print("%20s: Found complete slurm file" % d)
+                            tuning_completed = True
+                            break
+            if tuning_completed:
+                continue  # found complete slurm files: do not submit
+        else:
+            # Found no slurm files
+            if not submit_unstarted:
+                continue  # do not submit
 
         if d in submitted:
             print("%20s: Found submitted job" % d)
@@ -75,10 +90,31 @@ if __name__ == "__main__":
         This script is part of the workflow for autotuning optimal libcusmm parameters.
         For more details, see README.md#autotuning-procedure.
         """,
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('doit', metavar="doit!", nargs='?', type=str)
-    parser.add_argument("-j", "--num_jobs", metavar="INT", default=0, type=int, help="Maximum number of jobs to submit. 0: submit all")
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument("doit", metavar="doit!", nargs="?", type=str)
+    parser.add_argument(
+        "-j",
+        "--num-jobs",
+        metavar="INT",
+        default=0,
+        type=int,
+        help="Maximum number of jobs to submit. 0: submit all",
+    )
+    parser.add_argument(
+        "--submit-unstarted",
+        dest="submit_unstarted_folders",
+        action="store_true",
+        help="Submit both not-yet-started and already-started folders",
+    )
+    parser.add_argument(
+        "--no-submit-unstarted",
+        dest="submit_unstarted_folders",
+        action="store_false",
+        help="Submit only already-started folders",
+    )
+    parser.set_defaults(submit_unstarted_folders=True)
 
     args = parser.parse_args()
     submit_jobs = True if args.doit == "doit!" else False
-    main(submit_jobs, args.num_jobs)
+    main(submit_jobs, args.num_jobs, args.submit_unstarted_folders)
