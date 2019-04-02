@@ -1,0 +1,33 @@
+#!/bin/bash -l
+#
+#SBATCH --job-name=H2O
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=jakobovits@cscs.ch
+#SBATCH --time=00:05:00
+#SBATCH --nodes=18
+#SBATCH --ntasks-per-core=1
+#SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=12
+#SBATCH --partition=normal
+#SBATCH --constraint=gpu
+#SBATCH --output=perf-H2O.n18.%j.o
+
+module load craype-accel-nvidia60
+unset COMPUTE_PROFILE
+export PMI_NO_FORK=1
+
+export OMP_NUM_THREADS=$SLURM_CPUS_PER_TASK
+export CRAY_CUDA_MPS=1
+
+#cat inputs/test_H2O.size2300.nrep3.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+#cat inputs/test_H2O.size2300.nrep5.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+#cat inputs/test_H2O.size2300.nrep10.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+cat inputs/test_H2O.size4600.nrep3.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+cat inputs/test_H2O.size4600.nrep5.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+cat inputs/test_H2O.size4600.nrep10.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+cat inputs/test_H2O.size11500.nrep3.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+cat inputs/test_H2O.size11500.nrep5.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+cat inputs/test_H2O.size11500.nrep10.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+cat inputs/test_H2O.size23000.nrep3.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+cat inputs/test_H2O.size23000.nrep5.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
+cat inputs/test_H2O.size23000.nrep10.perf | srun ~/dbcsr/bin/dbcsr_performance_driver.x
