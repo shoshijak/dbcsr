@@ -20,6 +20,7 @@ re_mnk = re.compile(r"tune_(\d+)x(\d+)x(\d+)")
 re_winner = re.compile(r"\nWINNER: \d+ (.+)\n")
 re_gflops = re.compile(r"# ([0-9.]+) GFlop/s")
 re_errors = re.compile(r"Number of errors: (\d+)\n")
+re_log_line = re.compile(r">tune_\d+x\d+x\d+_exe\d+.log")
 
 
 # ===============================================================================
@@ -30,9 +31,9 @@ def main():
         if not os.path.isdir(d):
             continue
 
-        for exe_fn in glob(d + "/tune_*main.cu"):
-            mnk = tuple([int(i) for i in re_mnk.search(exe_fn).groups()])
-            log_fn = exe_fn.replace("_main.cu", ".log")
+        mnk = tuple([int(i) for i in re_mnk.search(d).groups()])
+        logs_fn = get_log_list(d, mnk)
+        for log_fn in logs_fn:
             error_code = 0
             if not os.path.exists(log_fn):
                 winners[mnk] = "log missing: " + log_fn
@@ -67,6 +68,47 @@ def main():
 
     print("\n")
     print("Wrote", new_file)
+
+
+# ===============================================================================
+def get_log_list(tuning_dir, mnk):
+
+    if len(glob(tuning_dir + "/tune_*main.cu")) > 0:
+
+        # Find the list of log files from the source file names
+        log_list = [
+            exe_fn.replace("_main.cu", ".log")
+            for exe_fn in glob(tuning_dir + "/tune_*main.cu")
+        ]
+
+    else:
+
+        jobfile_name = os.path.join(tuning_dir, "tune_{}x{}x{}.job".format(*mnk))
+        if os.path.exists(jobfile_name):
+
+            # Find the list of log files from the job file name
+            with open(jobfile_name) as f:
+                job_instructions = f.readlines()
+            num_logs = 0
+            for line in job_instructions:
+                if re_log_line.search(line) is not None:
+                    num_logs += 1
+            if num_logs > 0:
+                log_list = [
+                    os.path.join(tuning_dir, "tune_{}x{}x{}_exe{}.log".format(*mnk, i))
+                    for i in range(num_logs)
+                ]
+            else:
+                assert (
+                    False
+                ), "Found no instruction about logs in job file. Something must be wrong with the jobfile, please check it"
+
+        else:
+            assert (
+                False
+            ), "No tune_mxnxk/tune_mxnxk_*main.cu nor jobfile found, cannot determine the list of log files to parse"
+
+    return log_list
 
 
 # ===============================================================================
