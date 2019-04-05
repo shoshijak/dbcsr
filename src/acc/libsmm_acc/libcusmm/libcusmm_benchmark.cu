@@ -285,7 +285,6 @@ int libcusmm_benchmark(libcusmm_benchmark_t* h,
  double sumCPU, sumGPU;
  float t_duration;
  char descr[1000], msg_prefix[100]="";
- cudaError_t cudaError;
 
  memset(h->mat_c, 0, h->n_c * mat_m * mat_n * sizeof(double));
  matInit(h->mat_a, h->n_a, mat_m, mat_k, 42);
