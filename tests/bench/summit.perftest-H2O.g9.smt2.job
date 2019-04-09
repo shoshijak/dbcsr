@@ -1,0 +1,20 @@
+#!/bin/bash 
+### Begin BSUB Options 
+#BSUB -P CPH121
+#BSUB -J bench.g9.smt2
+#BSUB -W 00:02
+#BSUB -nnodes 3
+#BSUB -alloc_flags "smt2"
+### End BSUB Options and begin shell commands
+
+export OMP_NUM_THREADS=12
+
+cat inputs/test_H2O.size4600.nrep3.perf | jsrun -n 3 -a 1 -c 6 -g 1 -r 3 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf
+cat inputs/test_H2O.size4600.nrep5.perf | jsrun -n 3 -a 1 -c 6 -g 1 -r 3 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf
+cat inputs/test_H2O.size4600.nrep10.perf | jsrun -n 3 -a 1 -c 6 -g 1 -r 3 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf
+cat inputs/test_H2O.size11500.nrep3.perf | jsrun -n 3 -a 1 -c 6 -g 1 -r 3 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf
+cat inputs/test_H2O.size11500.nrep5.perf | jsrun -n 3 -a 1 -c 6 -g 1 -r 3 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf
+cat inputs/test_H2O.size11500.nrep10.perf | jsrun -n 3 -a 1 -c 6 -g 1 -r 3 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf
+cat inputs/test_H2O.size23000.nrep3.perf | jsrun -n 3 -a 1 -c 6 -g 1 -r 3 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf
+cat inputs/test_H2O.size23000.nrep5.perf | jsrun -n 3 -a 1 -c 6 -g 1 -r 3 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf
+cat inputs/test_H2O.size23000.nrep10.perf | jsrun -n 3 -a 1 -c 6 -g 1 -r 3 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf

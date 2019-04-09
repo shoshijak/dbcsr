@@ -1,0 +1,11 @@
+bsub summit.perftest-H2O.g1.smt4.job
+bsub summit.perftest-H2O.g12.smt4.job
+bsub summit.perftest-H2O.g18.smt4.job
+bsub summit.perftest-H2O.g24.smt4.job
+bsub summit.perftest-H2O.g25.smt4.job
+bsub summit.perftest-H2O.g30.smt4.job
+bsub summit.perftest-H2O.g36.smt4.job
+bsub summit.perftest-H2O.g4.smt4.job
+bsub summit.perftest-H2O.g42.smt4.job
+bsub summit.perftest-H2O.g6.smt4.job
+bsub summit.perftest-H2O.g9.smt4.job
