@@ -1,0 +1,12 @@
+#!/bin/bash 
+### Begin BSUB Options 
+#BSUB -P CPH121
+#BSUB -J bench.mini.g1.smt1
+#BSUB -W 00:05
+#BSUB -nnodes 1
+#BSUB -alloc_flags "smt1"
+### End BSUB Options and begin shell commands
+
+export OMP_NUM_THREADS=6
+
+jsrun -n 1 -a 1 -c 6 -g 1 -r 1 -l CPU-CPU -d packed -b rs /gpfs/alpine/scratch/alicej/cph121/dbcsr/build/tests/dbcsr_perf inputs/test_H2O.size4600.nrep3.perf 
