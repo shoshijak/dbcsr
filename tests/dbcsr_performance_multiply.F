@@ -722,6 +722,8 @@ CONTAINS
          WRITE (io_unit, '(T4,A)') "                       mean        std         minmin      maxmax"
          WRITE (io_unit, '(T4,A,4EN12.2,A)') "time            = ", mean(t), std(t), &
             MINVAL(times), MAXVAL(times), ' seconds'
+         WRITE (io_unit, '(T4,A,4EN12.2,A)') "flops total     = ", mean(REAL(flop_sum(:), KIND=real_8)), std(REAL(flop_sum(:), KIND=real_8)), &
+            MINVAL(REAL(flop_sum(:), KIND=real_8)), MAXVAL(REAL(flop_sum(:), KIND=real_8)), ' FLOPS'
          WRITE (io_unit, '(T4,A,4EN12.2,A)') "perf total      = ", mean(flops_all), std(flops_all), &
             MINVAL(flops_all), MAXVAL(flops_all), ' FLOPS'
          WRITE (io_unit, '(T4,A,4EN12.2,A)') "perf per node   = ", mean(flops_node), std(flops_node), &
