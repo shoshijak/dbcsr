@@ -1,520 +1,185 @@
-bench.g1.smt2.334949: numnodes           1
-bench.g1.smt2.334949: nrep           3
-bench.g1.smt2.334949:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g1.smt2.334949:   time            =     1.40E+00    1.04E+00  130.44E-03    3.95E+00 seconds
-bench.g1.smt2.334949:   perf total      =   649.67E+09  252.28E+09   31.72E+09  959.26E+09 FLOPS
-bench.g1.smt2.334949:   perf per node   =   649.67E+09  252.28E+09   31.72E+09  959.26E+09 FLOPS
-bench.g1.smt2.334949:   perf per thread =    54.14E+09   21.02E+09    2.64E+09   79.94E+09 FLOPS
-bench.g1.smt2.334949: numnodes           1
-bench.g1.smt2.334949: nrep           5
-bench.g1.smt2.334949:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g1.smt2.334949:   time            =   280.34E-03  133.85E-03  130.25E-03  878.94E-03 seconds
-bench.g1.smt2.334949:   perf total      =   794.44E+09  145.81E+09  142.36E+09  960.69E+09 FLOPS
-bench.g1.smt2.334949:   perf per node   =   794.44E+09  145.81E+09  142.36E+09  960.69E+09 FLOPS
-bench.g1.smt2.334949:   perf per thread =    66.20E+09   12.15E+09   11.86E+09   80.06E+09 FLOPS
-bench.g1.smt2.334949: numnodes           1
-bench.g1.smt2.334949: nrep          10
-bench.g1.smt2.334949:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g1.smt2.334949:   time            =   204.99E-03   70.67E-03  129.60E-03  875.38E-03 seconds
-bench.g1.smt2.334949:   perf total      =   877.28E+09   77.43E+09  142.94E+09  965.47E+09 FLOPS
-bench.g1.smt2.334949:   perf per node   =   877.28E+09   77.43E+09  142.94E+09  965.47E+09 FLOPS
-bench.g1.smt2.334949:   perf per thread =    73.11E+09    6.45E+09   11.91E+09   80.46E+09 FLOPS
-bench.g1.smt2.334949: numnodes           1
-bench.g1.smt2.334949: nrep           3
-bench.g1.smt2.334949:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g1.smt2.334949:   time            =     1.91E+00  387.27E-03    1.44E+00    2.86E+00 seconds
-bench.g1.smt2.334949:   perf total      =     1.13E+12  183.54E+09  682.74E+09    1.36E+12 FLOPS
-bench.g1.smt2.334949:   perf per node   =     1.13E+12  183.54E+09  682.74E+09    1.36E+12 FLOPS
-bench.g1.smt2.334949:   perf per thread =    94.36E+09   15.30E+09   56.90E+09  113.35E+09 FLOPS
-bench.g1.smt2.334949: numnodes           1
-bench.g1.smt2.334949: nrep           5
-bench.g1.smt2.334949:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g1.smt2.334949:   time            =     1.71E+00  244.14E-03    1.43E+00    2.80E+00 seconds
-bench.g1.smt2.334949:   perf total      =     1.23E+12  118.52E+09  697.69E+09    1.37E+12 FLOPS
-bench.g1.smt2.334949:   perf per node   =     1.23E+12  118.52E+09  697.69E+09    1.37E+12 FLOPS
-bench.g1.smt2.334949:   perf per thread =   102.30E+09    9.88E+09   58.14E+09  113.85E+09 FLOPS
-bench.g1.smt2.334949: numnodes           1
-bench.g1.smt2.334949: nrep          10
-bench.g1.smt2.334949:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g1.smt2.334949:   time            =     1.58E+00  130.78E-03    1.44E+00    2.82E+00 seconds
-bench.g1.smt2.334949:   perf total      =     1.29E+12   62.71E+09  692.53E+09    1.36E+12 FLOPS
-bench.g1.smt2.334949:   perf per node   =     1.29E+12   62.71E+09  692.53E+09    1.36E+12 FLOPS
-bench.g1.smt2.334949:   perf per thread =   107.28E+09    5.23E+09   57.71E+09  113.48E+09 FLOPS
-bench.g1.smt2.334949: numnodes           1
-bench.g1.smt2.334949: nrep           3
-bench.g1.smt2.334949: numnodes           1
-bench.g1.smt2.334949: nrep           5
-bench.g12.smt2.334952: numnodes          12
-bench.g12.smt2.334952: nrep           3
-bench.g12.smt2.334952:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g12.smt2.334952:   time            =   384.93E-03  288.03E-03   31.43E-03    1.09E+00 seconds
-bench.g12.smt2.334952:   perf total      =     2.63E+12    1.03E+12  114.74E+09    3.98E+12 FLOPS
-bench.g12.smt2.334952:   perf per node   =   219.25E+09   85.68E+09    9.56E+09  331.56E+09 FLOPS
-bench.g12.smt2.334952:   perf per thread =    18.27E+09    7.14E+09  796.83E+06   27.63E+09 FLOPS
-bench.g12.smt2.334952: numnodes          12
-bench.g12.smt2.334952: nrep           5
-bench.g12.smt2.334952:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g12.smt2.334952:   time            =   233.39E-03  180.24E-03   31.37E-03    1.04E+00 seconds
-bench.g12.smt2.334952:   perf total      =     3.16E+12  681.46E+09  120.37E+09    3.99E+12 FLOPS
-bench.g12.smt2.334952:   perf per node   =   263.74E+09   56.79E+09   10.03E+09  332.13E+09 FLOPS
-bench.g12.smt2.334952:   perf per thread =    21.98E+09    4.73E+09  835.93E+06   27.68E+09 FLOPS
-bench.g12.smt2.334952: numnodes          12
-bench.g12.smt2.334952: nrep          10
-bench.g12.smt2.334952:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g12.smt2.334952:   time            =   127.46E-03   91.08E-03   31.00E-03  991.55E-03 seconds
-bench.g12.smt2.334952:   perf total      =     3.59E+12  365.70E+09  126.19E+09    4.03E+12 FLOPS
-bench.g12.smt2.334952:   perf per node   =   299.34E+09   30.48E+09   10.52E+09  335.52E+09 FLOPS
-bench.g12.smt2.334952:   perf per thread =    24.95E+09    2.54E+09  876.32E+06   27.96E+09 FLOPS
-bench.g12.smt2.334952: numnodes          12
-bench.g12.smt2.334952: nrep           3
-bench.g12.smt2.334952:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g12.smt2.334952:   time            =   563.90E-03  279.20E-03  219.53E-03    1.25E+00 seconds
-bench.g12.smt2.334952:   perf total      =     6.39E+12    1.97E+12    1.57E+12    8.90E+12 FLOPS
-bench.g12.smt2.334952:   perf per node   =   532.85E+09  164.31E+09  130.48E+09  742.04E+09 FLOPS
-bench.g12.smt2.334952:   perf per thread =    44.40E+09   13.69E+09   10.87E+09   61.84E+09 FLOPS
-bench.g12.smt2.334952: numnodes          12
-bench.g12.smt2.334952: nrep           5
-bench.g12.smt2.334952:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g12.smt2.334952:   time            =   427.28E-03  185.67E-03  217.69E-03    1.26E+00 seconds
-bench.g12.smt2.334952:   perf total      =     7.43E+12    1.31E+12    1.55E+12    8.98E+12 FLOPS
-bench.g12.smt2.334952:   perf per node   =   619.18E+09  109.54E+09  129.47E+09  748.34E+09 FLOPS
-bench.g12.smt2.334952:   perf per thread =    51.60E+09    9.13E+09   10.79E+09   62.36E+09 FLOPS
-bench.g12.smt2.334952: numnodes          12
-bench.g12.smt2.334952: nrep          10
-bench.g12.smt2.334952:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g12.smt2.334952:   time            =   322.52E-03   97.28E-03  218.61E-03    1.25E+00 seconds
-bench.g12.smt2.334952:   perf total      =     8.15E+12  694.45E+09    1.57E+12    8.94E+12 FLOPS
-bench.g12.smt2.334952:   perf per node   =   679.58E+09   57.87E+09  130.74E+09  745.15E+09 FLOPS
-bench.g12.smt2.334952:   perf per thread =    56.63E+09    4.82E+09   10.90E+09   62.10E+09 FLOPS
-bench.g12.smt2.334952: numnodes          12
-bench.g12.smt2.334952: nrep           3
-bench.g18.smt2.334955: numnodes          18
-bench.g18.smt2.334955: nrep           3
-bench.g18.smt2.334955:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g18.smt2.334955:   time            =   428.41E-03  328.09E-03   26.18E-03    1.23E+00 seconds
-bench.g18.smt2.334955:   perf total      =     3.17E+12    1.25E+12  101.56E+09    4.77E+12 FLOPS
-bench.g18.smt2.334955:   perf per node   =   176.21E+09   69.66E+09    5.64E+09  265.23E+09 FLOPS
-bench.g18.smt2.334955:   perf per thread =    14.68E+09    5.80E+09  470.16E+06   22.10E+09 FLOPS
-bench.g18.smt2.334955: numnodes          18
-bench.g18.smt2.334955: nrep           5
-bench.g18.smt2.334955:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g18.smt2.334955:   time            =   194.22E-03  150.80E-03   24.59E-03  868.65E-03 seconds
-bench.g18.smt2.334955:   perf total      =     3.94E+12  849.01E+09  144.05E+09    5.08E+12 FLOPS
-bench.g18.smt2.334955:   perf per node   =   218.62E+09   47.17E+09    8.00E+09  282.28E+09 FLOPS
-bench.g18.smt2.334955:   perf per thread =    18.22E+09    3.93E+09  666.88E+06   23.52E+09 FLOPS
-bench.g18.smt2.334955: numnodes          18
-bench.g18.smt2.334955: nrep          10
-bench.g18.smt2.334955:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g18.smt2.334955:   time            =   114.52E-03   84.13E-03   25.13E-03  912.64E-03 seconds
-bench.g18.smt2.334955:   perf total      =     4.37E+12  446.60E+09  137.10E+09    4.97E+12 FLOPS
-bench.g18.smt2.334955:   perf per node   =   242.75E+09   24.81E+09    7.62E+09  276.28E+09 FLOPS
-bench.g18.smt2.334955:   perf per thread =    20.23E+09    2.07E+09  634.73E+06   23.02E+09 FLOPS
-bench.g18.smt2.334955: numnodes          18
-bench.g18.smt2.334955: nrep           3
-bench.g18.smt2.334955:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g18.smt2.334955:   time            =   506.15E-03  263.17E-03  182.29E-03    1.15E+00 seconds
-bench.g18.smt2.334955:   perf total      =     7.66E+12    2.43E+12    1.70E+12   10.72E+12 FLOPS
-bench.g18.smt2.334955:   perf per node   =   425.32E+09  135.13E+09   94.38E+09  595.68E+09 FLOPS
-bench.g18.smt2.334955:   perf per thread =    35.44E+09   11.26E+09    7.87E+09   49.64E+09 FLOPS
-bench.g18.smt2.334955: numnodes          18
-bench.g18.smt2.334955: nrep           5
-bench.g18.smt2.334955:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g18.smt2.334955:   time            =   376.01E-03  173.52E-03  176.52E-03    1.15E+00 seconds
-bench.g18.smt2.334955:   perf total      =     8.93E+12    1.62E+12    1.70E+12   11.07E+12 FLOPS
-bench.g18.smt2.334955:   perf per node   =   496.38E+09   90.04E+09   94.28E+09  615.21E+09 FLOPS
-bench.g18.smt2.334955:   perf per thread =    41.36E+09    7.50E+09    7.86E+09   51.27E+09 FLOPS
-bench.g18.smt2.334955: numnodes          18
-bench.g18.smt2.334955: nrep          10
-bench.g18.smt2.334955:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g18.smt2.334955:   time            =   270.97E-03   86.79E-03  175.51E-03    1.09E+00 seconds
-bench.g18.smt2.334955:   perf total      =     9.98E+12  866.06E+09    1.79E+12   11.14E+12 FLOPS
-bench.g18.smt2.334955:   perf per node   =   554.64E+09   48.11E+09   99.25E+09  618.72E+09 FLOPS
-bench.g18.smt2.334955:   perf per thread =    46.22E+09    4.01E+09    8.27E+09   51.56E+09 FLOPS
-bench.g18.smt2.334955: numnodes          18
-bench.g18.smt2.334955: nrep           3
-bench.g18.smt2.334955:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-bench.g18.smt2.334955:   time            =     1.34E+00  334.96E-03  924.97E-03    2.16E+00 seconds
-bench.g18.smt2.334955:   perf total      =    13.65E+12    2.62E+12    7.23E+12   16.86E+12 FLOPS
-bench.g18.smt2.334955:   perf per node   =   758.13E+09  145.43E+09  401.91E+09  936.85E+09 FLOPS
-bench.g18.smt2.334955:   perf per thread =    63.18E+09   12.12E+09   33.49E+09   78.07E+09 FLOPS
-bench.g24.smt2.334958: numnodes          24
-bench.g24.smt2.334958: nrep           3
-bench.g24.smt2.334958:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g24.smt2.334958:   time            =   433.51E-03  333.31E-03   24.48E-03    1.25E+00 seconds
-bench.g24.smt2.334958:   perf total      =     3.33E+12    1.32E+12  100.10E+09    5.10E+12 FLOPS
-bench.g24.smt2.334958:   perf per node   =   138.87E+09   55.07E+09    4.17E+09  212.65E+09 FLOPS
-bench.g24.smt2.334958:   perf per thread =    11.57E+09    4.59E+09  347.58E+06   17.72E+09 FLOPS
-bench.g24.smt2.334958: numnodes          24
-bench.g24.smt2.334958: nrep           5
-bench.g24.smt2.334958:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g24.smt2.334958:   time            =   217.29E-03  171.89E-03   24.42E-03  986.01E-03 seconds
-bench.g24.smt2.334958:   perf total      =     4.01E+12  869.61E+09  126.90E+09    5.11E+12 FLOPS
-bench.g24.smt2.334958:   perf per node   =   167.08E+09   36.23E+09    5.29E+09  213.12E+09 FLOPS
-bench.g24.smt2.334958:   perf per thread =    13.92E+09    3.02E+09  440.63E+06   17.76E+09 FLOPS
-bench.g24.smt2.334958: numnodes          24
-bench.g24.smt2.334958: nrep          10
-bench.g24.smt2.334958:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g24.smt2.334958:   time            =   112.71E-03   83.56E-03   24.26E-03  905.44E-03 seconds
-bench.g24.smt2.334958:   perf total      =     4.58E+12  468.68E+09  138.19E+09    5.15E+12 FLOPS
-bench.g24.smt2.334958:   perf per node   =   190.86E+09   19.53E+09    5.76E+09  214.50E+09 FLOPS
-bench.g24.smt2.334958:   perf per thread =    15.91E+09    1.63E+09  479.84E+06   17.88E+09 FLOPS
-bench.g24.smt2.334958: numnodes          24
-bench.g24.smt2.334958: nrep           3
-bench.g24.smt2.334958:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g24.smt2.334958:   time            =   484.89E-03  273.28E-03  146.11E-03    1.15E+00 seconds
-bench.g24.smt2.334958:   perf total      =     9.25E+12    3.09E+12    1.69E+12   13.38E+12 FLOPS
-bench.g24.smt2.334958:   perf per node   =   385.33E+09  128.69E+09   70.57E+09  557.38E+09 FLOPS
-bench.g24.smt2.334958:   perf per thread =    32.11E+09   10.72E+09    5.88E+09   46.45E+09 FLOPS
-bench.g24.smt2.334958: numnodes          24
-bench.g24.smt2.334958: nrep           5
-bench.g24.smt2.334958:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g24.smt2.334958:   time            =   344.61E-03  179.74E-03  141.78E-03    1.15E+00 seconds
-bench.g24.smt2.334958:   perf total      =    11.23E+12    2.13E+12    1.70E+12   13.79E+12 FLOPS
-bench.g24.smt2.334958:   perf per node   =   467.81E+09   88.80E+09   70.93E+09  574.40E+09 FLOPS
-bench.g24.smt2.334958:   perf per thread =    38.98E+09    7.40E+09    5.91E+09   47.87E+09 FLOPS
-bench.g24.smt2.334958: numnodes          24
-bench.g24.smt2.334958: nrep          10
-bench.g24.smt2.334958:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g24.smt2.334958:   time            =   244.56E-03   93.54E-03  143.21E-03    1.13E+00 seconds
-bench.g24.smt2.334958:   perf total      =    12.23E+12    1.11E+12    1.73E+12   13.65E+12 FLOPS
-bench.g24.smt2.334958:   perf per node   =   509.49E+09   46.17E+09   71.97E+09  568.69E+09 FLOPS
-bench.g24.smt2.334958:   perf per thread =    42.46E+09    3.85E+09    6.00E+09   47.39E+09 FLOPS
-bench.g24.smt2.334958: numnodes          24
-bench.g24.smt2.334958: nrep           3
-bench.g24.smt2.334958:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-bench.g24.smt2.334958:   time            =     1.08E+00  331.72E-03  673.79E-03    1.89E+00 seconds
-bench.g24.smt2.334958:   perf total      =    18.14E+12    4.04E+12    8.23E+12   23.15E+12 FLOPS
-bench.g24.smt2.334958:   perf per node   =   755.76E+09  168.47E+09  343.11E+09  964.57E+09 FLOPS
-bench.g24.smt2.334958:   perf per thread =    62.98E+09   14.04E+09   28.59E+09   80.38E+09 FLOPS
-bench.g25.smt2.334961: numnodes          25
-bench.g25.smt2.334961: nrep           3
-bench.g25.smt2.334961:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g25.smt2.334961:   time            =   417.01E-03  303.55E-03   45.18E-03    1.16E+00 seconds
-bench.g25.smt2.334961:   perf total      =     1.88E+12  722.92E+09  107.81E+09    2.77E+12 FLOPS
-bench.g25.smt2.334961:   perf per node   =    75.14E+09   28.92E+09    4.31E+09  110.67E+09 FLOPS
-bench.g25.smt2.334961:   perf per thread =     6.26E+09    2.41E+09  359.38E+06    9.22E+09 FLOPS
-bench.g25.smt2.334961: numnodes          25
-bench.g25.smt2.334961: nrep           5
-bench.g25.smt2.334961:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g25.smt2.334961:   time            =   209.17E-03  147.08E-03   44.45E-03  866.97E-03 seconds
-bench.g25.smt2.334961:   perf total      =     2.27E+12  474.30E+09  144.32E+09    2.81E+12 FLOPS
-bench.g25.smt2.334961:   perf per node   =    90.61E+09   18.97E+09    5.77E+09  112.44E+09 FLOPS
-bench.g25.smt2.334961:   perf per thread =     7.55E+09    1.58E+09  481.08E+06    9.37E+09 FLOPS
-bench.g25.smt2.334961: numnodes          25
-bench.g25.smt2.334961: nrep          10
-bench.g25.smt2.334961:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g25.smt2.334961:   time            =   126.96E-03   78.02E-03   44.52E-03  867.18E-03 seconds
-bench.g25.smt2.334961:   perf total      =     2.53E+12  251.60E+09  144.29E+09    2.81E+12 FLOPS
-bench.g25.smt2.334961:   perf per node   =   101.24E+09   10.06E+09    5.77E+09  112.26E+09 FLOPS
-bench.g25.smt2.334961:   perf per thread =     8.44E+09  838.66E+06  480.97E+06    9.36E+09 FLOPS
-bench.g25.smt2.334961: numnodes          25
-bench.g25.smt2.334961: nrep           3
-bench.g25.smt2.334961:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g25.smt2.334961:   time            =   626.61E-03  344.33E-03  204.78E-03    1.47E+00 seconds
-bench.g25.smt2.334961:   perf total      =     6.80E+12    2.23E+12    1.33E+12    9.54E+12 FLOPS
-bench.g25.smt2.334961:   perf per node   =   272.10E+09   89.37E+09   53.19E+09  381.66E+09 FLOPS
-bench.g25.smt2.334961:   perf per thread =    22.68E+09    7.45E+09    4.43E+09   31.81E+09 FLOPS
-bench.g25.smt2.334961: numnodes          25
-bench.g25.smt2.334961: nrep           5
-bench.g25.smt2.334961:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g25.smt2.334961:   time            =   452.12E-03  221.67E-03  203.95E-03    1.44E+00 seconds
-bench.g25.smt2.334961:   perf total      =     7.92E+12    1.47E+12    1.35E+12    9.58E+12 FLOPS
-bench.g25.smt2.334961:   perf per node   =   316.98E+09   58.77E+09   54.17E+09  383.23E+09 FLOPS
-bench.g25.smt2.334961:   perf per thread =    26.41E+09    4.90E+09    4.51E+09   31.94E+09 FLOPS
-bench.g25.smt2.334961: numnodes          25
-bench.g25.smt2.334961: nrep          10
-bench.g25.smt2.334961:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g25.smt2.334961:   time            =   333.98E-03  123.11E-03  203.93E-03    1.50E+00 seconds
-bench.g25.smt2.334961:   perf total      =     8.74E+12  784.40E+09    1.30E+12    9.58E+12 FLOPS
-bench.g25.smt2.334961:   perf per node   =   349.73E+09   31.38E+09   52.07E+09  383.25E+09 FLOPS
-bench.g25.smt2.334961:   perf per thread =    29.14E+09    2.61E+09    4.34E+09   31.94E+09 FLOPS
-bench.g25.smt2.334961: numnodes          25
-bench.g25.smt2.334961: nrep           3
-bench.g30.smt2.334964: numnodes          30
-bench.g30.smt2.334964: nrep           3
-bench.g30.smt2.334964:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g30.smt2.334964:   time            =   546.76E-03  411.55E-03   40.88E-03    1.55E+00 seconds
-bench.g30.smt2.334964:   perf total      =     1.98E+12  778.56E+09   80.47E+09    3.06E+12 FLOPS
-bench.g30.smt2.334964:   perf per node   =    66.07E+09   25.95E+09    2.68E+09  101.90E+09 FLOPS
-bench.g30.smt2.334964:   perf per thread =     5.51E+09    2.16E+09  223.54E+06    8.49E+09 FLOPS
-bench.g30.smt2.334964: numnodes          30
-bench.g30.smt2.334964: nrep           5
-bench.g30.smt2.334964:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g30.smt2.334964:   time            =   220.57E-03  160.70E-03   36.06E-03  939.25E-03 seconds
-bench.g30.smt2.334964:   perf total      =     2.49E+12  535.00E+09  133.22E+09    3.46E+12 FLOPS
-bench.g30.smt2.334964:   perf per node   =    82.88E+09   17.83E+09    4.44E+09  115.48E+09 FLOPS
-bench.g30.smt2.334964:   perf per thread =     6.91E+09    1.49E+09  370.05E+06    9.62E+09 FLOPS
-bench.g30.smt2.334964: numnodes          30
-bench.g30.smt2.334964: nrep          10
-bench.g30.smt2.334964:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g30.smt2.334964:   time            =   129.41E-03   86.43E-03   35.45E-03  949.36E-03 seconds
-bench.g30.smt2.334964:   perf total      =     2.97E+12  308.41E+09  131.80E+09    3.53E+12 FLOPS
-bench.g30.smt2.334964:   perf per node   =    98.99E+09   10.28E+09    4.39E+09  117.54E+09 FLOPS
-bench.g30.smt2.334964:   perf per thread =     8.25E+09  856.69E+06  366.11E+06    9.80E+09 FLOPS
-bench.g30.smt2.334964: numnodes          30
-bench.g30.smt2.334964: nrep           3
-bench.g30.smt2.334964:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g30.smt2.334964:   time            =   486.64E-03  289.75E-03  131.52E-03    1.20E+00 seconds
-bench.g30.smt2.334964:   perf total      =    10.43E+12    3.59E+12    1.63E+12   14.86E+12 FLOPS
-bench.g30.smt2.334964:   perf per node   =   347.76E+09  119.73E+09   54.47E+09  495.25E+09 FLOPS
-bench.g30.smt2.334964:   perf per thread =    28.98E+09    9.98E+09    4.54E+09   41.27E+09 FLOPS
-bench.g30.smt2.334964: numnodes          30
-bench.g30.smt2.334964: nrep           5
-bench.g30.smt2.334964:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g30.smt2.334964:   time            =   351.24E-03  196.49E-03  131.02E-03    1.23E+00 seconds
-bench.g30.smt2.334964:   perf total      =    12.20E+12    2.37E+12    1.59E+12   14.92E+12 FLOPS
-bench.g30.smt2.334964:   perf per node   =   406.75E+09   79.11E+09   52.98E+09  497.18E+09 FLOPS
-bench.g30.smt2.334964:   perf per thread =    33.90E+09    6.59E+09    4.42E+09   41.43E+09 FLOPS
-bench.g30.smt2.334964: numnodes          30
-bench.g30.smt2.334964: nrep          10
-bench.g30.smt2.334964:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g30.smt2.334964:   time            =   239.51E-03  101.99E-03  131.34E-03    1.21E+00 seconds
-bench.g30.smt2.334964:   perf total      =    13.49E+12    1.25E+12    1.62E+12   14.88E+12 FLOPS
-bench.g30.smt2.334964:   perf per node   =   449.64E+09   41.71E+09   53.99E+09  496.00E+09 FLOPS
-bench.g30.smt2.334964:   perf per thread =    37.47E+09    3.48E+09    4.50E+09   41.33E+09 FLOPS
-bench.g30.smt2.334964: numnodes          30
-bench.g30.smt2.334964: nrep           3
-bench.g36.smt2.334967: numnodes          36
-bench.g36.smt2.334967: nrep           3
-bench.g36.smt2.334967:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g36.smt2.334967:   time            =   384.77E-03  298.09E-03   19.05E-03    1.11E+00 seconds
-bench.g36.smt2.334967:   perf total      =     4.27E+12    1.70E+12  112.22E+09    6.55E+12 FLOPS
-bench.g36.smt2.334967:   perf per node   =   118.66E+09   47.24E+09    3.12E+09  181.94E+09 FLOPS
-bench.g36.smt2.334967:   perf per thread =     9.89E+09    3.94E+09  259.78E+06   15.16E+09 FLOPS
-bench.g36.smt2.334967: numnodes          36
-bench.g36.smt2.334967: nrep           5
-bench.g36.smt2.334967:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g36.smt2.334967:   time            =   179.33E-03  143.15E-03   18.67E-03  819.55E-03 seconds
-bench.g36.smt2.334967:   perf total      =     5.22E+12    1.14E+12  152.67E+09    6.67E+12 FLOPS
-bench.g36.smt2.334967:   perf per node   =   145.03E+09   31.60E+09    4.24E+09  185.41E+09 FLOPS
-bench.g36.smt2.334967:   perf per thread =    12.09E+09    2.63E+09  353.41E+06   15.45E+09 FLOPS
-bench.g36.smt2.334967: numnodes          36
-bench.g36.smt2.334967: nrep          10
-bench.g36.smt2.334967:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g36.smt2.334967:   time            =    98.13E-03   74.54E-03   18.68E-03  805.34E-03 seconds
-bench.g36.smt2.334967:   perf total      =     5.77E+12  594.06E+09  155.37E+09    6.68E+12 FLOPS
-bench.g36.smt2.334967:   perf per node   =   160.35E+09   16.50E+09    4.32E+09  185.62E+09 FLOPS
-bench.g36.smt2.334967:   perf per thread =    13.36E+09    1.38E+09  359.65E+06   15.47E+09 FLOPS
-bench.g36.smt2.334967: numnodes          36
-bench.g36.smt2.334967: nrep           3
-bench.g36.smt2.334967:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g36.smt2.334967:   time            =   413.91E-03  238.14E-03  121.71E-03  997.26E-03 seconds
-bench.g36.smt2.334967:   perf total      =    11.31E+12    3.82E+12    1.96E+12   16.05E+12 FLOPS
-bench.g36.smt2.334967:   perf per node   =   314.24E+09  106.06E+09   54.46E+09  445.90E+09 FLOPS
-bench.g36.smt2.334967:   perf per thread =    26.19E+09    8.84E+09    4.54E+09   37.16E+09 FLOPS
-bench.g36.smt2.334967: numnodes          36
-bench.g36.smt2.334967: nrep           5
-bench.g36.smt2.334967:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g36.smt2.334967:   time            =   295.85E-03  155.36E-03  119.98E-03  990.65E-03 seconds
-bench.g36.smt2.334967:   perf total      =    13.20E+12    2.51E+12    1.97E+12   16.29E+12 FLOPS
-bench.g36.smt2.334967:   perf per node   =   366.59E+09   69.74E+09   54.82E+09  452.42E+09 FLOPS
-bench.g36.smt2.334967:   perf per thread =    30.55E+09    5.81E+09    4.57E+09   37.70E+09 FLOPS
-bench.g36.smt2.334967: numnodes          36
-bench.g36.smt2.334967: nrep          10
-bench.g36.smt2.334967:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g36.smt2.334967:   time            =   211.58E-03   84.95E-03  119.76E-03    1.02E+00 seconds
-bench.g36.smt2.334967:   perf total      =    14.61E+12    1.34E+12    1.92E+12   16.32E+12 FLOPS
-bench.g36.smt2.334967:   perf per node   =   405.90E+09   37.22E+09   53.37E+09  453.34E+09 FLOPS
-bench.g36.smt2.334967:   perf per thread =    33.83E+09    3.10E+09    4.45E+09   37.78E+09 FLOPS
-bench.g36.smt2.334967: numnodes          36
-bench.g36.smt2.334967: nrep           3
-bench.g36.smt2.334967:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-bench.g36.smt2.334967:   time            =   905.51E-03  276.59E-03  559.85E-03    1.58E+00 seconds
-bench.g36.smt2.334967:   perf total      =    21.63E+12    4.82E+12    9.84E+12   27.86E+12 FLOPS
-bench.g36.smt2.334967:   perf per node   =   600.92E+09  133.75E+09  273.47E+09  773.96E+09 FLOPS
-bench.g36.smt2.334967:   perf per thread =    50.08E+09   11.15E+09   22.79E+09   64.50E+09 FLOPS
-bench.g36.smt2.334967: numnodes          36
-bench.g36.smt2.334967: nrep           5
-bench.g36.smt2.334967:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-bench.g36.smt2.334967:   time            =   774.25E-03  189.84E-03  549.65E-03    1.62E+00 seconds
-bench.g36.smt2.334967:   perf total      =    24.13E+12    3.26E+12    9.60E+12   28.38E+12 FLOPS
-bench.g36.smt2.334967:   perf per node   =   670.41E+09   90.60E+09  266.72E+09  788.29E+09 FLOPS
-bench.g36.smt2.334967:   perf per thread =    55.87E+09    7.55E+09   22.23E+09   65.69E+09 FLOPS
-bench.g36.smt2.334967: numnodes          36
-bench.g36.smt2.334967: nrep          10
-bench.g36.smt2.334967:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-bench.g36.smt2.334967:   time            =   657.31E-03   96.33E-03  547.21E-03    1.57E+00 seconds
-bench.g36.smt2.334967:   perf total      =    26.26E+12    1.73E+12    9.92E+12   28.51E+12 FLOPS
-bench.g36.smt2.334967:   perf per node   =   729.31E+09   47.92E+09  275.54E+09  791.82E+09 FLOPS
-bench.g36.smt2.334967:   perf per thread =    60.78E+09    3.99E+09   22.96E+09   65.99E+09 FLOPS
-bench.g4.smt2.334970: numnodes           4
-bench.g4.smt2.334970: nrep           3
-bench.g4.smt2.334970:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g4.smt2.334970:   time            =   340.32E-03  232.15E-03   55.60E-03  908.99E-03 seconds
-bench.g4.smt2.334970:   perf total      =     1.54E+12  570.67E+09  137.65E+09    2.25E+12 FLOPS
-bench.g4.smt2.334970:   perf per node   =   383.85E+09  142.67E+09   34.41E+09  562.31E+09 FLOPS
-bench.g4.smt2.334970:   perf per thread =    31.99E+09   11.89E+09    2.87E+09   46.86E+09 FLOPS
-bench.g4.smt2.334970: numnodes           4
-bench.g4.smt2.334970: nrep           5
-bench.g4.smt2.334970:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g4.smt2.334970:   time            =   212.56E-03  140.17E-03   55.65E-03  839.42E-03 seconds
-bench.g4.smt2.334970:   perf total      =     1.82E+12  374.02E+09  149.06E+09    2.25E+12 FLOPS
-bench.g4.smt2.334970:   perf per node   =   455.42E+09   93.50E+09   37.27E+09  561.88E+09 FLOPS
-bench.g4.smt2.334970:   perf per thread =    37.95E+09    7.79E+09    3.11E+09   46.82E+09 FLOPS
-bench.g4.smt2.334970: numnodes           4
-bench.g4.smt2.334970: nrep          10
-bench.g4.smt2.334970:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g4.smt2.334970:   time            =   133.99E-03   74.16E-03   55.40E-03  837.54E-03 seconds
-bench.g4.smt2.334970:   perf total      =     2.03E+12  198.48E+09  149.40E+09    2.26E+12 FLOPS
-bench.g4.smt2.334970:   perf per node   =   508.00E+09   49.62E+09   37.35E+09  564.45E+09 FLOPS
-bench.g4.smt2.334970:   perf per thread =    42.33E+09    4.13E+09    3.11E+09   47.04E+09 FLOPS
-bench.g4.smt2.334970: numnodes           4
-bench.g4.smt2.334970: nrep           3
-bench.g4.smt2.334970:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g4.smt2.334970:   time            =   826.97E-03  284.32E-03  477.29E-03    1.52E+00 seconds
-bench.g4.smt2.334970:   perf total      =     3.15E+12  762.15E+09    1.28E+12    4.10E+12 FLOPS
-bench.g4.smt2.334970:   perf per node   =   787.54E+09  190.54E+09  320.84E+09    1.02E+12 FLOPS
-bench.g4.smt2.334970:   perf per thread =    65.63E+09   15.88E+09   26.74E+09   85.33E+09 FLOPS
-bench.g4.smt2.334970: numnodes           4
-bench.g4.smt2.334970: nrep           5
-bench.g4.smt2.334970:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g4.smt2.334970:   time            =   691.72E-03  191.61E-03  476.53E-03    1.55E+00 seconds
-bench.g4.smt2.334970:   perf total      =     3.53E+12  506.59E+09    1.26E+12    4.10E+12 FLOPS
-bench.g4.smt2.334970:   perf per node   =   881.99E+09  126.65E+09  315.62E+09    1.03E+12 FLOPS
-bench.g4.smt2.334970:   perf per thread =    73.50E+09   10.55E+09   26.30E+09   85.47E+09 FLOPS
-bench.g4.smt2.334970: numnodes           4
-bench.g4.smt2.334970: nrep          10
-bench.g4.smt2.334970:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g4.smt2.334970:   time            =   584.35E-03   99.87E-03  475.99E-03    1.53E+00 seconds
-bench.g4.smt2.334970:   perf total      =     3.80E+12  266.14E+09    1.28E+12    4.11E+12 FLOPS
-bench.g4.smt2.334970:   perf per node   =   950.11E+09   66.53E+09  319.09E+09    1.03E+12 FLOPS
-bench.g4.smt2.334970:   perf per thread =    79.18E+09    5.54E+09   26.59E+09   85.57E+09 FLOPS
-bench.g4.smt2.334970: numnodes           4
-bench.g4.smt2.334970: nrep           3
-bench.g4.smt2.334970:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-bench.g4.smt2.334970:   time            =     3.74E+00  551.78E-03    3.06E+00    5.09E+00 seconds
-bench.g4.smt2.334970:   perf total      =     4.42E+12  552.03E+09    3.06E+12    5.10E+12 FLOPS
-bench.g4.smt2.334970:   perf per node   =     1.10E+12  138.01E+09  766.14E+09    1.27E+12 FLOPS
-bench.g4.smt2.334970:   perf per thread =    92.02E+09   11.50E+09   63.84E+09  106.23E+09 FLOPS
-bench.g4.smt2.334970: numnodes           4
-bench.g4.smt2.334970: nrep           5
-bench.g42.smt2.334973: numnodes          42
-bench.g42.smt2.334973: nrep           3
-bench.g42.smt2.334973:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g42.smt2.334973:   time            =   428.19E-03  312.15E-03   45.33E-03    1.19E+00 seconds
-bench.g42.smt2.334973:   perf total      =     1.85E+12  713.57E+09  104.90E+09    2.76E+12 FLOPS
-bench.g42.smt2.334973:   perf per node   =    44.10E+09   16.99E+09    2.50E+09   65.65E+09 FLOPS
-bench.g42.smt2.334973:   perf per thread =     3.68E+09    1.42E+09  208.13E+06    5.47E+09 FLOPS
-bench.g42.smt2.334973: numnodes          42
-bench.g42.smt2.334973: nrep           5
-bench.g42.smt2.334973:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g42.smt2.334973:   time            =   220.54E-03  158.34E-03   40.92E-03  928.66E-03 seconds
-bench.g42.smt2.334973:   perf total      =     2.33E+12  494.91E+09  134.74E+09    3.05E+12 FLOPS
-bench.g42.smt2.334973:   perf per node   =    55.53E+09   11.78E+09    3.21E+09   72.71E+09 FLOPS
-bench.g42.smt2.334973:   perf per thread =     4.63E+09  981.96E+06  267.34E+06    6.06E+09 FLOPS
-bench.g42.smt2.334973: numnodes          42
-bench.g42.smt2.334973: nrep          10
-bench.g42.smt2.334973:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g42.smt2.334973:   time            =   126.23E-03   79.78E-03   39.57E-03  883.13E-03 seconds
-bench.g42.smt2.334973:   perf total      =     2.70E+12  274.22E+09  141.68E+09    3.16E+12 FLOPS
-bench.g42.smt2.334973:   perf per node   =    64.17E+09    6.53E+09    3.37E+09   75.21E+09 FLOPS
-bench.g42.smt2.334973:   perf per thread =     5.35E+09  544.10E+06  281.12E+06    6.27E+09 FLOPS
-bench.g42.smt2.334973: numnodes          42
-bench.g42.smt2.334973: nrep           3
-bench.g6.smt2.334976: numnodes           6
-bench.g6.smt2.334976: nrep           3
-bench.g6.smt2.334976:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g6.smt2.334976:   time            =   374.18E-03  270.64E-03   42.69E-03    1.04E+00 seconds
-bench.g6.smt2.334976:   perf total      =     1.99E+12  764.07E+09  120.64E+09    2.93E+12 FLOPS
-bench.g6.smt2.334976:   perf per node   =   332.04E+09  127.34E+09   20.11E+09  488.21E+09 FLOPS
-bench.g6.smt2.334976:   perf per thread =    27.67E+09   10.61E+09    1.68E+09   40.68E+09 FLOPS
-bench.g6.smt2.334976: numnodes           6
-bench.g6.smt2.334976: nrep           5
-bench.g6.smt2.334976:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g6.smt2.334976:   time            =   227.94E-03  165.45E-03   42.78E-03  967.86E-03 seconds
-bench.g6.smt2.334976:   perf total      =     2.36E+12  497.73E+09  129.28E+09    2.92E+12 FLOPS
-bench.g6.smt2.334976:   perf per node   =   392.52E+09   82.96E+09   21.55E+09  487.25E+09 FLOPS
-bench.g6.smt2.334976:   perf per thread =    32.71E+09    6.91E+09    1.80E+09   40.60E+09 FLOPS
-bench.g6.smt2.334976: numnodes           6
-bench.g6.smt2.334976: nrep          10
-bench.g6.smt2.334976:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g6.smt2.334976:   time            =   135.27E-03   87.70E-03   42.59E-03  967.27E-03 seconds
-bench.g6.smt2.334976:   perf total      =     2.64E+12  264.82E+09  129.36E+09    2.94E+12 FLOPS
-bench.g6.smt2.334976:   perf per node   =   440.26E+09   44.14E+09   21.56E+09  489.45E+09 FLOPS
-bench.g6.smt2.334976:   perf per thread =    36.69E+09    3.68E+09    1.80E+09   40.79E+09 FLOPS
-bench.g6.smt2.334976: numnodes           6
-bench.g6.smt2.334976: nrep           3
-bench.g6.smt2.334976:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g6.smt2.334976:   time            =   769.77E-03  318.27E-03  379.01E-03    1.55E+00 seconds
-bench.g6.smt2.334976:   perf total      =     3.85E+12    1.06E+12    1.26E+12    5.16E+12 FLOPS
-bench.g6.smt2.334976:   perf per node   =   641.79E+09  176.15E+09  210.31E+09  859.65E+09 FLOPS
-bench.g6.smt2.334976:   perf per thread =    53.48E+09   14.68E+09   17.53E+09   71.64E+09 FLOPS
-bench.g6.smt2.334976: numnodes           6
-bench.g6.smt2.334976: nrep           5
-bench.g6.smt2.334976:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g6.smt2.334976:   time            =   609.82E-03  206.43E-03  378.12E-03    1.53E+00 seconds
-bench.g6.smt2.334976:   perf total      =     4.38E+12  694.61E+09    1.28E+12    5.17E+12 FLOPS
-bench.g6.smt2.334976:   perf per node   =   730.26E+09  115.77E+09  212.55E+09  861.72E+09 FLOPS
-bench.g6.smt2.334976:   perf per thread =    60.86E+09    9.65E+09   17.71E+09   71.81E+09 FLOPS
-bench.g6.smt2.334976: numnodes           6
-bench.g6.smt2.334976: nrep          10
-bench.g6.smt2.334976:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g6.smt2.334976:   time            =   493.71E-03  108.23E-03  378.17E-03    1.52E+00 seconds
-bench.g6.smt2.334976:   perf total      =     4.76E+12  366.60E+09    1.29E+12    5.17E+12 FLOPS
-bench.g6.smt2.334976:   perf per node   =   793.92E+09   61.10E+09  214.30E+09  861.59E+09 FLOPS
-bench.g6.smt2.334976:   perf per thread =    66.16E+09    5.09E+09   17.86E+09   71.80E+09 FLOPS
-bench.g6.smt2.334976: numnodes           6
-bench.g6.smt2.334976: nrep           3
-bench.g6.smt2.334976:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-bench.g6.smt2.334976:   time            =     2.86E+00  581.27E-03    2.15E+00    4.29E+00 seconds
-bench.g6.smt2.334976:   perf total      =     6.04E+12  982.28E+09    3.64E+12    7.25E+12 FLOPS
-bench.g6.smt2.334976:   perf per node   =     1.01E+12  163.71E+09  606.29E+09    1.21E+12 FLOPS
-bench.g6.smt2.334976:   perf per thread =    83.94E+09   13.64E+09   50.52E+09  100.69E+09 FLOPS
-bench.g6.smt2.334976: numnodes           6
-bench.g6.smt2.334976: nrep           5
-bench.g6.smt2.334976:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-bench.g6.smt2.334976:   time            =     2.57E+00  375.02E-03    2.15E+00    4.25E+00 seconds
-bench.g6.smt2.334976:   perf total      =     6.53E+12  639.00E+09    3.67E+12    7.25E+12 FLOPS
-bench.g6.smt2.334976:   perf per node   =     1.09E+12  106.50E+09  611.70E+09    1.21E+12 FLOPS
-bench.g6.smt2.334976:   perf per thread =    90.67E+09    8.88E+09   50.98E+09  100.71E+09 FLOPS
-bench.g6.smt2.334976: numnodes           6
-bench.g6.smt2.334976: nrep          10
-bench.g6.smt2.334976:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-bench.g6.smt2.334976:   time            =     2.37E+00  203.87E-03    2.15E+00    4.30E+00 seconds
-bench.g6.smt2.334976:   perf total      =     6.89E+12  343.74E+09    3.63E+12    7.27E+12 FLOPS
-bench.g6.smt2.334976:   perf per node   =     1.15E+12   57.29E+09  604.59E+09    1.21E+12 FLOPS
-bench.g6.smt2.334976:   perf per thread =    95.67E+09    4.77E+09   50.38E+09  100.93E+09 FLOPS
-bench.g9.smt2.334979: numnodes           3
-bench.g9.smt2.334979: nrep           3
-bench.g9.smt2.334979:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g9.smt2.334979:   time            =   346.42E-03  221.46E-03   74.65E-03  888.90E-03 seconds
-bench.g9.smt2.334979:   perf total      =     1.16E+12  414.64E+09  140.76E+09    1.68E+12 FLOPS
-bench.g9.smt2.334979:   perf per node   =   385.44E+09  138.21E+09   46.92E+09  558.65E+09 FLOPS
-bench.g9.smt2.334979:   perf per thread =    32.12E+09   11.52E+09    3.91E+09   46.55E+09 FLOPS
-bench.g9.smt2.334979: numnodes           3
-bench.g9.smt2.334979: nrep           5
-bench.g9.smt2.334979:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g9.smt2.334979:   time            =   224.63E-03  134.33E-03   73.70E-03  825.38E-03 seconds
-bench.g9.smt2.334979:   perf total      =     1.37E+12  273.57E+09  151.60E+09    1.70E+12 FLOPS
-bench.g9.smt2.334979:   perf per node   =   458.27E+09   91.19E+09   50.53E+09  565.83E+09 FLOPS
-bench.g9.smt2.334979:   perf per thread =    38.19E+09    7.60E+09    4.21E+09   47.15E+09 FLOPS
-bench.g9.smt2.334979: numnodes           3
-bench.g9.smt2.334979: nrep          10
-bench.g9.smt2.334979:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-bench.g9.smt2.334979:   time            =   151.62E-03   73.35E-03   73.84E-03  847.45E-03 seconds
-bench.g9.smt2.334979:   perf total      =     1.53E+12  145.75E+09  147.65E+09    1.69E+12 FLOPS
-bench.g9.smt2.334979:   perf per node   =   510.05E+09   48.58E+09   49.22E+09  564.84E+09 FLOPS
-bench.g9.smt2.334979:   perf per thread =    42.50E+09    4.05E+09    4.10E+09   47.07E+09 FLOPS
-bench.g9.smt2.334979: numnodes           3
-bench.g9.smt2.334979: nrep           3
-bench.g9.smt2.334979:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g9.smt2.334979:   time            =     1.01E+00  285.66E-03  658.44E-03    1.71E+00 seconds
-bench.g9.smt2.334979:   perf total      =     2.35E+12  493.84E+09    1.14E+12    2.97E+12 FLOPS
-bench.g9.smt2.334979:   perf per node   =   784.14E+09  164.61E+09  380.95E+09  989.75E+09 FLOPS
-bench.g9.smt2.334979:   perf per thread =    65.35E+09   13.72E+09   31.75E+09   82.48E+09 FLOPS
-bench.g9.smt2.334979: numnodes           3
-bench.g9.smt2.334979: nrep           5
-bench.g9.smt2.334979:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g9.smt2.334979:   time            =   870.88E-03  188.06E-03  658.59E-03    1.71E+00 seconds
-bench.g9.smt2.334979:   perf total      =     2.60E+12  325.12E+09    1.14E+12    2.97E+12 FLOPS
-bench.g9.smt2.334979:   perf per node   =   865.32E+09  108.37E+09  380.68E+09  989.53E+09 FLOPS
-bench.g9.smt2.334979:   perf per thread =    72.11E+09    9.03E+09   31.72E+09   82.46E+09 FLOPS
-bench.g9.smt2.334979: numnodes           3
-bench.g9.smt2.334979: nrep          10
-bench.g9.smt2.334979:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-bench.g9.smt2.334979:   time            =   769.16E-03  102.18E-03  658.14E-03    1.74E+00 seconds
-bench.g9.smt2.334979:   perf total      =     2.77E+12  173.75E+09    1.12E+12    2.97E+12 FLOPS
-bench.g9.smt2.334979:   perf per node   =   924.21E+09   57.92E+09  374.85E+09  990.18E+09 FLOPS
-bench.g9.smt2.334979:   perf per thread =    77.02E+09    4.83E+09   31.24E+09   82.52E+09 FLOPS
-bench.g9.smt2.334979: numnodes           3
-bench.g9.smt2.334979: nrep           3
+bench.g1.smt2.r100.337873: numnodes           1
+bench.g1.smt2.r100.337873: nrep         100
+bench.g1.smt2.r100.337873:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+bench.g1.smt2.r100.337873:   time            =   135.41E-03    8.01E-03  126.35E-03  932.77E-03 seconds
+bench.g1.smt2.r100.337873:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+bench.g1.smt2.r100.337873:   perf total      =   974.01E+09    8.45E+09  134.14E+09  990.31E+09 FLOPS
+bench.g1.smt2.r100.337873:   perf per node   =   974.01E+09    8.45E+09  134.14E+09  990.31E+09 FLOPS
+bench.g1.smt2.r100.337873:   perf per thread =    81.17E+09  704.40E+06   11.18E+09   82.53E+09 FLOPS
+bench.g1.smt2.r100.337873: numnodes           1
+bench.g1.smt2.r100.337873: nrep         100
+bench.g1.smt2.r100.337873:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+bench.g1.smt2.r100.337873:   time            =     1.58E+00   11.21E-03    1.52E+00    2.69E+00 seconds
+bench.g1.smt2.r100.337873:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+bench.g1.smt2.r100.337873:   perf total      =     1.24E+12    5.24E+09  726.81E+09    1.29E+12 FLOPS
+bench.g1.smt2.r100.337873:   perf per node   =     1.24E+12    5.24E+09  726.81E+09    1.29E+12 FLOPS
+bench.g1.smt2.r100.337873:   perf per thread =   103.40E+09  436.61E+06   60.57E+09  107.26E+09 FLOPS
+bench.g1.smt2.r100.337873: numnodes           1
+bench.g1.smt2.r100.337873: nrep         100
+bench.g12.smt2.r100.337876: numnodes          12
+bench.g12.smt2.r100.337876: nrep         100
+bench.g18.smt2.r100.337879: numnodes          18
+bench.g18.smt2.r100.337879: nrep         100
+bench.g18.smt2.r100.337879:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+bench.g18.smt2.r100.337879:   time            =    43.63E-03   17.78E-03   24.28E-03    1.81E+00 seconds
+bench.g18.smt2.r100.337879:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+bench.g18.smt2.r100.337879:   perf total      =     4.81E+12   48.45E+09   69.02E+09    5.14E+12 FLOPS
+bench.g18.smt2.r100.337879:   perf per node   =   267.09E+09    2.69E+09    3.83E+09  285.83E+09 FLOPS
+bench.g18.smt2.r100.337879:   perf per thread =    22.26E+09  224.32E+06  319.54E+06   23.82E+09 FLOPS
+bench.g18.smt2.r100.337879: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+bench.g18.smt2.r100.337879: numnodes          18
+bench.g18.smt2.r100.337879: nrep         100
+bench.g18.smt2.r100.337879:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+bench.g18.smt2.r100.337879:   time            =   191.19E-03    9.19E-03  174.68E-03    1.11E+00 seconds
+bench.g18.smt2.r100.337879:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+bench.g18.smt2.r100.337879:   perf total      =    10.66E+12   91.02E+09    1.77E+12   11.19E+12 FLOPS
+bench.g18.smt2.r100.337879:   perf per node   =   592.04E+09    5.06E+09   98.24E+09  621.66E+09 FLOPS
+bench.g18.smt2.r100.337879:   perf per thread =    49.34E+09  421.38E+06    8.19E+09   51.80E+09 FLOPS
+bench.g18.smt2.r100.337879: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+bench.g18.smt2.r100.337879: numnodes          18
+bench.g18.smt2.r100.337879: nrep         100
+bench.g18.smt2.r100.337879:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+bench.g18.smt2.r100.337879:   time            =   923.05E-03   12.13E-03  884.08E-03    2.12E+00 seconds
+bench.g18.smt2.r100.337879:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+bench.g18.smt2.r100.337879:   perf total      =    17.03E+12  100.36E+09    7.35E+12   17.64E+12 FLOPS
+bench.g18.smt2.r100.337879:   perf per node   =   946.02E+09    5.58E+09  408.26E+09  980.09E+09 FLOPS
+bench.g18.smt2.r100.337879:   perf per thread =    78.83E+09  464.61E+06   34.02E+09   81.67E+09 FLOPS
+bench.g18.smt2.r100.337879: flops total                         1.560011E+15       0.0%      0.0%    100.0%
+bench.g24.smt2.r100.337882: numnodes          24
+bench.g24.smt2.r100.337882: nrep         100
+bench.g24.smt2.r100.337882:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+bench.g24.smt2.r100.337882:   time            =    37.47E-03   12.60E-03   24.08E-03    1.29E+00 seconds
+bench.g24.smt2.r100.337882:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+bench.g24.smt2.r100.337882:   perf total      =     4.99E+12   49.56E+09   96.91E+09    5.19E+12 FLOPS
+bench.g24.smt2.r100.337882:   perf per node   =   207.90E+09    2.06E+09    4.04E+09  216.10E+09 FLOPS
+bench.g24.smt2.r100.337882:   perf per thread =    17.33E+09  172.07E+06  336.48E+06   18.01E+09 FLOPS
+bench.g24.smt2.r100.337882: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+bench.g24.smt2.r100.337882: numnodes          24
+bench.g24.smt2.r100.337882: nrep         100
+bench.g24.smt2.r100.337882:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+bench.g24.smt2.r100.337882:   time            =   155.71E-03    9.52E-03  142.52E-03    1.10E+00 seconds
+bench.g24.smt2.r100.337882:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+bench.g24.smt2.r100.337882:   perf total      =    13.26E+12  116.65E+09    1.77E+12   13.71E+12 FLOPS
+bench.g24.smt2.r100.337882:   perf per node   =   552.55E+09    4.86E+09   73.85E+09  571.32E+09 FLOPS
+bench.g24.smt2.r100.337882:   perf per thread =    46.05E+09  405.05E+06    6.15E+09   47.61E+09 FLOPS
+bench.g24.smt2.r100.337882: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+bench.g24.smt2.r100.337882: numnodes          24
+bench.g24.smt2.r100.337882: nrep         100
+bench.g24.smt2.r100.337882:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+bench.g24.smt2.r100.337882:   time            =   694.63E-03   11.86E-03  674.78E-03    1.87E+00 seconds
+bench.g24.smt2.r100.337882:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+bench.g24.smt2.r100.337882:   perf total      =    22.70E+12  145.31E+09    8.33E+12   23.11E+12 FLOPS
+bench.g24.smt2.r100.337882:   perf per node   =   945.90E+09    6.05E+09  346.92E+09  963.07E+09 FLOPS
+bench.g24.smt2.r100.337882:   perf per thread =    78.83E+09  504.55E+06   28.91E+09   80.26E+09 FLOPS
+bench.g24.smt2.r100.337882: flops total                         1.560011E+15       0.0%      0.0%    100.0%
+bench.g25.smt2.r100.337885: numnodes          25
+bench.g25.smt2.r100.337885: nrep         100
+bench.g25.smt2.r100.337885:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+bench.g25.smt2.r100.337885:   time            =    68.57E-03   23.49E-03   43.72E-03    2.41E+00 seconds
+bench.g25.smt2.r100.337885:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+bench.g25.smt2.r100.337885:   perf total      =     2.75E+12   27.34E+09   52.01E+09    2.86E+12 FLOPS
+bench.g25.smt2.r100.337885:   perf per node   =   110.18E+09    1.09E+09    2.08E+09  114.33E+09 FLOPS
+bench.g25.smt2.r100.337885:   perf per thread =     9.18E+09   91.14E+06  173.38E+06    9.53E+09 FLOPS
+bench.g25.smt2.r100.337885: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+bench.g25.smt2.r100.337885: numnodes          25
+bench.g25.smt2.r100.337885: nrep         100
+bench.g30.smt2.r100.337888: numnodes          30
+bench.g30.smt2.r100.337888: nrep         100
+bench.g30.smt2.r100.337888:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+bench.g30.smt2.r100.337888:   time            =    46.30E-03   10.56E-03   34.91E-03    1.10E+00 seconds
+bench.g30.smt2.r100.337888:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+bench.g30.smt2.r100.337888:   perf total      =     3.47E+12   35.15E+09  114.08E+09    3.58E+12 FLOPS
+bench.g30.smt2.r100.337888:   perf per node   =   115.77E+09    1.17E+09    3.80E+09  119.33E+09 FLOPS
+bench.g30.smt2.r100.337888:   perf per thread =     9.65E+09   97.64E+06  316.88E+06    9.94E+09 FLOPS
+bench.g30.smt2.r100.337888: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+bench.g30.smt2.r100.337888: numnodes          30
+bench.g30.smt2.r100.337888: nrep         100
+bench.g30.smt2.r100.337888:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+bench.g30.smt2.r100.337888:   time            =   156.53E-03   11.14E-03  140.84E-03    1.26E+00 seconds
+bench.g30.smt2.r100.337888:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+bench.g30.smt2.r100.337888:   perf total      =    13.33E+12  119.61E+09    1.55E+12   13.88E+12 FLOPS
+bench.g30.smt2.r100.337888:   perf per node   =   444.42E+09    3.99E+09   51.54E+09  462.62E+09 FLOPS
+bench.g30.smt2.r100.337888:   perf per thread =    37.03E+09  332.26E+06    4.29E+09   38.55E+09 FLOPS
+bench.g30.smt2.r100.337888: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+bench.g30.smt2.r100.337888: numnodes          30
+bench.g30.smt2.r100.337888: nrep         100
+bench.g30.smt2.r100.337888:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+bench.g30.smt2.r100.337888:   time            =   661.54E-03   11.11E-03  623.68E-03    1.77E+00 seconds
+bench.g30.smt2.r100.337888:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+bench.g30.smt2.r100.337888:   perf total      =    23.83E+12  153.94E+09    8.84E+12   25.01E+12 FLOPS
+bench.g30.smt2.r100.337888:   perf per node   =   794.49E+09    5.13E+09  294.57E+09  833.65E+09 FLOPS
+bench.g30.smt2.r100.337888:   perf per thread =    66.21E+09  427.62E+06   24.55E+09   69.47E+09 FLOPS
+bench.g30.smt2.r100.337888: flops total                         1.560011E+15       0.0%      0.0%    100.0%
+bench.g36.smt2.r100.337891: numnodes          36
+bench.g36.smt2.r100.337891: nrep         100
+bench.g36.smt2.r100.337891:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+bench.g36.smt2.r100.337891:   time            =    34.92E-03   15.74E-03   17.90E-03    1.60E+00 seconds
+bench.g36.smt2.r100.337891:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+bench.g36.smt2.r100.337891:   perf total      =     6.48E+12   66.56E+09   78.16E+09    6.97E+12 FLOPS
+bench.g36.smt2.r100.337891:   perf per node   =   180.06E+09    1.85E+09    2.17E+09  193.52E+09 FLOPS
+bench.g36.smt2.r100.337891:   perf per thread =    15.00E+09  154.06E+06  180.93E+06   16.13E+09 FLOPS
+bench.g36.smt2.r100.337891: numnodes          36
+bench.g36.smt2.r100.337891: nrep         100
+bench.g36.smt2.r100.337891:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+bench.g36.smt2.r100.337891:   time            =   129.80E-03    8.62E-03  115.93E-03  986.82E-03 seconds
+bench.g36.smt2.r100.337891:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+bench.g36.smt2.r100.337891:   perf total      =    16.00E+12  143.65E+09    1.98E+12   16.86E+12 FLOPS
+bench.g36.smt2.r100.337891:   perf per node   =   444.42E+09    3.99E+09   55.03E+09  468.32E+09 FLOPS
+bench.g36.smt2.r100.337891:   perf per thread =    37.03E+09  332.52E+06    4.59E+09   39.03E+09 FLOPS
+bench.g36.smt2.r100.337891: numnodes          36
+bench.g36.smt2.r100.337891: nrep         100
+bench.g36.smt2.r100.337891:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+bench.g36.smt2.r100.337891:   time            =   567.17E-03   10.59E-03  542.11E-03    1.62E+00 seconds
+bench.g36.smt2.r100.337891:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+bench.g36.smt2.r100.337891:   perf total      =    27.85E+12  185.68E+09    9.63E+12   28.77E+12 FLOPS
+bench.g36.smt2.r100.337891:   perf per node   =   773.53E+09    5.16E+09  267.54E+09  799.24E+09 FLOPS
+bench.g36.smt2.r100.337891:   perf per thread =    64.46E+09  429.81E+06   22.30E+09   66.60E+09 FLOPS
+bench.g4.smt2.r100.337894: numnodes           4
+bench.g4.smt2.r100.337894: nrep         100
+bench.g4.smt2.r100.337894:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+bench.g4.smt2.r100.337894:   time            =    64.25E-03    8.51E-03   55.23E-03  911.25E-03 seconds
+bench.g4.smt2.r100.337894:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+bench.g4.smt2.r100.337894:   perf total      =     2.22E+12   20.99E+09  137.31E+09    2.26E+12 FLOPS
+bench.g4.smt2.r100.337894:   perf per node   =   556.08E+09    5.25E+09   34.33E+09  565.99E+09 FLOPS
+bench.g4.smt2.r100.337894:   perf per thread =    46.34E+09  437.34E+06    2.86E+09   47.17E+09 FLOPS
+bench.g4.smt2.r100.337894: numnodes           4
+bench.g4.smt2.r100.337894: nrep         100
+bench.g4.smt2.r100.337894:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+bench.g4.smt2.r100.337894:   time            =   485.77E-03   10.64E-03  472.19E-03    1.54E+00 seconds
+bench.g4.smt2.r100.337894:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+bench.g4.smt2.r100.337894:   perf total      =     4.09E+12   28.38E+09    1.27E+12    4.14E+12 FLOPS
+bench.g4.smt2.r100.337894:   perf per node   =     1.02E+12    7.10E+09  316.44E+09    1.04E+12 FLOPS
+bench.g4.smt2.r100.337894:   perf per thread =    85.14E+09  591.26E+06   26.37E+09   86.26E+09 FLOPS
+bench.g4.smt2.r100.337894: numnodes           4
+bench.g4.smt2.r100.337894: nrep         100
+bench.g42.smt2.r100.337897: numnodes          42
+bench.g42.smt2.r100.337897: nrep         100
+bench.g42.smt2.r100.337897:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+bench.g42.smt2.r100.337897:   time            =    80.21E-03   40.44E-03   38.70E-03    4.10E+00 seconds
+bench.g42.smt2.r100.337897:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+bench.g42.smt2.r100.337897:   perf total      =     3.13E+12   32.66E+09   30.49E+09    3.23E+12 FLOPS
+bench.g42.smt2.r100.337897:   perf per node   =    74.59E+09  777.51E+06  725.88E+06   76.90E+09 FLOPS
+bench.g42.smt2.r100.337897:   perf per thread =     6.22E+09   64.79E+06   60.49E+06    6.41E+09 FLOPS
+bench.g42.smt2.r100.337897: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+bench.g42.smt2.r100.337897: numnodes          42
+bench.g42.smt2.r100.337897: nrep         100
+bench.g6.smt2.r100.337900: numnodes           6
+bench.g6.smt2.r100.337900: nrep         100
+bench.g6.smt2.r100.337900:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+bench.g6.smt2.r100.337900:   time            =    53.43E-03   10.04E-03   42.95E-03    1.05E+00 seconds
+bench.g6.smt2.r100.337900:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+bench.g6.smt2.r100.337900:   perf total      =     2.86E+12   27.56E+09  118.87E+09    2.91E+12 FLOPS
+bench.g6.smt2.r100.337900:   perf per node   =   476.41E+09    4.59E+09   19.81E+09  485.19E+09 FLOPS
+bench.g6.smt2.r100.337900:   perf per thread =    39.70E+09  382.74E+06    1.65E+09   40.43E+09 FLOPS
+bench.g6.smt2.r100.337900: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+bench.g6.smt2.r100.337900: numnodes           6
+bench.g6.smt2.r100.337900: nrep         100
+bench.g6.smt2.r100.337900:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+bench.g6.smt2.r100.337900:   time            =   393.92E-03   11.28E-03  379.07E-03    1.52E+00 seconds
+bench.g6.smt2.r100.337900:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+bench.g6.smt2.r100.337900:   perf total      =     5.07E+12   38.08E+09    1.29E+12    5.16E+12 FLOPS
+bench.g6.smt2.r100.337900:   perf per node   =   845.30E+09    6.35E+09  214.89E+09  859.45E+09 FLOPS
+bench.g6.smt2.r100.337900:   perf per thread =    70.44E+09  528.87E+06   17.91E+09   71.62E+09 FLOPS
+bench.g6.smt2.r100.337900: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+bench.g6.smt2.r100.337900: numnodes           6
+bench.g6.smt2.r100.337900: nrep         100

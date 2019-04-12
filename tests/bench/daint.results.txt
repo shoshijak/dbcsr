@@ -1,489 +1,222 @@
-perf-H2O.n1.12728669.o: numnodes           1
-perf-H2O.n1.12728669.o: nrep          10
-perf-H2O.n1.12728669.o:   matrix sizes A(     2300 x     2300), B(     2300 x     2300) and C(     2300 x     2300)
-perf-H2O.n1.12728669.o:   time            =   502.95E-03  424.10E-03   46.54E-03    4.53E+00 seconds
-perf-H2O.n1.12728669.o:   perf total      =   265.80E+09   33.06E+09    3.43E+09  334.03E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per node   =   265.80E+09   33.06E+09    3.43E+09  334.03E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per thread =    22.15E+09    2.76E+09  286.21E+06   27.84E+09 FLOPS
-perf-H2O.n1.12728669.o: numnodes           1
-perf-H2O.n1.12728669.o: nrep           3
-perf-H2O.n1.12728669.o:   matrix sizes A(     2300 x     2300), B(     2300 x     2300) and C(     2300 x     2300)
-perf-H2O.n1.12728669.o:   time            =     1.50E+00    1.19E+00   46.92E-03    4.42E+00 seconds
-perf-H2O.n1.12728669.o:   perf total      =   215.49E+09   86.66E+09    3.52E+09  331.33E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per node   =   215.49E+09   86.66E+09    3.52E+09  331.33E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per thread =    17.96E+09    7.22E+09  293.25E+06   27.61E+09 FLOPS
-perf-H2O.n1.12728669.o: numnodes           1
-perf-H2O.n1.12728669.o: nrep           5
-perf-H2O.n1.12728669.o:   matrix sizes A(     2300 x     2300), B(     2300 x     2300) and C(     2300 x     2300)
-perf-H2O.n1.12728669.o:   time            =     1.00E+00  853.85E-03   46.71E-03    4.82E+00 seconds
-perf-H2O.n1.12728669.o:   perf total      =   261.33E+09   57.77E+09    3.22E+09  332.77E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per node   =   261.33E+09   57.77E+09    3.22E+09  332.77E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per thread =    21.78E+09    4.81E+09  268.71E+06   27.73E+09 FLOPS
-perf-H2O.n1.12728669.o: numnodes           1
-perf-H2O.n1.12728669.o: nrep          10
-perf-H2O.n1.12728669.o: numnodes           1
-perf-H2O.n1.12728669.o: nrep           3
-perf-H2O.n1.12728669.o: numnodes           1
-perf-H2O.n1.12728669.o: nrep           5
-perf-H2O.n1.12728669.o: numnodes           1
-perf-H2O.n1.12728669.o: nrep          10
-perf-H2O.n1.12728669.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n1.12728669.o:   time            =     1.56E+00  369.60E-03    1.13E+00    5.07E+00 seconds
-perf-H2O.n1.12728669.o:   perf total      =    98.46E+09    7.82E+09   24.69E+09  110.70E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per node   =    98.46E+09    7.82E+09   24.69E+09  110.70E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per thread =     8.21E+09  651.26E+06    2.06E+09    9.22E+09 FLOPS
-perf-H2O.n1.12728669.o: numnodes           1
-perf-H2O.n1.12728669.o: nrep           3
-perf-H2O.n1.12728669.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n1.12728669.o:   time            =     2.61E+00    1.15E+00    1.18E+00    5.43E+00 seconds
-perf-H2O.n1.12728669.o:   perf total      =    77.54E+09   22.25E+09   23.06E+09  105.64E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per node   =    77.54E+09   22.25E+09   23.06E+09  105.64E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per thread =     6.46E+09    1.85E+09    1.92E+09    8.80E+09 FLOPS
-perf-H2O.n1.12728669.o: numnodes           1
-perf-H2O.n1.12728669.o: nrep           5
-perf-H2O.n1.12728669.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n1.12728669.o:   time            =     1.98E+00  738.85E-03    1.14E+00    5.28E+00 seconds
-perf-H2O.n1.12728669.o:   perf total      =    91.56E+09   15.18E+09   23.68E+09  109.71E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per node   =    91.56E+09   15.18E+09   23.68E+09  109.71E+09 FLOPS
-perf-H2O.n1.12728669.o:   perf per thread =     7.63E+09    1.27E+09    1.97E+09    9.14E+09 FLOPS
-perf-H2O.n12.12730212.o: numnodes          12
-perf-H2O.n12.12730212.o: nrep           3
-perf-H2O.n12.12730212.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n12.12730212.o:   time            =     1.58E+00    1.25E+00   34.82E-03    4.64E+00 seconds
-perf-H2O.n12.12730212.o:   perf total      =     2.05E+12  863.61E+09   26.94E+09    3.59E+12 FLOPS
-perf-H2O.n12.12730212.o:   perf per node   =   171.24E+09   71.97E+09    2.25E+09  299.19E+09 FLOPS
-perf-H2O.n12.12730212.o:   perf per thread =    14.27E+09    6.00E+09  187.12E+06   24.93E+09 FLOPS
-perf-H2O.n12.12730212.o: numnodes          12
-perf-H2O.n12.12730212.o: nrep           5
-perf-H2O.n12.12730212.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n12.12730212.o:   time            =   902.75E-03  773.91E-03   33.69E-03    4.36E+00 seconds
-perf-H2O.n12.12730212.o:   perf total      =     2.71E+12  618.58E+09   28.67E+09    3.70E+12 FLOPS
-perf-H2O.n12.12730212.o:   perf per node   =   225.90E+09   51.55E+09    2.39E+09  308.68E+09 FLOPS
-perf-H2O.n12.12730212.o:   perf per thread =    18.83E+09    4.30E+09  199.12E+06   25.72E+09 FLOPS
-perf-H2O.n12.12730212.o: numnodes          12
-perf-H2O.n12.12730212.o: nrep          10
-perf-H2O.n12.12730212.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n12.12730212.o:   time            =   473.05E-03  405.46E-03   33.41E-03    4.32E+00 seconds
-perf-H2O.n12.12730212.o:   perf total      =     2.72E+12  368.86E+09   28.97E+09    3.74E+12 FLOPS
-perf-H2O.n12.12730212.o:   perf per node   =   227.02E+09   30.74E+09    2.41E+09  311.91E+09 FLOPS
-perf-H2O.n12.12730212.o:   perf per thread =    18.92E+09    2.56E+09  201.16E+06   25.99E+09 FLOPS
-perf-H2O.n12.12730212.o: numnodes          12
-perf-H2O.n12.12730212.o: nrep           3
-perf-H2O.n12.12730212.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n12.12730212.o:   time            =     1.93E+00    1.32E+00  315.20E-03    5.16E+00 seconds
-perf-H2O.n12.12730212.o:   perf total      =     4.16E+12    1.55E+12  379.17E+09    6.20E+12 FLOPS
-perf-H2O.n12.12730212.o:   perf per node   =   347.01E+09  128.89E+09   31.60E+09  516.83E+09 FLOPS
-perf-H2O.n12.12730212.o:   perf per thread =    28.92E+09   10.74E+09    2.63E+09   43.07E+09 FLOPS
-perf-H2O.n12.12730212.o: numnodes          12
-perf-H2O.n12.12730212.o: nrep           5
-perf-H2O.n12.12730212.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n12.12730212.o:   time            =     1.46E+00  836.79E-03  320.29E-03    5.17E+00 seconds
-perf-H2O.n12.12730212.o:   perf total      =     3.57E+12  922.25E+09  378.12E+09    5.77E+12 FLOPS
-perf-H2O.n12.12730212.o:   perf per node   =   297.82E+09   76.85E+09   31.51E+09  480.43E+09 FLOPS
-perf-H2O.n12.12730212.o:   perf per thread =    24.82E+09    6.40E+09    2.63E+09   40.04E+09 FLOPS
-perf-H2O.n12.12730212.o: numnodes          12
-perf-H2O.n12.12730212.o: nrep          10
-perf-H2O.n12.12730212.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n12.12730212.o:   time            =   818.46E-03  470.36E-03  315.12E-03    5.28E+00 seconds
-perf-H2O.n12.12730212.o:   perf total      =     5.49E+12  540.97E+09  370.16E+09    6.20E+12 FLOPS
-perf-H2O.n12.12730212.o:   perf per node   =   457.51E+09   45.08E+09   30.85E+09  516.92E+09 FLOPS
-perf-H2O.n12.12730212.o:   perf per thread =    38.13E+09    3.76E+09    2.57E+09   43.08E+09 FLOPS
-perf-H2O.n12.12730212.o: numnodes          12
-perf-H2O.n12.12730212.o: nrep           3
-perf-H2O.n12.12730212.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n12.12730212.o:   time            =     6.38E+00    1.80E+00    3.97E+00   10.80E+00 seconds
-perf-H2O.n12.12730212.o:   perf total      =     2.97E+12  628.59E+09    1.45E+12    3.91E+12 FLOPS
-perf-H2O.n12.12730212.o:   perf per node   =   247.56E+09   52.38E+09  120.42E+09  326.12E+09 FLOPS
-perf-H2O.n12.12730212.o:   perf per thread =    20.63E+09    4.37E+09   10.03E+09   27.18E+09 FLOPS
-perf-H2O.n12.12730212.o: numnodes          12
-perf-H2O.n12.12730212.o: nrep           5
-perf-H2O.n12.12730212.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n12.12730212.o:   time            =     5.53E+00    1.06E+00    4.03E+00   10.26E+00 seconds
-perf-H2O.n12.12730212.o:   perf total      =     3.18E+12  381.50E+09    1.52E+12    3.87E+12 FLOPS
-perf-H2O.n12.12730212.o:   perf per node   =   265.07E+09   31.79E+09  126.73E+09  322.65E+09 FLOPS
-perf-H2O.n12.12730212.o:   perf per thread =    22.09E+09    2.65E+09   10.56E+09   26.89E+09 FLOPS
-perf-H2O.n12.12730212.o: numnodes          12
-perf-H2O.n12.12730212.o: nrep          10
-perf-H2O.n12.12730212.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n12.12730212.o:   time            =     5.25E+00  597.18E-03    4.29E+00   10.89E+00 seconds
-perf-H2O.n12.12730212.o:   perf total      =     3.18E+12  188.79E+09    1.43E+12    3.64E+12 FLOPS
-perf-H2O.n12.12730212.o:   perf per node   =   265.15E+09   15.73E+09  119.37E+09  302.98E+09 FLOPS
-perf-H2O.n12.12730212.o:   perf per thread =    22.10E+09    1.31E+09    9.95E+09   25.25E+09 FLOPS
-perf-H2O.n18.12730213.o: numnodes          18
-perf-H2O.n18.12730213.o: nrep           3
-perf-H2O.n18.12730213.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n18.12730213.o:   time            =     1.51E+00    1.20E+00   30.66E-03    4.46E+00 seconds
-perf-H2O.n18.12730213.o:   perf total      =     2.36E+12  982.52E+09   28.03E+09    4.05E+12 FLOPS
-perf-H2O.n18.12730213.o:   perf per node   =   130.86E+09   54.58E+09    1.56E+09  224.98E+09 FLOPS
-perf-H2O.n18.12730213.o:   perf per thread =    10.90E+09    4.55E+09  129.76E+06   18.75E+09 FLOPS
-perf-H2O.n18.12730213.o: numnodes          18
-perf-H2O.n18.12730213.o: nrep           5
-perf-H2O.n18.12730213.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n18.12730213.o:   time            =   883.80E-03  761.80E-03   25.89E-03    4.29E+00 seconds
-perf-H2O.n18.12730213.o:   perf total      =     3.21E+12  757.84E+09   29.16E+09    4.81E+12 FLOPS
-perf-H2O.n18.12730213.o:   perf per node   =   178.51E+09   42.10E+09    1.62E+09  267.23E+09 FLOPS
-perf-H2O.n18.12730213.o:   perf per thread =    14.88E+09    3.51E+09  135.01E+06   22.27E+09 FLOPS
-perf-H2O.n18.12730213.o: numnodes          18
-perf-H2O.n18.12730213.o: nrep          10
-perf-H2O.n18.12730213.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n18.12730213.o:   time            =   457.26E-03  401.03E-03   26.37E-03    4.27E+00 seconds
-perf-H2O.n18.12730213.o:   perf total      =     3.41E+12  463.89E+09   29.28E+09    4.74E+12 FLOPS
-perf-H2O.n18.12730213.o:   perf per node   =   189.38E+09   25.77E+09    1.63E+09  263.27E+09 FLOPS
-perf-H2O.n18.12730213.o:   perf per thread =    15.78E+09    2.15E+09  135.55E+06   21.94E+09 FLOPS
-perf-H2O.n18.12730213.o: numnodes          18
-perf-H2O.n18.12730213.o: nrep           3
-perf-H2O.n18.12730213.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n18.12730213.o:   time            =     1.86E+00    1.29E+00  263.57E-03    5.02E+00 seconds
-perf-H2O.n18.12730213.o:   perf total      =     4.79E+12    1.81E+12  389.58E+09    7.42E+12 FLOPS
-perf-H2O.n18.12730213.o:   perf per node   =   266.16E+09  100.44E+09   21.64E+09  411.95E+09 FLOPS
-perf-H2O.n18.12730213.o:   perf per thread =    22.18E+09    8.37E+09    1.80E+09   34.33E+09 FLOPS
-perf-H2O.n18.12730213.o: numnodes          18
-perf-H2O.n18.12730213.o: nrep           5
-perf-H2O.n18.12730213.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n18.12730213.o:   time            =     1.20E+00  823.87E-03  250.66E-03    4.90E+00 seconds
-perf-H2O.n18.12730213.o:   perf total      =     5.71E+12    1.25E+12  398.97E+09    7.77E+12 FLOPS
-perf-H2O.n18.12730213.o:   perf per node   =   317.13E+09   69.26E+09   22.17E+09  431.93E+09 FLOPS
-perf-H2O.n18.12730213.o:   perf per thread =    26.43E+09    5.77E+09    1.85E+09   35.99E+09 FLOPS
-perf-H2O.n18.12730213.o: numnodes          18
-perf-H2O.n18.12730213.o: nrep          10
-perf-H2O.n18.12730213.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n18.12730213.o:   time            =   737.04E-03  432.05E-03  215.18E-03    4.84E+00 seconds
-perf-H2O.n18.12730213.o:   perf total      =     6.69E+12  844.06E+09  403.77E+09    9.07E+12 FLOPS
-perf-H2O.n18.12730213.o:   perf per node   =   371.77E+09   46.89E+09   22.43E+09  503.84E+09 FLOPS
-perf-H2O.n18.12730213.o:   perf per thread =    30.98E+09    3.91E+09    1.87E+09   41.99E+09 FLOPS
-perf-H2O.n18.12730213.o: numnodes          18
-perf-H2O.n18.12730213.o: nrep           3
-perf-H2O.n18.12730213.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n18.12730213.o:   time            =     5.13E+00    1.55E+00    3.21E+00    8.94E+00 seconds
-perf-H2O.n18.12730213.o:   perf total      =     3.79E+12  834.17E+09    1.75E+12    4.84E+12 FLOPS
-perf-H2O.n18.12730213.o:   perf per node   =   210.49E+09   46.34E+09   97.00E+09  269.08E+09 FLOPS
-perf-H2O.n18.12730213.o:   perf per thread =    17.54E+09    3.86E+09    8.08E+09   22.42E+09 FLOPS
-perf-H2O.n18.12730213.o: numnodes          18
-perf-H2O.n18.12730213.o: nrep           5
-perf-H2O.n18.12730213.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n18.12730213.o:   time            =     4.66E+00    1.07E+00    3.43E+00    9.45E+00 seconds
-perf-H2O.n18.12730213.o:   perf total      =     3.92E+12  506.98E+09    1.65E+12    4.53E+12 FLOPS
-perf-H2O.n18.12730213.o:   perf per node   =   217.58E+09   28.17E+09   91.75E+09  251.77E+09 FLOPS
-perf-H2O.n18.12730213.o:   perf per thread =    18.13E+09    2.35E+09    7.65E+09   20.98E+09 FLOPS
-perf-H2O.n18.12730213.o: numnodes          18
-perf-H2O.n18.12730213.o: nrep          10
-perf-H2O.n18.12730213.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n18.12730213.o:   time            =     3.96E+00  505.93E-03    3.15E+00    8.75E+00 seconds
-perf-H2O.n18.12730213.o:   perf total      =     4.27E+12  269.39E+09    1.78E+12    4.93E+12 FLOPS
-perf-H2O.n18.12730213.o:   perf per node   =   236.98E+09   14.97E+09   99.04E+09  273.71E+09 FLOPS
-perf-H2O.n18.12730213.o:   perf per thread =    19.75E+09    1.25E+09    8.25E+09   22.81E+09 FLOPS
-perf-H2O.n24.12730214.o: numnodes          24
-perf-H2O.n24.12730214.o: nrep           3
-perf-H2O.n24.12730214.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n24.12730214.o:   time            =     1.47E+00    1.16E+00   43.01E-03    4.32E+00 seconds
-perf-H2O.n24.12730214.o:   perf total      =     1.92E+12  772.02E+09   28.97E+09    2.90E+12 FLOPS
-perf-H2O.n24.12730214.o:   perf per node   =    79.98E+09   32.17E+09    1.21E+09  120.97E+09 FLOPS
-perf-H2O.n24.12730214.o:   perf per thread =     6.66E+09    2.68E+09  100.61E+06   10.08E+09 FLOPS
-perf-H2O.n24.12730214.o: numnodes          24
-perf-H2O.n24.12730214.o: nrep           5
-perf-H2O.n24.12730214.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n24.12730214.o:   time            =   937.64E-03  806.56E-03   23.11E-03    4.54E+00 seconds
-perf-H2O.n24.12730214.o:   perf total      =     3.22E+12  910.16E+09   27.53E+09    5.41E+12 FLOPS
-perf-H2O.n24.12730214.o:   perf per node   =   134.30E+09   37.92E+09    1.15E+09  225.30E+09 FLOPS
-perf-H2O.n24.12730214.o:   perf per thread =    11.19E+09    3.16E+09   95.60E+06   18.78E+09 FLOPS
-perf-H2O.n24.12730214.o: numnodes          24
-perf-H2O.n24.12730214.o: nrep          10
-perf-H2O.n24.12730214.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n24.12730214.o:   time            =   464.41E-03  406.83E-03   22.20E-03    4.32E+00 seconds
-perf-H2O.n24.12730214.o:   perf total      =     3.41E+12  487.53E+09   28.94E+09    5.63E+12 FLOPS
-perf-H2O.n24.12730214.o:   perf per node   =   142.27E+09   20.31E+09    1.21E+09  234.66E+09 FLOPS
-perf-H2O.n24.12730214.o:   perf per thread =    11.86E+09    1.69E+09  100.48E+06   19.55E+09 FLOPS
-perf-H2O.n24.12730214.o: numnodes          24
-perf-H2O.n24.12730214.o: nrep           3
-perf-H2O.n24.12730214.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n24.12730214.o:   time            =     1.69E+00    1.21E+00  194.95E-03    4.66E+00 seconds
-perf-H2O.n24.12730214.o:   perf total      =     6.44E+12    2.46E+12  419.94E+09    9.50E+12 FLOPS
-perf-H2O.n24.12730214.o:   perf per node   =   268.14E+09  102.33E+09   17.50E+09  395.63E+09 FLOPS
-perf-H2O.n24.12730214.o:   perf per thread =    22.34E+09    8.53E+09    1.46E+09   32.97E+09 FLOPS
-perf-H2O.n24.12730214.o: numnodes          24
-perf-H2O.n24.12730214.o: nrep           5
-perf-H2O.n24.12730214.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n24.12730214.o:   time            =     1.12E+00  825.01E-03  193.79E-03    4.81E+00 seconds
-perf-H2O.n24.12730214.o:   perf total      =     7.93E+12    1.68E+12  406.36E+09   10.09E+12 FLOPS
-perf-H2O.n24.12730214.o:   perf per node   =   330.47E+09   70.18E+09   16.93E+09  420.24E+09 FLOPS
-perf-H2O.n24.12730214.o:   perf per thread =    27.54E+09    5.85E+09    1.41E+09   35.02E+09 FLOPS
-perf-H2O.n24.12730214.o: numnodes          24
-perf-H2O.n24.12730214.o: nrep          10
-perf-H2O.n24.12730214.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n24.12730214.o:   time            =   648.78E-03  425.27E-03  196.03E-03    4.68E+00 seconds
-perf-H2O.n24.12730214.o:   perf total      =     8.82E+12  888.91E+09  417.47E+09    9.97E+12 FLOPS
-perf-H2O.n24.12730214.o:   perf per node   =   367.55E+09   37.04E+09   17.39E+09  415.45E+09 FLOPS
-perf-H2O.n24.12730214.o:   perf per thread =    30.63E+09    3.09E+09    1.45E+09   34.62E+09 FLOPS
-perf-H2O.n24.12730214.o: numnodes          24
-perf-H2O.n24.12730214.o: nrep           3
-perf-H2O.n24.12730214.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n24.12730214.o:   time            =     3.31E+00    1.48E+00    1.38E+00    6.93E+00 seconds
-perf-H2O.n24.12730214.o:   perf total      =     7.75E+12    2.27E+12    2.25E+12   11.29E+12 FLOPS
-perf-H2O.n24.12730214.o:   perf per node   =   322.83E+09   94.77E+09   93.85E+09  470.30E+09 FLOPS
-perf-H2O.n24.12730214.o:   perf per thread =    26.90E+09    7.90E+09    7.82E+09   39.19E+09 FLOPS
-perf-H2O.n24.12730214.o: numnodes          24
-perf-H2O.n24.12730214.o: nrep           5
-perf-H2O.n24.12730214.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n24.12730214.o:   time            =     2.45E+00  967.71E-03    1.34E+00    6.78E+00 seconds
-perf-H2O.n24.12730214.o:   perf total      =     9.60E+12    1.63E+12    2.30E+12   11.61E+12 FLOPS
-perf-H2O.n24.12730214.o:   perf per node   =   400.02E+09   68.07E+09   95.94E+09  483.76E+09 FLOPS
-perf-H2O.n24.12730214.o:   perf per thread =    33.33E+09    5.67E+09    7.99E+09   40.31E+09 FLOPS
-perf-H2O.n24.12730214.o: numnodes          24
-perf-H2O.n24.12730214.o: nrep          10
-perf-H2O.n24.12730214.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n24.12730214.o:   time            =     2.04E+00  484.43E-03    1.35E+00    6.63E+00 seconds
-perf-H2O.n24.12730214.o:   perf total      =     9.45E+12  770.42E+09    2.35E+12   11.54E+12 FLOPS
-perf-H2O.n24.12730214.o:   perf per node   =   393.69E+09   32.10E+09   98.10E+09  481.01E+09 FLOPS
-perf-H2O.n24.12730214.o:   perf per thread =    32.81E+09    2.68E+09    8.18E+09   40.08E+09 FLOPS
-perf-H2O.n30.12730215.o: numnodes          30
-perf-H2O.n30.12730215.o: nrep           3
-perf-H2O.n30.12730215.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n30.12730215.o:   time            =     1.48E+00    1.16E+00   36.77E-03    4.33E+00 seconds
-perf-H2O.n30.12730215.o:   perf total      =     1.77E+12  795.42E+09   28.92E+09    3.40E+12 FLOPS
-perf-H2O.n30.12730215.o:   perf per node   =    59.06E+09   26.51E+09  963.84E+06  113.25E+09 FLOPS
-perf-H2O.n30.12730215.o:   perf per thread =     4.92E+09    2.21E+09   80.32E+06    9.44E+09 FLOPS
-perf-H2O.n30.12730215.o: numnodes          30
-perf-H2O.n30.12730215.o: nrep           5
-perf-H2O.n30.12730215.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n30.12730215.o:   time            =   911.95E-03  770.72E-03   37.81E-03    4.36E+00 seconds
-perf-H2O.n30.12730215.o:   perf total      =     2.11E+12  522.99E+09   28.71E+09    3.30E+12 FLOPS
-perf-H2O.n30.12730215.o:   perf per node   =    70.22E+09   17.43E+09  956.91E+06  110.13E+09 FLOPS
-perf-H2O.n30.12730215.o:   perf per thread =     5.85E+09    1.45E+09   79.74E+06    9.18E+09 FLOPS
-perf-H2O.n30.12730215.o: numnodes          30
-perf-H2O.n30.12730215.o: nrep          10
-perf-H2O.n30.12730215.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n30.12730215.o:   time            =   480.20E-03  410.33E-03   29.20E-03    4.37E+00 seconds
-perf-H2O.n30.12730215.o:   perf total      =     2.64E+12  403.28E+09   28.61E+09    4.28E+12 FLOPS
-perf-H2O.n30.12730215.o:   perf per node   =    87.89E+09   13.44E+09  953.83E+06  142.73E+09 FLOPS
-perf-H2O.n30.12730215.o:   perf per thread =     7.32E+09    1.12E+09   79.49E+06   11.89E+09 FLOPS
-perf-H2O.n30.12730215.o: numnodes          30
-perf-H2O.n30.12730215.o: nrep           3
-perf-H2O.n30.12730215.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n30.12730215.o:   time            =     1.69E+00    1.24E+00  158.54E-03    4.75E+00 seconds
-perf-H2O.n30.12730215.o:   perf total      =     8.14E+12    3.16E+12  411.96E+09   12.33E+12 FLOPS
-perf-H2O.n30.12730215.o:   perf per node   =   271.46E+09  105.33E+09   13.73E+09  410.92E+09 FLOPS
-perf-H2O.n30.12730215.o:   perf per thread =    22.62E+09    8.78E+09    1.14E+09   34.24E+09 FLOPS
-perf-H2O.n30.12730215.o: numnodes          30
-perf-H2O.n30.12730215.o: nrep           5
-perf-H2O.n30.12730215.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n30.12730215.o:   time            =     1.07E+00  828.34E-03  129.06E-03    4.77E+00 seconds
-perf-H2O.n30.12730215.o:   perf total      =    11.37E+12    2.48E+12  409.62E+09   15.14E+12 FLOPS
-perf-H2O.n30.12730215.o:   perf per node   =   379.10E+09   82.61E+09   13.65E+09  504.68E+09 FLOPS
-perf-H2O.n30.12730215.o:   perf per thread =    31.59E+09    6.88E+09    1.14E+09   42.06E+09 FLOPS
-perf-H2O.n30.12730215.o: numnodes          30
-perf-H2O.n30.12730215.o: nrep          10
-perf-H2O.n30.12730215.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n30.12730215.o:   time            =   583.34E-03  429.07E-03  114.82E-03    4.65E+00 seconds
-perf-H2O.n30.12730215.o:   perf total      =    13.57E+12    1.44E+12  420.11E+09   17.02E+12 FLOPS
-perf-H2O.n30.12730215.o:   perf per node   =   452.40E+09   48.09E+09   14.00E+09  567.22E+09 FLOPS
-perf-H2O.n30.12730215.o:   perf per thread =    37.70E+09    4.01E+09    1.17E+09   47.27E+09 FLOPS
-perf-H2O.n30.12730215.o: numnodes          30
-perf-H2O.n30.12730215.o: nrep           3
-perf-H2O.n30.12730215.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n30.12730215.o:   time            =     2.70E+00    1.40E+00  972.79E-03    6.15E+00 seconds
-perf-H2O.n30.12730215.o:   perf total      =    11.35E+12    3.60E+12    2.54E+12   15.98E+12 FLOPS
-perf-H2O.n30.12730215.o:   perf per node   =   378.35E+09  119.97E+09   84.60E+09  532.71E+09 FLOPS
-perf-H2O.n30.12730215.o:   perf per thread =    31.53E+09   10.00E+09    7.05E+09   44.39E+09 FLOPS
-perf-H2O.n30.12730215.o: numnodes          30
-perf-H2O.n30.12730215.o: nrep           5
-perf-H2O.n30.12730215.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n30.12730215.o:   time            =     2.06E+00  905.69E-03  962.42E-03    6.11E+00 seconds
-perf-H2O.n30.12730215.o:   perf total      =    12.39E+12    2.23E+12    2.55E+12   16.12E+12 FLOPS
-perf-H2O.n30.12730215.o:   perf per node   =   412.94E+09   74.47E+09   85.07E+09  537.41E+09 FLOPS
-perf-H2O.n30.12730215.o:   perf per thread =    34.41E+09    6.21E+09    7.09E+09   44.78E+09 FLOPS
-perf-H2O.n30.12730215.o: numnodes          30
-perf-H2O.n30.12730215.o: nrep          10
-perf-H2O.n30.12730215.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n30.12730215.o:   time            =     1.55E+00  502.71E-03  978.87E-03    6.32E+00 seconds
-perf-H2O.n30.12730215.o:   perf total      =    13.96E+12    1.22E+12    2.47E+12   15.78E+12 FLOPS
-perf-H2O.n30.12730215.o:   perf per node   =   465.23E+09   40.82E+09   82.32E+09  525.87E+09 FLOPS
-perf-H2O.n30.12730215.o:   perf per thread =    38.77E+09    3.40E+09    6.86E+09   43.82E+09 FLOPS
-perf-H2O.n36.12730216.o: numnodes          36
-perf-H2O.n36.12730216.o: nrep           3
-perf-H2O.n36.12730216.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n36.12730216.o:   time            =     1.60E+00    1.24E+00   22.31E-03    4.66E+00 seconds
-perf-H2O.n36.12730216.o:   perf total      =     1.50E+12  856.75E+09   26.86E+09    3.53E+12 FLOPS
-perf-H2O.n36.12730216.o:   perf per node   =    41.80E+09   23.80E+09  746.21E+06   98.17E+09 FLOPS
-perf-H2O.n36.12730216.o:   perf per thread =     3.48E+09    1.98E+09   62.18E+06    8.18E+09 FLOPS
-perf-H2O.n36.12730216.o: numnodes          36
-perf-H2O.n36.12730216.o: nrep           5
-perf-H2O.n36.12730216.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n36.12730216.o:   time            =   902.42E-03  758.92E-03   22.07E-03    4.30E+00 seconds
-perf-H2O.n36.12730216.o:   perf total      =     2.23E+12  825.09E+09   29.12E+09    5.64E+12 FLOPS
-perf-H2O.n36.12730216.o:   perf per node   =    61.92E+09   22.92E+09  809.00E+06  156.78E+09 FLOPS
-perf-H2O.n36.12730216.o:   perf per thread =     5.16E+09    1.91E+09   67.42E+06   13.07E+09 FLOPS
-perf-H2O.n36.12730216.o: numnodes          36
-perf-H2O.n36.12730216.o: nrep          10
-perf-H2O.n36.12730216.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n36.12730216.o:   time            =   627.21E-03  408.24E-03   85.05E-03    4.51E+00 seconds
-perf-H2O.n36.12730216.o:   perf total      =   776.01E+09  142.40E+09   27.77E+09    1.46E+12 FLOPS
-perf-H2O.n36.12730216.o:   perf per node   =    21.56E+09    3.96E+09  771.36E+06   40.53E+09 FLOPS
-perf-H2O.n36.12730216.o:   perf per thread =     1.80E+09  329.63E+06   64.28E+06    3.38E+09 FLOPS
-perf-H2O.n36.12730216.o: numnodes          36
-perf-H2O.n36.12730216.o: nrep           3
-perf-H2O.n36.12730216.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n36.12730216.o:   time            =     2.06E+00    1.32E+00  245.44E-03    5.30E+00 seconds
-perf-H2O.n36.12730216.o:   perf total      =     3.74E+12    1.81E+12  368.86E+09    7.91E+12 FLOPS
-perf-H2O.n36.12730216.o:   perf per node   =   103.86E+09   50.17E+09   10.25E+09  219.60E+09 FLOPS
-perf-H2O.n36.12730216.o:   perf per thread =     8.66E+09    4.18E+09  853.84E+06   18.30E+09 FLOPS
-perf-H2O.n36.12730216.o: numnodes          36
-perf-H2O.n36.12730216.o: nrep           5
-perf-H2O.n36.12730216.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n36.12730216.o:   time            =     1.16E+00  886.89E-03  124.64E-03    5.14E+00 seconds
-perf-H2O.n36.12730216.o:   perf total      =     9.47E+12    2.22E+12  380.47E+09   15.16E+12 FLOPS
-perf-H2O.n36.12730216.o:   perf per node   =   263.02E+09   61.75E+09   10.57E+09  421.24E+09 FLOPS
-perf-H2O.n36.12730216.o:   perf per thread =    21.92E+09    5.15E+09  880.72E+06   35.10E+09 FLOPS
-perf-H2O.n36.12730216.o: numnodes          36
-perf-H2O.n36.12730216.o: nrep          10
-perf-H2O.n36.12730216.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n36.12730216.o:   time            =   767.60E-03  496.30E-03  129.02E-03    5.48E+00 seconds
-perf-H2O.n36.12730216.o:   perf total      =     8.23E+12    1.27E+12  356.73E+09   13.60E+12 FLOPS
-perf-H2O.n36.12730216.o:   perf per node   =   228.70E+09   35.37E+09    9.91E+09  377.65E+09 FLOPS
-perf-H2O.n36.12730216.o:   perf per thread =    19.06E+09    2.95E+09  825.77E+06   31.47E+09 FLOPS
-perf-H2O.n36.12730216.o: numnodes          36
-perf-H2O.n36.12730216.o: nrep           3
-perf-H2O.n36.12730216.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n36.12730216.o:   time            =     2.80E+00    1.30E+00    1.12E+00    5.99E+00 seconds
-perf-H2O.n36.12730216.o:   perf total      =     9.48E+12    2.85E+12    2.60E+12   13.99E+12 FLOPS
-perf-H2O.n36.12730216.o:   perf per node   =   263.28E+09   79.21E+09   72.34E+09  388.56E+09 FLOPS
-perf-H2O.n36.12730216.o:   perf per thread =    21.94E+09    6.60E+09    6.03E+09   32.38E+09 FLOPS
-perf-H2O.n36.12730216.o: numnodes          36
-perf-H2O.n36.12730216.o: nrep           5
-perf-H2O.n36.12730216.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n36.12730216.o:   time            =     2.27E+00    1.05E+00    1.08E+00    6.97E+00 seconds
-perf-H2O.n36.12730216.o:   perf total      =    11.77E+12    2.13E+12    2.24E+12   14.47E+12 FLOPS
-perf-H2O.n36.12730216.o:   perf per node   =   326.95E+09   59.24E+09   62.20E+09  401.87E+09 FLOPS
-perf-H2O.n36.12730216.o:   perf per thread =    27.25E+09    4.94E+09    5.18E+09   33.49E+09 FLOPS
-perf-H2O.n36.12730216.o: numnodes          36
-perf-H2O.n36.12730216.o: nrep          10
-perf-H2O.n36.12730216.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n36.12730216.o:   time            =     1.76E+00  473.88E-03    1.04E+00    6.01E+00 seconds
-perf-H2O.n36.12730216.o:   perf total      =    12.16E+12    1.31E+12    2.59E+12   14.99E+12 FLOPS
-perf-H2O.n36.12730216.o:   perf per node   =   337.64E+09   36.49E+09   72.05E+09  416.51E+09 FLOPS
-perf-H2O.n36.12730216.o:   perf per thread =    28.14E+09    3.04E+09    6.00E+09   34.71E+09 FLOPS
-perf-H2O.n42.12730217.o: numnodes          42
-perf-H2O.n42.12730217.o: nrep           3
-perf-H2O.n42.12730217.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n42.12730217.o:   time            =     1.57E+00    1.21E+00   82.64E-03    4.53E+00 seconds
-perf-H2O.n42.12730217.o:   perf total      =   951.52E+09  380.04E+09   27.64E+09    1.51E+12 FLOPS
-perf-H2O.n42.12730217.o:   perf per node   =    22.66E+09    9.05E+09  658.08E+06   36.01E+09 FLOPS
-perf-H2O.n42.12730217.o:   perf per thread =     1.89E+09  754.05E+06   54.84E+06    3.00E+09 FLOPS
-perf-H2O.n42.12730217.o: numnodes          42
-perf-H2O.n42.12730217.o: nrep           5
-perf-H2O.n42.12730217.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n42.12730217.o:   time            =   935.77E-03  777.38E-03   56.99E-03    4.41E+00 seconds
-perf-H2O.n42.12730217.o:   perf total      =     1.52E+12  344.36E+09   28.36E+09    2.19E+12 FLOPS
-perf-H2O.n42.12730217.o:   perf per node   =    36.26E+09    8.20E+09  675.19E+06   52.21E+09 FLOPS
-perf-H2O.n42.12730217.o:   perf per thread =     3.02E+09  683.25E+06   56.27E+06    4.35E+09 FLOPS
-perf-H2O.n42.12730217.o: numnodes          42
-perf-H2O.n42.12730217.o: nrep          10
-perf-H2O.n42.12730217.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n42.12730217.o:   time            =   498.32E-03  418.49E-03   45.53E-03    4.47E+00 seconds
-perf-H2O.n42.12730217.o:   perf total      =     2.03E+12  237.15E+09   28.00E+09    2.74E+12 FLOPS
-perf-H2O.n42.12730217.o:   perf per node   =    48.40E+09    5.65E+09  666.72E+06   65.34E+09 FLOPS
-perf-H2O.n42.12730217.o:   perf per thread =     4.03E+09  470.53E+06   55.56E+06    5.44E+09 FLOPS
-perf-H2O.n42.12730217.o: numnodes          42
-perf-H2O.n42.12730217.o: nrep           3
-perf-H2O.n42.12730217.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n42.12730217.o:   time            =     1.74E+00    1.30E+00  131.29E-03    4.93E+00 seconds
-perf-H2O.n42.12730217.o:   perf total      =     9.17E+12    3.64E+12  396.48E+09   14.88E+12 FLOPS
-perf-H2O.n42.12730217.o:   perf per node   =   218.43E+09   86.60E+09    9.44E+09  354.38E+09 FLOPS
-perf-H2O.n42.12730217.o:   perf per thread =    18.20E+09    7.22E+09  786.66E+06   29.53E+09 FLOPS
-perf-H2O.n42.12730217.o: numnodes          42
-perf-H2O.n42.12730217.o: nrep           5
-perf-H2O.n42.12730217.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n42.12730217.o:   time            =     1.09E+00  843.98E-03  118.11E-03    4.86E+00 seconds
-perf-H2O.n42.12730217.o:   perf total      =    11.43E+12    2.62E+12  402.35E+09   16.55E+12 FLOPS
-perf-H2O.n42.12730217.o:   perf per node   =   272.15E+09   62.36E+09    9.58E+09  393.94E+09 FLOPS
-perf-H2O.n42.12730217.o:   perf per thread =    22.68E+09    5.20E+09  798.31E+06   32.83E+09 FLOPS
-perf-H2O.n42.12730217.o: numnodes          42
-perf-H2O.n42.12730217.o: nrep          10
-perf-H2O.n42.12730217.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n42.12730217.o:   time            =   581.16E-03  429.45E-03   95.24E-03    4.65E+00 seconds
-perf-H2O.n42.12730217.o:   perf total      =    13.92E+12    1.59E+12  420.01E+09   20.51E+12 FLOPS
-perf-H2O.n42.12730217.o:   perf per node   =   331.36E+09   37.84E+09   10.00E+09  488.42E+09 FLOPS
-perf-H2O.n42.12730217.o:   perf per thread =    27.61E+09    3.15E+09  833.35E+06   40.70E+09 FLOPS
-perf-H2O.n42.12730217.o: numnodes          42
-perf-H2O.n42.12730217.o: nrep           3
-perf-H2O.n42.12730217.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n42.12730217.o:   time            =     2.40E+00    1.36E+00  636.52E-03    5.75E+00 seconds
-perf-H2O.n42.12730217.o:   perf total      =    15.25E+12    5.29E+12    2.71E+12   24.32E+12 FLOPS
-perf-H2O.n42.12730217.o:   perf per node   =   363.21E+09  125.88E+09   64.55E+09  578.94E+09 FLOPS
-perf-H2O.n42.12730217.o:   perf per thread =    30.27E+09   10.49E+09    5.38E+09   48.24E+09 FLOPS
-perf-H2O.n42.12730217.o: numnodes          42
-perf-H2O.n42.12730217.o: nrep           5
-perf-H2O.n42.12730217.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n42.12730217.o:   time            =     1.83E+00    1.09E+00  602.98E-03    6.69E+00 seconds
-perf-H2O.n42.12730217.o:   perf total      =    20.80E+12    4.13E+12    2.33E+12   25.87E+12 FLOPS
-perf-H2O.n42.12730217.o:   perf per node   =   495.14E+09   98.39E+09   55.52E+09  615.93E+09 FLOPS
-perf-H2O.n42.12730217.o:   perf per thread =    41.26E+09    8.20E+09    4.63E+09   51.33E+09 FLOPS
-perf-H2O.n42.12730217.o: numnodes          42
-perf-H2O.n42.12730217.o: nrep          10
-perf-H2O.n42.12730217.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n42.12730217.o:   time            =     1.18E+00  537.68E-03  592.43E-03    6.28E+00 seconds
-perf-H2O.n42.12730217.o:   perf total      =    23.24E+12    2.20E+12    2.48E+12   26.33E+12 FLOPS
-perf-H2O.n42.12730217.o:   perf per node   =   553.29E+09   52.34E+09   59.16E+09  626.92E+09 FLOPS
-perf-H2O.n42.12730217.o:   perf per thread =    46.11E+09    4.36E+09    4.93E+09   52.24E+09 FLOPS
-perf-H2O.n6.12730218.o: numnodes           6
-perf-H2O.n6.12730218.o: nrep           3
-perf-H2O.n6.12730218.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n6.12730218.o:   time            =     1.51E+00    1.19E+00   49.64E-03    4.44E+00 seconds
-perf-H2O.n6.12730218.o:   perf total      =     1.61E+12  646.58E+09   28.21E+09    2.52E+12 FLOPS
-perf-H2O.n6.12730218.o:   perf per node   =   267.56E+09  107.76E+09    4.70E+09  419.90E+09 FLOPS
-perf-H2O.n6.12730218.o:   perf per thread =    22.30E+09    8.98E+09  391.80E+06   34.99E+09 FLOPS
-perf-H2O.n6.12730218.o: numnodes           6
-perf-H2O.n6.12730218.o: nrep           5
-perf-H2O.n6.12730218.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n6.12730218.o:   time            =   965.92E-03  812.60E-03   50.49E-03    4.61E+00 seconds
-perf-H2O.n6.12730218.o:   perf total      =     1.80E+12  422.36E+09   27.13E+09    2.48E+12 FLOPS
-perf-H2O.n6.12730218.o:   perf per node   =   300.67E+09   70.39E+09    4.52E+09  412.84E+09 FLOPS
-perf-H2O.n6.12730218.o:   perf per thread =    25.06E+09    5.87E+09  376.79E+06   34.40E+09 FLOPS
-perf-H2O.n6.12730218.o: numnodes           6
-perf-H2O.n6.12730218.o: nrep          10
-perf-H2O.n6.12730218.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
-perf-H2O.n6.12730218.o:   time            =   487.90E-03  414.41E-03   48.94E-03    4.42E+00 seconds
-perf-H2O.n6.12730218.o:   perf total      =     2.21E+12  233.32E+09   28.31E+09    2.55E+12 FLOPS
-perf-H2O.n6.12730218.o:   perf per node   =   368.77E+09   38.89E+09    4.72E+09  425.83E+09 FLOPS
-perf-H2O.n6.12730218.o:   perf per thread =    30.73E+09    3.24E+09  393.24E+06   35.49E+09 FLOPS
-perf-H2O.n6.12730218.o: numnodes           6
-perf-H2O.n6.12730218.o: nrep           3
-perf-H2O.n6.12730218.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n6.12730218.o:   time            =     2.81E+00    1.45E+00    1.02E+00    6.36E+00 seconds
-perf-H2O.n6.12730218.o:   perf total      =     1.36E+12  430.07E+09  307.47E+09    1.91E+12 FLOPS
-perf-H2O.n6.12730218.o:   perf per node   =   226.75E+09   71.68E+09   51.24E+09  318.67E+09 FLOPS
-perf-H2O.n6.12730218.o:   perf per thread =    18.90E+09    5.97E+09    4.27E+09   26.56E+09 FLOPS
-perf-H2O.n6.12730218.o: numnodes           6
-perf-H2O.n6.12730218.o: nrep           5
-perf-H2O.n6.12730218.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n6.12730218.o:   time            =     2.06E+00  928.21E-03    1.01E+00    6.22E+00 seconds
-perf-H2O.n6.12730218.o:   perf total      =     1.59E+12  286.40E+09  314.22E+09    1.93E+12 FLOPS
-perf-H2O.n6.12730218.o:   perf per node   =   265.78E+09   47.73E+09   52.37E+09  322.29E+09 FLOPS
-perf-H2O.n6.12730218.o:   perf per thread =    22.15E+09    3.98E+09    4.36E+09   26.86E+09 FLOPS
-perf-H2O.n6.12730218.o: numnodes           6
-perf-H2O.n6.12730218.o: nrep          10
-perf-H2O.n6.12730218.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
-perf-H2O.n6.12730218.o:   time            =     1.62E+00  569.31E-03  999.39E-03    7.02E+00 seconds
-perf-H2O.n6.12730218.o:   perf total      =     1.76E+12  156.23E+09  278.63E+09    1.96E+12 FLOPS
-perf-H2O.n6.12730218.o:   perf per node   =   293.36E+09   26.04E+09   46.44E+09  326.04E+09 FLOPS
-perf-H2O.n6.12730218.o:   perf per thread =    24.45E+09    2.17E+09    3.87E+09   27.17E+09 FLOPS
-perf-H2O.n6.12730218.o: numnodes           6
-perf-H2O.n6.12730218.o: nrep           3
-perf-H2O.n6.12730218.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n6.12730218.o:   time            =    12.09E+00    2.01E+00    9.58E+00   17.03E+00 seconds
-perf-H2O.n6.12730218.o:   perf total      =     1.39E+12  191.61E+09  916.19E+09    1.63E+12 FLOPS
-perf-H2O.n6.12730218.o:   perf per node   =   230.91E+09   31.93E+09  152.70E+09  271.25E+09 FLOPS
-perf-H2O.n6.12730218.o:   perf per thread =    19.24E+09    2.66E+09   12.72E+09   22.60E+09 FLOPS
-perf-H2O.n6.12730218.o: numnodes           6
-perf-H2O.n6.12730218.o: nrep           5
-perf-H2O.n6.12730218.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n6.12730218.o:   time            =    11.19E+00    1.41E+00    9.57E+00   17.52E+00 seconds
-perf-H2O.n6.12730218.o:   perf total      =     1.48E+12  131.03E+09  890.63E+09    1.63E+12 FLOPS
-perf-H2O.n6.12730218.o:   perf per node   =   246.09E+09   21.84E+09  148.44E+09  271.32E+09 FLOPS
-perf-H2O.n6.12730218.o:   perf per thread =    20.51E+09    1.82E+09   12.37E+09   22.61E+09 FLOPS
-perf-H2O.n6.12730218.o: numnodes           6
-perf-H2O.n6.12730218.o: nrep          10
-perf-H2O.n6.12730218.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
-perf-H2O.n6.12730218.o:   time            =    10.40E+00  750.46E-03    9.55E+00   17.52E+00 seconds
-perf-H2O.n6.12730218.o:   perf total      =     1.55E+12   69.54E+09  890.56E+09    1.63E+12 FLOPS
-perf-H2O.n6.12730218.o:   perf per node   =   258.18E+09   11.59E+09  148.43E+09  272.12E+09 FLOPS
-perf-H2O.n6.12730218.o:   perf per thread =    21.51E+09  965.84E+06   12.37E+09   22.68E+09 FLOPS
+perf-H2O.n12.r100.12868358.o: numnodes          12
+perf-H2O.n12.r100.12868358.o: nrep         100
+perf-H2O.n12.r100.12868358.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+perf-H2O.n12.r100.12868358.o:   time            =    65.60E-03   11.56E-03   33.14E-03    1.21E+00 seconds
+perf-H2O.n12.r100.12868358.o:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+perf-H2O.n12.r100.12868358.o:   perf total      =     2.55E+12   83.04E+09  103.47E+09    3.77E+12 FLOPS
+perf-H2O.n12.r100.12868358.o:   perf per node   =   212.86E+09    6.92E+09    8.62E+09  314.29E+09 FLOPS
+perf-H2O.n12.r100.12868358.o:   perf per thread =    17.74E+09  576.65E+06  718.53E+06   26.19E+09 FLOPS
+perf-H2O.n12.r100.12868358.o: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+perf-H2O.n12.r100.12868358.o: numnodes          12
+perf-H2O.n12.r100.12868358.o: nrep         100
+perf-H2O.n12.r100.12868358.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+perf-H2O.n12.r100.12868358.o:   time            =   356.59E-03   13.29E-03  314.01E-03    1.66E+00 seconds
+perf-H2O.n12.r100.12868358.o:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+perf-H2O.n12.r100.12868358.o:   perf total      =     5.67E+12   55.84E+09    1.18E+12    6.23E+12 FLOPS
+perf-H2O.n12.r100.12868358.o:   perf per node   =   472.12E+09    4.65E+09   97.99E+09  518.77E+09 FLOPS
+perf-H2O.n12.r100.12868358.o:   perf per thread =    39.34E+09  387.80E+06    8.17E+09   43.23E+09 FLOPS
+perf-H2O.n12.r100.12868358.o: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+perf-H2O.n12.r100.12868358.o: numnodes          12
+perf-H2O.n12.r100.12868358.o: nrep         100
+perf-H2O.n12.r100.12868358.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+perf-H2O.n12.r100.12868358.o:   time            =     4.40E+00   38.22E-03    3.94E+00    6.80E+00 seconds
+perf-H2O.n12.r100.12868358.o:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+perf-H2O.n12.r100.12868358.o:   perf total      =     3.57E+12   27.31E+09    2.30E+12    3.96E+12 FLOPS
+perf-H2O.n12.r100.12868358.o:   perf per node   =   297.23E+09    2.28E+09  191.27E+09  330.33E+09 FLOPS
+perf-H2O.n12.r100.12868358.o:   perf per thread =    24.77E+09  189.65E+06   15.94E+09   27.53E+09 FLOPS
+perf-H2O.n12.r100.12868358.o: flops total                         1.560011E+15       3.3%      0.0%     96.7%
+perf-H2O.n18.r100.12868359.o: numnodes          18
+perf-H2O.n18.r100.12868359.o: nrep         100
+perf-H2O.n18.r100.12868359.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+perf-H2O.n18.r100.12868359.o:   time            =    57.51E-03    9.49E-03   25.00E-03  992.36E-03 seconds
+perf-H2O.n18.r100.12868359.o:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+perf-H2O.n18.r100.12868359.o:   perf total      =     2.99E+12  115.66E+09  126.09E+09    5.00E+12 FLOPS
+perf-H2O.n18.r100.12868359.o:   perf per node   =   166.11E+09    6.43E+09    7.00E+09  277.61E+09 FLOPS
+perf-H2O.n18.r100.12868359.o:   perf per thread =    13.84E+09  535.46E+06  583.74E+06   23.13E+09 FLOPS
+perf-H2O.n18.r100.12868359.o: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+perf-H2O.n18.r100.12868359.o: numnodes          18
+perf-H2O.n18.r100.12868359.o: nrep         100
+perf-H2O.n18.r100.12868359.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+perf-H2O.n18.r100.12868359.o:   time            =   282.45E-03   12.04E-03  213.35E-03    1.42E+00 seconds
+perf-H2O.n18.r100.12868359.o:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+perf-H2O.n18.r100.12868359.o:   perf total      =     7.27E+12  110.64E+09    1.37E+12    9.16E+12 FLOPS
+perf-H2O.n18.r100.12868359.o:   perf per node   =   403.76E+09    6.15E+09   76.29E+09  508.99E+09 FLOPS
+perf-H2O.n18.r100.12868359.o:   perf per thread =    33.65E+09  512.21E+06    6.36E+09   42.42E+09 FLOPS
+perf-H2O.n18.r100.12868359.o: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+perf-H2O.n18.r100.12868359.o: numnodes          18
+perf-H2O.n18.r100.12868359.o: nrep         100
+perf-H2O.n18.r100.12868359.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+perf-H2O.n18.r100.12868359.o:   time            =     3.50E+00   25.58E-03    3.19E+00    5.79E+00 seconds
+perf-H2O.n18.r100.12868359.o:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+perf-H2O.n18.r100.12868359.o:   perf total      =     4.46E+12   22.97E+09    2.69E+12    4.88E+12 FLOPS
+perf-H2O.n18.r100.12868359.o:   perf per node   =   247.52E+09    1.28E+09  149.66E+09  270.94E+09 FLOPS
+perf-H2O.n18.r100.12868359.o:   perf per thread =    20.63E+09  106.33E+06   12.47E+09   22.58E+09 FLOPS
+perf-H2O.n18.r100.12868359.o: flops total                         1.560011E+15       3.0%      0.0%     97.0%
+perf-H2O.n1.r100.12862919.o:srun: error: Task 0 reported exit for a second time.
+perf-H2O.n1.r100.12862919.o:srun: error: Task 0 reported exit for a second time.
+perf-H2O.n1.r100.12863215.o: numnodes           1
+perf-H2O.n1.r100.12863215.o: nrep         100
+perf-H2O.n1.r100.12863215.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+perf-H2O.n1.r100.12863215.o:   time            =     1.21E+00   10.82E-03    1.03E+00    2.24E+00 seconds
+perf-H2O.n1.r100.12863215.o:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+perf-H2O.n1.r100.12863215.o:   perf total      =   104.22E+09  561.30E+06   55.87E+09  121.01E+09 FLOPS
+perf-H2O.n1.r100.12863215.o:   perf per node   =   104.22E+09  561.30E+06   55.87E+09  121.01E+09 FLOPS
+perf-H2O.n1.r100.12863215.o:   perf per thread =     8.68E+09   46.78E+06    4.66E+09   10.08E+09 FLOPS
+perf-H2O.n1.r100.12863215.o: flops total                        12.512492E+12      12.3%      0.0%     87.7%
+perf-H2O.n1.r100.12863215.o: numnodes           1
+perf-H2O.n1.r100.12863215.o: nrep         100
+perf-H2O.n1.r100.12866782.o: numnodes           1
+perf-H2O.n1.r100.12866782.o: nrep         100
+perf-H2O.n1.r100.12866782.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+perf-H2O.n1.r100.12866782.o:   time            =     1.21E+00    9.56E-03    1.12E+00    2.11E+00 seconds
+perf-H2O.n1.r100.12866782.o:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+perf-H2O.n1.r100.12866782.o:   perf total      =   104.20E+09  517.63E+06   59.21E+09  111.64E+09 FLOPS
+perf-H2O.n1.r100.12866782.o:   perf per node   =   104.20E+09  517.63E+06   59.21E+09  111.64E+09 FLOPS
+perf-H2O.n1.r100.12866782.o:   perf per thread =     8.68E+09   43.14E+06    4.93E+09    9.30E+09 FLOPS
+perf-H2O.n1.r100.12866782.o: flops total                        12.512492E+12      12.3%      0.0%     87.7%
+perf-H2O.n1.r100.12866782.o: numnodes           1
+perf-H2O.n1.r100.12866782.o: nrep         100
+perf-H2O.n1.r100.12868243.o: numnodes           1
+perf-H2O.n1.r100.12868243.o: nrep         100
+perf-H2O.n1.r100.12868243.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+perf-H2O.n1.r100.12868243.o:   time            =    12.18E+00   40.23E-03   10.55E+00   13.36E+00 seconds
+perf-H2O.n1.r100.12868243.o:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+perf-H2O.n1.r100.12868243.o:   perf total      =   160.65E+09  522.30E+06  146.29E+09  185.27E+09 FLOPS
+perf-H2O.n1.r100.12868243.o:   perf per node   =   160.65E+09  522.30E+06  146.29E+09  185.27E+09 FLOPS
+perf-H2O.n1.r100.12868243.o:   perf per thread =    13.39E+09   43.53E+06   12.19E+09   15.44E+09 FLOPS
+perf-H2O.n1.r100.12868243.o: flops total                       195.507978E+12       9.0%      0.0%     91.0%
+perf-H2O.n24.r100.12868361.o: numnodes          24
+perf-H2O.n24.r100.12868361.o: nrep         100
+perf-H2O.n24.r100.12868361.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+perf-H2O.n24.r100.12868361.o:   time            =    60.68E-03   11.47E-03   22.63E-03    1.18E+00 seconds
+perf-H2O.n24.r100.12868361.o:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+perf-H2O.n24.r100.12868361.o:   perf total      =     3.01E+12  131.33E+09  105.94E+09    5.52E+12 FLOPS
+perf-H2O.n24.r100.12868361.o:   perf per node   =   125.58E+09    5.47E+09    4.41E+09  230.07E+09 FLOPS
+perf-H2O.n24.r100.12868361.o:   perf per thread =    10.46E+09  456.02E+06  367.84E+06   19.17E+09 FLOPS
+perf-H2O.n24.r100.12868361.o: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+perf-H2O.n24.r100.12868361.o: numnodes          24
+perf-H2O.n24.r100.12868361.o: nrep         100
+perf-H2O.n24.r100.12868361.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+perf-H2O.n24.r100.12868361.o:   time            =   258.74E-03   11.65E-03  201.57E-03    1.38E+00 seconds
+perf-H2O.n24.r100.12868361.o:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+perf-H2O.n24.r100.12868361.o:   perf total      =     7.93E+12  115.82E+09    1.42E+12    9.66E+12 FLOPS
+perf-H2O.n24.r100.12868361.o:   perf per node   =   330.48E+09    4.83E+09   59.15E+09  402.71E+09 FLOPS
+perf-H2O.n24.r100.12868361.o:   perf per thread =    27.54E+09  402.15E+06    4.93E+09   33.56E+09 FLOPS
+perf-H2O.n24.r100.12868361.o: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+perf-H2O.n24.r100.12868361.o: numnodes          24
+perf-H2O.n24.r100.12868361.o: nrep         100
+perf-H2O.n24.r100.12868361.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+perf-H2O.n24.r100.12868361.o:   time            =     1.50E+00   24.40E-03    1.37E+00    3.83E+00 seconds
+perf-H2O.n24.r100.12868361.o:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+perf-H2O.n24.r100.12868361.o:   perf total      =    10.51E+12   80.71E+09    4.08E+12   11.36E+12 FLOPS
+perf-H2O.n24.r100.12868361.o:   perf per node   =   437.73E+09    3.36E+09  169.85E+09  473.25E+09 FLOPS
+perf-H2O.n24.r100.12868361.o:   perf per thread =    36.48E+09  280.23E+06   14.15E+09   39.44E+09 FLOPS
+perf-H2O.n24.r100.12868361.o: flops total                         1.560011E+15       1.3%      0.0%     98.7%
+perf-H2O.n30.r100.12868362.o: numnodes          30
+perf-H2O.n30.r100.12868362.o: nrep         100
+perf-H2O.n30.r100.12868362.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+perf-H2O.n30.r100.12868362.o:   time            =    76.74E-03   14.27E-03   29.15E-03    1.48E+00 seconds
+perf-H2O.n30.r100.12868362.o:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+perf-H2O.n30.r100.12868362.o:   perf total      =     2.25E+12   82.88E+09   84.76E+09    4.29E+12 FLOPS
+perf-H2O.n30.r100.12868362.o:   perf per node   =    74.84E+09    2.76E+09    2.83E+09  142.95E+09 FLOPS
+perf-H2O.n30.r100.12868362.o:   perf per thread =     6.24E+09  230.21E+06  235.45E+06   11.91E+09 FLOPS
+perf-H2O.n30.r100.12868362.o: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+perf-H2O.n30.r100.12868362.o: numnodes          30
+perf-H2O.n30.r100.12868362.o: nrep         100
+perf-H2O.n30.r100.12868362.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+perf-H2O.n30.r100.12868362.o:   time            =   166.54E-03   11.24E-03  110.67E-03    1.24E+00 seconds
+perf-H2O.n30.r100.12868362.o:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+perf-H2O.n30.r100.12868362.o:   perf total      =    12.93E+12  277.08E+09    1.58E+12   17.53E+12 FLOPS
+perf-H2O.n30.r100.12868362.o:   perf per node   =   430.84E+09    9.24E+09   52.66E+09  584.47E+09 FLOPS
+perf-H2O.n30.r100.12868362.o:   perf per thread =    35.90E+09  769.66E+06    4.39E+09   48.71E+09 FLOPS
+perf-H2O.n30.r100.12868362.o: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+perf-H2O.n30.r100.12868362.o: numnodes          30
+perf-H2O.n30.r100.12868362.o: nrep         100
+perf-H2O.n30.r100.12868362.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+perf-H2O.n30.r100.12868362.o:   time            =     1.09E+00   19.49E-03  976.96E-03    2.96E+00 seconds
+perf-H2O.n30.r100.12868362.o:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+perf-H2O.n30.r100.12868362.o:   perf total      =    14.45E+12  113.48E+09    5.27E+12   15.96E+12 FLOPS
+perf-H2O.n30.r100.12868362.o:   perf per node   =   481.57E+09    3.78E+09  175.79E+09  532.00E+09 FLOPS
+perf-H2O.n30.r100.12868362.o:   perf per thread =    40.13E+09  315.23E+06   14.65E+09   44.33E+09 FLOPS
+perf-H2O.n30.r100.12868362.o: flops total                         1.560011E+15       0.2%      0.0%     99.8%
+perf-H2O.n36.r100.12868363.o: numnodes          36
+perf-H2O.n36.r100.12868363.o: nrep         100
+perf-H2O.n36.r100.12868363.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+perf-H2O.n36.r100.12868363.o:   time            =    49.29E-03    9.96E-03   16.66E-03    1.01E+00 seconds
+perf-H2O.n36.r100.12868363.o:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+perf-H2O.n36.r100.12868363.o:   perf total      =     4.09E+12  192.73E+09  123.62E+09    7.47E+12 FLOPS
+perf-H2O.n36.r100.12868363.o:   perf per node   =   113.61E+09    5.35E+09    3.43E+09  207.57E+09 FLOPS
+perf-H2O.n36.r100.12868363.o:   perf per thread =     9.47E+09  446.14E+06  286.15E+06   17.30E+09 FLOPS
+perf-H2O.n36.r100.12868363.o: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+perf-H2O.n36.r100.12868363.o: numnodes          36
+perf-H2O.n36.r100.12868363.o: nrep         100
+perf-H2O.n36.r100.12868363.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+perf-H2O.n36.r100.12868363.o:   time            =   167.94E-03   16.59E-03  101.98E-03    1.77E+00 seconds
+perf-H2O.n36.r100.12868363.o:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+perf-H2O.n36.r100.12868363.o:   perf total      =    13.38E+12  332.67E+09    1.10E+12   19.06E+12 FLOPS
+perf-H2O.n36.r100.12868363.o:   perf per node   =   371.75E+09    9.24E+09   30.64E+09  529.48E+09 FLOPS
+perf-H2O.n36.r100.12868363.o:   perf per thread =    30.98E+09  770.07E+06    2.55E+09   44.12E+09 FLOPS
+perf-H2O.n36.r100.12868363.o: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+perf-H2O.n36.r100.12868363.o: numnodes          36
+perf-H2O.n36.r100.12868363.o: nrep         100
+perf-H2O.n36.r100.12868363.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+perf-H2O.n36.r100.12868363.o:   time            =     1.16E+00   14.95E-03    1.05E+00    2.58E+00 seconds
+perf-H2O.n36.r100.12868363.o:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+perf-H2O.n36.r100.12868363.o:   perf total      =    13.57E+12   93.68E+09    6.05E+12   14.90E+12 FLOPS
+perf-H2O.n36.r100.12868363.o:   perf per node   =   376.93E+09    2.60E+09  168.11E+09  414.02E+09 FLOPS
+perf-H2O.n36.r100.12868363.o:   perf per thread =    31.41E+09  216.85E+06   14.01E+09   34.50E+09 FLOPS
+perf-H2O.n36.r100.12868363.o: flops total                         1.560011E+15       2.0%      0.0%     98.0%
+perf-H2O.n42.r100.12868364.o: numnodes          42
+perf-H2O.n42.r100.12868364.o: nrep         100
+perf-H2O.n42.r100.12868364.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+perf-H2O.n42.r100.12868364.o:   time            =    95.11E-03   15.11E-03   38.03E-03    1.58E+00 seconds
+perf-H2O.n42.r100.12868364.o:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+perf-H2O.n42.r100.12868364.o:   perf total      =     1.69E+12   56.60E+09   79.36E+09    3.28E+12 FLOPS
+perf-H2O.n42.r100.12868364.o:   perf per node   =    40.26E+09    1.35E+09    1.89E+09   78.17E+09 FLOPS
+perf-H2O.n42.r100.12868364.o:   perf per thread =     3.35E+09  112.30E+06  157.46E+06    6.51E+09 FLOPS
+perf-H2O.n42.r100.12868364.o: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+perf-H2O.n42.r100.12868364.o: numnodes          42
+perf-H2O.n42.r100.12868364.o: nrep         100
+perf-H2O.n42.r100.12868364.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+perf-H2O.n42.r100.12868364.o:   time            =   168.17E-03   11.63E-03   96.49E-03    1.27E+00 seconds
+perf-H2O.n42.r100.12868364.o:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+perf-H2O.n42.r100.12868364.o:   perf total      =    12.82E+12  302.06E+09    1.54E+12   19.99E+12 FLOPS
+perf-H2O.n42.r100.12868364.o:   perf per node   =   305.25E+09    7.19E+09   36.67E+09  475.87E+09 FLOPS
+perf-H2O.n42.r100.12868364.o:   perf per thread =    25.44E+09  599.33E+06    3.06E+09   39.66E+09 FLOPS
+perf-H2O.n42.r100.12868364.o: flops total                       195.507978E+12       0.0%      0.0%    100.0%
+perf-H2O.n42.r100.12868364.o: numnodes          42
+perf-H2O.n42.r100.12868364.o: nrep         100
+perf-H2O.n42.r100.12868364.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+perf-H2O.n42.r100.12868364.o:   time            =   656.51E-03   19.46E-03  597.92E-03    2.57E+00 seconds
+perf-H2O.n42.r100.12868364.o:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+perf-H2O.n42.r100.12868364.o:   perf total      =    24.26E+12  209.06E+09    6.06E+12   26.08E+12 FLOPS
+perf-H2O.n42.r100.12868364.o:   perf per node   =   577.57E+09    4.98E+09  144.29E+09  621.06E+09 FLOPS
+perf-H2O.n42.r100.12868364.o:   perf per thread =    48.13E+09  414.81E+06   12.02E+09   51.76E+09 FLOPS
+perf-H2O.n42.r100.12868364.o: flops total                         1.560011E+15       0.0%      0.0%    100.0%
+perf-H2O.n6.r100.12868365.o: numnodes           6
+perf-H2O.n6.r100.12868365.o: nrep         100
+perf-H2O.n6.r100.12868365.o:   matrix sizes A(     4600 x     4600), B(     4600 x     4600) and C(     4600 x     4600)
+perf-H2O.n6.r100.12868365.o:   time            =    60.83E-03    9.31E-03   47.16E-03  984.06E-03 seconds
+perf-H2O.n6.r100.12868365.o:   flops total     =   125.12E+09    0.00E+00  125.12E+09  125.12E+09 FLOPS
+perf-H2O.n6.r100.12868365.o:   perf total      =     2.44E+12   32.08E+09  127.15E+09    2.65E+12 FLOPS
+perf-H2O.n6.r100.12868365.o:   perf per node   =   406.40E+09    5.35E+09   21.19E+09  441.85E+09 FLOPS
+perf-H2O.n6.r100.12868365.o:   perf per thread =    33.87E+09  445.57E+06    1.77E+09   36.82E+09 FLOPS
+perf-H2O.n6.r100.12868365.o: flops total                        12.512492E+12       0.0%      0.0%    100.0%
+perf-H2O.n6.r100.12868365.o: numnodes           6
+perf-H2O.n6.r100.12868365.o: nrep         100
+perf-H2O.n6.r100.12868365.o:   matrix sizes A(    11500 x    11500), B(    11500 x    11500) and C(    11500 x    11500)
+perf-H2O.n6.r100.12868365.o:   time            =     1.06E+00   17.63E-03    1.01E+00    2.72E+00 seconds
+perf-H2O.n6.r100.12868365.o:   flops total     =     1.96E+12    0.00E+00    1.96E+12    1.96E+12 FLOPS
+perf-H2O.n6.r100.12868365.o:   perf total      =     1.86E+12   14.62E+09  718.90E+09    1.93E+12 FLOPS
+perf-H2O.n6.r100.12868365.o:   perf per node   =   310.53E+09    2.44E+09  119.82E+09  322.49E+09 FLOPS
+perf-H2O.n6.r100.12868365.o:   perf per thread =    25.88E+09  203.06E+06    9.98E+09   26.87E+09 FLOPS
+perf-H2O.n6.r100.12868365.o: flops total                       195.507978E+12       2.7%      0.0%     97.3%
+perf-H2O.n6.r100.12868365.o: numnodes           6
+perf-H2O.n6.r100.12868365.o: nrep         100
+perf-H2O.n6.r100.12868365.o:   matrix sizes A(    23000 x    23000), B(    23000 x    23000) and C(    23000 x    23000)
+perf-H2O.n6.r100.12868365.o:   time            =     9.68E+00   45.78E-03    9.54E+00   14.21E+00 seconds
+perf-H2O.n6.r100.12868365.o:   flops total     =    15.60E+12    0.00E+00   15.60E+12   15.60E+12 FLOPS
+perf-H2O.n6.r100.12868365.o:   perf total      =     1.61E+12    5.24E+09    1.10E+12    1.63E+12 FLOPS
+perf-H2O.n6.r100.12868365.o:   perf per node   =   268.79E+09  874.05E+06  183.00E+09  272.10E+09 FLOPS
+perf-H2O.n6.r100.12868365.o:   perf per thread =    22.40E+09   72.84E+06   15.25E+09   22.68E+09 FLOPS
+perf-H2O.n6.r100.12868365.o: flops total                         1.560011E+15       4.5%      0.0%     95.5%
