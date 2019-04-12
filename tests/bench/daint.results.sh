@@ -1,1 +1,1 @@
-grep -P '(numnodes    |matrix sizes| time| perf |nrep )' perf-H2O.n*.*.o | tee results.txt
+grep -P '(numnodes    |matrix sizes| time| flops total| perf |nrep )' perf-H2O.n*.r100.*.o | tee results.txt
