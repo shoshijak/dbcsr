@@ -469,6 +469,20 @@ CONTAINS
                   "DBCSR| ACC: Size of binning bins", dbcsr_cfg%accdrv_binning_binsize
             END IF
          END IF
+         IF (has_omp) THEN
+!$OMP PARALLEL
+!$OMP MASTER
+!$          numthreads = omp_get_num_threads()
+!$OMP END MASTER
+!$OMP END PARALLEL
+            WRITE (UNIT=unit_nr, FMT='(1X,A,T70,I11)') &
+               "DBCSR| OMP: Number of threads", numthreads
+         END IF
+         IF (has_mpi) THEN
+            CALL mp_environ(numnodes, mynode, mp_group)
+            WRITE (UNIT=unit_nr, FMT='(1X,A,T70,I11)') &
+               "DBCSR| MPI: Number of nodes", numnodes
+         END IF
       ENDIF
 
    END SUBROUTINE dbcsr_print_config
