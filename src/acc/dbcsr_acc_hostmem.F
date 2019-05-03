@@ -129,6 +129,7 @@ CONTAINS
       INTEGER                                            :: istat
       TYPE(C_PTR)                                        :: stream_cptr
 
+!$OMP CRITICAL
       IF (.NOT. acc_stream_associated(stream)) &
          DBCSR_ABORT("acc_hostmem_dealloc_raw: stream not associated")
 
@@ -137,6 +138,7 @@ CONTAINS
       istat = cuda_host_mem_dealloc_cu(host_mem_c_ptr, stream_cptr)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_hostmem_dealloc_raw: Could not deallocate host pinned memory")
+!$OMP END CRITICAL
    END SUBROUTINE acc_hostmem_dealloc_raw
 #endif
 
