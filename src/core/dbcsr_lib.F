@@ -42,6 +42,18 @@ MODULE dbcsr_lib
 
    LOGICAL, PRIVATE, SAVE :: is_initialized = .FALSE.
 
+#if defined (__DBCSR_ACC)
+   INTERFACE
+      FUNCTION libsmm_acc_libcusmm_is_thread_safe_cu() &
+         RESULT(thread_safe) &
+         BIND(C, name="libsmm_acc_libcusmm_is_thread_safe")
+         IMPORT
+         INTEGER                    :: thread_safe
+
+      END FUNCTION libsmm_acc_libcusmm_is_thread_safe_cu
+   END INTERFACE
+#endif
+
 CONTAINS
 
 ! **************************************************************************************************
@@ -52,6 +64,31 @@ CONTAINS
    SUBROUTINE dbcsr_init_lib()
 
       CHARACTER(len=*), PARAMETER :: routineN = 'dbcsr_init_lib', routineP = moduleN//':'//routineN
+#if defined(__LIBXSMM)
+      USE libxsmm, ONLY: libxsmm_init
+#endif
+      INTEGER, INTENT(IN)  :: mp_comm
+      INTEGER, INTENT(IN), OPTIONAL :: io_unit
+
+      INTEGER :: numnodes, mynode, thread_safe
+
+      IF (PRESENT(io_unit)) THEN
+         ext_io_unit = io_unit
+      ELSE
+         ext_io_unit = 0
+         CALL mp_environ(numnodes, mynode, mp_comm)
+         IF (mynode .EQ. 0) ext_io_unit = default_output_unit
+      ENDIF
+      CALL dbcsr_mp_make_env(mp_env, default_group, mp_comm)
+#if defined(__LIBXSMM)
+      CALL libxsmm_init()
+#endif
+#if defined(__DBCSR_ACC)
+!$       thread_safe = libsmm_acc_libcusmm_is_thread_safe_cu()
+!$       IF (thread_safe /= 0) then
+!$          DBCSR_ABORT("libcusmm not compiled to be thread-safe. Recompile with OpenMP support")
+!$       endif
+#endif
 
       INTEGER                                            :: error_handle, ithread, nthreads
 
