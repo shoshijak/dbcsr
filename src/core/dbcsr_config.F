@@ -25,7 +25,7 @@ MODULE dbcsr_config
                              dbcsr_data_allocation_type
 #include "base/dbcsr_base_uses.f90"
 
-!$ USE OMP_LIB, ONLY: omp_get_max_threads
+!$ USE OMP_LIB, ONLY: omp_get_max_threads, omp_get_num_threads
 
    IMPLICIT NONE
 
@@ -380,7 +380,7 @@ CONTAINS
 ! **************************************************************************************************
    SUBROUTINE dbcsr_print_config(unit_nr)
       INTEGER, INTENT(IN)                                :: unit_nr
-      INTEGER                                            :: numnodes, mynode, numthreads
+      INTEGER                                            :: numthreads, numnodes, mynode, mp_group
 
       CHARACTER(len=default_string_length)               :: mm_name
 
