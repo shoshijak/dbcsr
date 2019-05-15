@@ -71,23 +71,12 @@ CONTAINS
 #if defined(__LIBXSMM)
       USE libxsmm, ONLY: libxsmm_init
 #endif
-      INTEGER, INTENT(IN)  :: mp_comm
-      INTEGER, INTENT(IN), OPTIONAL :: io_unit
-
-      INTEGER :: numnodes, mynode
+      INTEGER                                            :: error_handle, ithread, nthreads
 
 #if defined(__DBCSR_ACC)
       INTEGER :: dbcsr_thread_safe, libcusmm_thread_safe
 #endif
 
-      IF (PRESENT(io_unit)) THEN
-         ext_io_unit = io_unit
-      ELSE
-         ext_io_unit = 0
-         CALL mp_environ(numnodes, mynode, mp_comm)
-         IF (mynode .EQ. 0) ext_io_unit = default_output_unit
-      ENDIF
-      CALL dbcsr_mp_make_env(mp_env, default_group, mp_comm)
 #if defined(__LIBXSMM)
       CALL libxsmm_init()
 #endif
@@ -108,7 +97,6 @@ without threading support while libcusmm is compiled with threading support.")
        ENDIF
 #endif
 
-      INTEGER                                            :: error_handle, ithread, nthreads
 
 !n_stack_buffers,mem_type, n_stack_mem_regions, stack_size, nstacks,&
 !INTEGER, DIMENSION(3)                    :: nxstacks
