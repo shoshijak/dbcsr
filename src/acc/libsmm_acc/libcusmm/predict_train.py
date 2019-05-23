@@ -16,6 +16,7 @@ import json
 import random
 import numpy as np
 import pandas as pd
+import dask.dataframe as dd
 import matplotlib.pyplot as plt
 import argparse
 from predict_helpers import (
@@ -23,6 +24,7 @@ from predict_helpers import (
     safe_pickle_load,
     plot_training_data,
     plot_choice_goodness,
+    plot_choice_goodness_empty,
     plot_performance_gains,
     plot_scaled_performance_gains,
     plot_absolute_performance_gain,
@@ -30,10 +32,11 @@ from predict_helpers import (
     performance_gain,
 )
 from kernels.cusmm_predict import to_tuple, to_string
+visual_separator = "\n----------------------------------------------------------------------------"
 
 
 # ===============================================================================
-def main(datadir, algo, plot_all, model_args, nrows, prefitted_model):
+def main(datadir, algo, plot_all, model_args, nrows, prefitted_model_folder, run_intermediate_evaluation):
     """
     This script is part of the workflow for predictive modelling of optimal libcusmm parameters.
     For more details, see predict.md
@@ -41,15 +44,13 @@ def main(datadir, algo, plot_all, model_args, nrows, prefitted_model):
     """
     # ===============================================================================
     # Create folder to store results of this training and start a log
-    folder, log_file, log = get_log_folder(datadir, algo)
+    folder, log_file, log = get_log_folder(prefitted_model_folder, algo)
 
     # ===============================================================================
     # Override algorithm option if working on a pre-fitted model, and log program options
-    log += print_and_log(
-        "----------------------------------------------------------------------------"
-    )
+    log += print_and_log(visual_separator)
     algo, model_args, nrows, log = dump_or_load_options(
-        algo, model_args, prefitted_model, nrows, folder, log
+        algo, model_args, prefitted_model_folder, nrows, folder, log
     )
 
     # ===============================================================================
@@ -60,36 +61,48 @@ def main(datadir, algo, plot_all, model_args, nrows, prefitted_model):
 
     # ===============================================================================
     # Read data
-    log += print_and_log(
-        "----------------------------------------------------------------------------"
-    )
+    log += print_and_log(visual_separator)
     X, X_mnk, Y, log, data_nrows = read_data(
         algo, datadir, nrows, plot_all, folder, log
     )
 
     # ===============================================================================
+    # AT THIS POINT, WE MOVE FROM DASK TO PANDAS
+    # ===============================================================================
+    log += print_and_log("\n[moving to pantas] Compute X ...")
+    X= X.compute()
+    log += print_and_log("\n[moving to pantas] Compute Y ...")
+    Y = Y.compute()
+    log += print_and_log("\n[moving to pantas] Compute X_mnk ...")
+    X_mnk = X_mnk.compute()
+    log += print_and_log("\n[moving to pantas] Done")
+
+    # ===============================================================================
     # Get or train model
-    log += print_and_log(
-        "----------------------------------------------------------------------------"
-    )
-    if len(prefitted_model) == 0:  # train a model
+    log += print_and_log(visual_separator)
+    if len(prefitted_model_folder) == 0:  # train a model
 
         log += print_and_log("\nPreparing to fit model...")
-        X_train, Y_train, X_mnk_train, X_test, Y_test, X_mnk_test, model, log = train_model(
+        X_train, Y_train, X_mnk_train, X_test, Y_test, X_mnk_test, model_partial, log = train_model(
             X, X_mnk, Y, algo, model_args, folder, log
         )
 
     else:  # load pre-trained model
 
-        log += print_and_log("\nReading pre-fitted model from " + prefitted_model)
-        X_train, Y_train, X_mnk_train, X_test, Y_test, X_mnk_test, model, log = fetch_pre_trained_model(
-            X, X_mnk, Y, prefitted_model, log
-        )
+        log += print_and_log("\nReading pre-fitted model from " + prefitted_model_folder)
+
+        if run_intermediate_evaluation:
+            X_train, Y_train, X_mnk_train, X_test, Y_test, X_mnk_test, model_partial, log = fetch_pre_trained_model_partial(
+                X, X_mnk, Y, prefitted_model_folder, log
+            )
+        else:
+            X_train, Y_train, X_mnk_train, X_test, Y_test, X_mnk_test, model_partial = \
+            None, None, None, None, None, None, None
 
     # ===============================================================================
-    # Evaluate model
+    # Evaluate partial model
     log = evaluate_model(
-        model,
+        model_partial,
         X_train,
         X_mnk_train,
         Y_train,
@@ -107,16 +120,19 @@ def main(datadir, algo, plot_all, model_args, nrows, prefitted_model):
 
     # ===============================================================================
     # Refit to the entire dataset
-    log += print_and_log(
-        "----------------------------------------------------------------------------"
-    )
-    log += print_and_log("\nRefit to the entire dataset:")
-    X = pd.concat([X_train, X_test], ignore_index=True)
-    X_mnk = pd.concat([X_mnk_train, X_mnk_test], ignore_index=True)
-    Y = pd.concat([Y_train, Y_test], ignore_index=True)
-    model.fit(X, Y)
-    results_file = os.path.join(folder, "feature_tree_refit.p")
-    safe_pickle([X.columns.values, model], results_file)
+    if run_intermediate_evaluation or len(prefitted_model_folder) == 0:
+        log += print_and_log(visual_separator)
+        log += print_and_log("\nRefit to the entire dataset:")
+        X = X_train.append(X_test, ignore_index=True)
+        X_mnk = X_mnk_train.append(X_mnk_test, ignore_index=True)
+        Y = Y_train.append(Y_test, ignore_index=True)
+        model_partial.fit(X, Y)
+        model = model_partial  # This model is fit on the entire dataset, it is not partial
+        results_file = os.path.join(folder, "feature_tree_refit.p")
+        safe_pickle([X.columns.values, model], results_file)
+    else:
+        log += print_and_log("\nReading pre-fitted model from " + prefitted_model_folder)
+        X, model, log = fetch_pre_trained_model(prefitted_model_folder, X, log)
 
     # ===============================================================================
     # Evaluate refit-model
@@ -139,9 +155,7 @@ def main(datadir, algo, plot_all, model_args, nrows, prefitted_model):
 
     # ===============================================================================
     # Print log
-    log += print_and_log(
-        "----------------------------------------------------------------------------"
-    )
+    log += print_and_log(visual_separator)
     with open(log_file, "w") as f:
         f.write(log)
 
@@ -184,7 +198,7 @@ optimized_hyperparameters = {  # chosen by common sense, then trial and error
 
 # ===============================================================================
 # Printing and dumping helpers
-def get_log_folder(algo, prefitted_model_folder):
+def get_log_folder(prefitted_model_folder, algo):
     """Create a unique log folder for this run in which logs, plots etc. will be stored """
     if len(prefitted_model_folder) == 0:
 
@@ -319,7 +333,7 @@ def worse_case_scorer(estimator, X, y, top_k):
     :param y: ground truth target for X
     :return: score: a floating point number that quantifies the estimator prediction quality on X, with reference to y
     """
-    mnk = pd.DataFrame()
+    mnk = dd.DataFrame()
     mnk["mnk"] = X["mnk"].copy()
     y_pred = estimator.predict(X.drop(["mnk"], axis=1))
     score = worse_rel_perf_loss_of_k(y, y_pred, top_k, mnk)
@@ -339,7 +353,7 @@ def mean_scorer(estimator, X, y, top_k):
     :param y: ground truth target for X
     :return: score: a floating point number that quantifies the estimator prediction quality on X, with reference to y
     """
-    mnk = pd.DataFrame()
+    mnk = dd.DataFrame()
     mnk["mnk"] = X["mnk"].copy()
     y_pred = estimator.predict(X.drop(["mnk"], axis=1))
     score = mean_rel_perf_loss_of_k(y, y_pred, top_k, mnk)
@@ -381,47 +395,23 @@ def get_reference_performances(folder, algo):
 
 def read_data(algo, read_from, nrows, plot_all, folder, log):
 
-    # ===============================================================================
-    # Read raw and derived data from CSV
-    raw_data_file = os.path.join(read_from, "raw_training_data_" + algo + ".csv")
-    log += print_and_log("\nRead raw data from " + raw_data_file)
-    raw_data = pd.read_csv(raw_data_file, index_col=False, nrows=nrows)
-    log += print_and_log(
-        "raw data    : {:>8,} x {:>8,} ({:>2.3} MB)".format(
-            raw_data.shape[0], raw_data.shape[1], sys.getsizeof(raw_data) / 10 ** 6
-        )
-    )
-
-    derived_data_file = os.path.join(read_from, "training_data_" + algo + ".csv")
-    log += print_and_log("\nRead training data from " + derived_data_file)
-    derived_data = pd.read_csv(derived_data_file, index_col=False, nrows=nrows)
-    log += print_and_log(
-        "derived data    : {:>8,} x {:>8,} ({:>2.3} MB)".format(
-            derived_data.shape[0],
-            derived_data.shape[1],
-            sys.getsizeof(derived_data) / 10 ** 6,
-        )
-    )
+    parquet_data_file = os.path.join(read_from, "training_data_" + algo + ".parquet")
+    log += print_and_log("\nRead data from " + parquet_data_file)
 
     # ===============================================================================
     # Get 'X'
-    X = pd.concat(
-        [
-            raw_data.drop(["perf (Gflop/s)"], axis=1),
-            derived_data.drop(["perf_scaled"], axis=1),
-        ],
-        axis=1,
-    )
-    # If there are unique-valued columns, drop these since they do not contribute to any prediction
-    for col in X.columns.values.tolist():
-        if len(X[col].unique().tolist()) == 1:
-            X = X.drop(col, axis=1)
-
+    cols_to_ignore = ["perf_scaled", "mnk", "perf (Gflop/s)", "perf_scaled_by_algo", "perf_squared"]
+    X = dd.read_parquet(parquet_data_file, )
+    cols_to_drop = set(cols_to_ignore).intersection(set(X.columns.values))
+    log += print_and_log("\nDropping following columns from X:\n" + str(cols_to_drop))
+    X = X.drop(cols_to_drop, axis=1)
     log += print_and_log(
         "X    : {:>8,} x {:>8,} ({:>2.2} MB)".format(
-            X.shape[0], X.shape[1], sys.getsizeof(X) / 10 ** 6
+            len(X), X.shape[1], sys.getsizeof(X) / 10 ** 6
         )
     )
+    log += print_and_log("Head:")
+    log += print_and_log(X.head())
     n_features = len(list(X.columns))
     predictor_names = X.columns.values
     log += print_and_log("\nPredictor variables: (" + str(n_features) + ")")
@@ -430,29 +420,30 @@ def read_data(algo, read_from, nrows, plot_all, folder, log):
 
     # ===============================================================================
     # Get 'Y'
-    log += print_and_log("\nExtract Y")
-    Y = pd.DataFrame()
-    Y["perf_scaled"] = derived_data["perf_scaled"]
-    Y.dropna(axis=0, inplace=True)
+    log += print_and_log("\nRead Y")
+    Y = dd.read_parquet(parquet_data_file, columns=["perf_scaled"])
     log += print_and_log(
-        "Y    : {:>8,} ({:>2.2} MB)".format(Y.size, sys.getsizeof(Y) / 10 ** 6)
+        "Y    : {:>8,} ({:>2.2} MB)".format(len(Y), sys.getsizeof(Y) / 10 ** 6)
     )
+    log += print_and_log("Head:")
+    log += print_and_log(Y.head())
 
     # ===============================================================================
     # Get 'X_mnk'
-    log += print_and_log("\nWrite X_mnk")
-    X_mnk = pd.DataFrame()
-    X_mnk["mnk"] = (
-        X["m"].astype(str) + "x" + X["n"].astype(str) + "x" + X["k"].astype(str)
-    )
+    log += print_and_log("\nRead X_mnk")
+    X_mnk = dd.read_parquet(parquet_data_file, columns=["mnk"])
+    nrows_data = len(X_mnk.index)
     log += print_and_log(
-        "X_mnk : {:>8,} ({:>2.2} MB)".format(X_mnk.size, sys.getsizeof(X_mnk) / 10 ** 6)
+        "X_mnk : {:>8,} ({:>2.2} MB)".format(nrows_data, sys.getsizeof(X_mnk) / 10 ** 6)
     )
+    log += print_and_log("Head:")
+    log += print_and_log(X_mnk.head())
+    log += print_and_log("# unique mnks:")
+    log += print_and_log(str(X_mnk["mnk"].nunique().compute()))
 
     if plot_all:
         plot_training_data(Y, X_mnk, algo, folder)
 
-    nrows_data = len(X.index)
     return X, X_mnk, Y, log, nrows_data
 
 
@@ -555,6 +546,7 @@ def get_train_test_partition(to_partition, test, train=None):
         all_indices = set(range(len(to_partition[0].index)))
         train = list(all_indices - set(test))
 
+    print("About to partition into train (len: {:,}) / test (len: {:,})".format(len(train), len(test)))
     partitioned = list()
     for df in to_partition:
         df_train = df.iloc[
@@ -566,6 +558,7 @@ def get_train_test_partition(to_partition, test, train=None):
         ]  # test : use for evaluation of 'selected/final' model
         partitioned.append(df_test)
 
+    print("Returning object of length: {}".format(len(partitioned)))
     return partitioned
 
 
@@ -625,7 +618,7 @@ def train_model(X, X_mnk, Y, algo, model_options, folder, log):
     # Feature selection: SelectFromModel
     from sklearn.feature_selection import SelectFromModel
 
-    feature_importance_threshold = -np.inf
+    feature_importance_threshold = 0.015
     max_features = n_predictors - optimized_hyperparameters[algo]["n_features_to_drop"]
     model.cv = cv.split(X_train.values, Y_train.values, groups=X_mnk_train.values)
     model.fit(X_train.values, Y_train.values)
@@ -650,9 +643,7 @@ def train_model(X, X_mnk, Y, algo, model_options, folder, log):
         feature_name_importance, key=lambda x: x[1], reverse=True
     )
 
-    log += print_and_log(
-        "\n----------------------------------------------------------------------------"
-    )
+    log += print_and_log(visual_separator)
     n_selected_features = np.sum(feature_support)
     log += print_and_log("Optimal number of features : {}".format(n_selected_features))
 
@@ -678,9 +669,7 @@ def train_model(X, X_mnk, Y, algo, model_options, folder, log):
 
     # ===============================================================================
     # Fit
-    log += print_and_log(
-        "----------------------------------------------------------------------------"
-    )
+    log += print_and_log(visual_separator)
     log += print_and_log("\nStart fitting model with predictors:\n")
     for i, p in enumerate(X_train.columns.values):
         log += print_and_log("\t{:>2}) {}".format(i + 1, p))
@@ -689,9 +678,7 @@ def train_model(X, X_mnk, Y, algo, model_options, folder, log):
 
     safe_pickle([X_train.columns.values, model, test], results_file)
     log += print_and_log("\nCompleted fit, wrote results to " + results_file)
-    log += print_and_log(
-        "----------------------------------------------------------------------------"
-    )
+    log += print_and_log(visual_separator)
     return_model = model
 
     # Return
@@ -703,14 +690,29 @@ def train_model(X, X_mnk, Y, algo, model_options, folder, log):
     return X_train, Y_train, X_mnk_train, X_test, Y_test, X_mnk_test, return_model, log
 
 
-def fetch_pre_trained_model(X, X_mnk, Y, model_path, log):
+def fetch_pre_trained_model(model_path_folder, X, log):
+    model_path = os.path.join(model_path_folder, "feature_tree_refit.p")
+    print("fetched pre-trained model from: {}".format(model_path))
+    features, model = safe_pickle_load(model_path)
+    print(model)
+
+    log += print_and_log("\nDrop non-selected features")
+    predictor_names = X.columns.values.tolist()
+    features_to_drop = [f for f in predictor_names if f not in features]
+    X.drop(features_to_drop, axis=1, inplace=True)
+    return X, model, log
+
+
+def fetch_pre_trained_model_partial(X, X_mnk, Y, model_path_folder, log):
 
     # Load pre-trained model, selected features and indices of test-set
-    features, model, test_indices = safe_pickle_load(
-        os.path.join(model_path, "feature_tree.p")
-    )
+    model_path = os.path.join(model_path_folder, "feature_tree.p")
+    print("fetched pre-trained model from: {}".format(model_path))
+    features, model, test_indices = safe_pickle_load(model_path)
+    print("Pickled stuff:\nfeatures:{}\nmodel:{}\ntest_indices:{}".format(features, model, test_indices))
     if "mnk" in features:
         features.remove("mnk")
+    #print(features)
 
     log += print_and_log("\nPerform train/test split")
     X_train, X_test, Y_train, Y_test, X_mnk_train, X_mnk_test = get_train_test_partition(
@@ -724,7 +726,7 @@ def fetch_pre_trained_model(X, X_mnk, Y, model_path, log):
         + ", train_size="
         + str(X_train.shape)
     )
-    assert X_test.shape[0] < X_train.shape[0]
+    #assert X_test.shape[0] < X_train.shape[0]
 
     log += print_and_log("\nDrop non-selected features")
     predictor_names = X_train.columns.values.tolist()
@@ -739,9 +741,7 @@ def fetch_pre_trained_model(X, X_mnk, Y, model_path, log):
 # Describe and evaluate model
 def describe_hpo(gs, X, Y, log, plot_all):
     predictor_names = X.columns.values.tolist()
-    log += print_and_log(
-        "\n----------------------------------------------------------------------------"
-    )
+    log += print_and_log(visual_separator)
     log += print_and_log("Available predictor variables:")
     for p in predictor_names:
         log += print_and_log("\t{}".format(p))
@@ -753,9 +753,7 @@ def describe_hpo(gs, X, Y, log, plot_all):
     log += print_and_log("\nBest estimator:")
     best_estimator = gs.best_estimator_._final_estimator
     log += print_and_log(best_estimator)
-    log += print_and_log(
-        "----------------------------------------------------------------------------"
-    )
+    log += print_and_log(visual_separator)
 
     # Export tree SVG
     if plot_all:
@@ -818,10 +816,13 @@ def print_error(y_true, y_pred, X_mnk, log, scaled=True):
     return log
 
 
-def scale_back(y_scaled, x_mnk, max_performances):
-    corresponding_maxperf = np.array(
-        [max_performances[mnk] for mnk in x_mnk["mnk"].values.tolist()]
-    )
+def scale_back(y_scaled, x_mnk, max_performances, mnk=None):
+    if mnk is None:
+        corresponding_maxperf = np.array(
+            [max_performances[mnk] for mnk in x_mnk["mnk"].values.tolist()]
+        )
+    else:
+        corresponding_maxperf = max_performances[mnk]
     return y_scaled * corresponding_maxperf
 
 
@@ -974,7 +975,7 @@ def get_predive_model_performances(
         assert len(idx_mnk) > 0, "idx_mnk is empty"
         m, n, k = to_tuple(mnk_string)
 
-        perf_chosen_idx = np.argmax(y_pred[idx_mnk])
+        perf_chosen_idx = [np.argmax(y_pred[idx_mnk])]
         perf_effective = y_true.iloc[idx_mnk].iloc[perf_chosen_idx].values.item()
         predictive_model_perf_scaled[
             (m, n, k)
@@ -1022,49 +1023,52 @@ def evaluate_model(
     folder,
 ):
     """Main evaluation function"""
+    if model is None:
+        return log
 
-    log += print_and_log(
-        "----------------------------------------------------------------------------"
-    )
+    # Start evaluation
+    log += print_and_log(visual_separator)
     log += print_and_log("Start model evaluation")
-    if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+    if all([x is not None for x in [X_test, Y_test]]):
         log = describe_model(model, X_test, Y_test, log, plot_all)
 
     # Training error
-    y_train_pred = model.predict(X_train)
-    log += print_and_log("\nTraining error: (train&val)")
-    log = print_error(Y_train, y_train_pred, X_mnk_train, log, True)
+    if all([x is not None for x in [X_train, X_mnk_train, Y_train]]):
+        y_train_pred = model.predict(X_train)
+        log += print_and_log("\nTraining error: (train&val)")
+        log = print_error(Y_train, y_train_pred, X_mnk_train, log, True)
 
-    # Test error
-    if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
-        y_test_pred = model.predict(X_test)
-        log += print_and_log("\nTesting error:")
-        log = print_error(Y_test, y_test_pred, X_mnk_test, log, True)
+        # Test error
+        if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+            y_test_pred = model.predict(X_test)
+            log += print_and_log("\nTesting error:")
+            log = print_error(Y_test, y_test_pred, X_mnk_test, log, True)
 
     # Training error (scaled-back)
-    log += print_and_log("\nTraining error (scaled back): (train&val)")
-    y_train_pred_scaled_back = scale_back(
-        y_train_pred, X_mnk_train, max_performances_ref
-    )
-    y_train_scaled_back = pd.DataFrame(
-        scale_back(Y_train.values.flatten(), X_mnk_train, max_performances_ref)
-    )
-    log = print_error(
-        y_train_scaled_back, y_train_pred_scaled_back, X_mnk_train, log, False
-    )
-
-    if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
-        # Test error (scaled-back)
-        log += print_and_log("\nTesting error (scaled back): (test&val)")
-        y_test_pred_scaled_back = scale_back(
-            y_test_pred, X_mnk_test, max_performances_ref
+    if all([x is not None for x in [X_train, X_mnk_train, Y_train]]):
+        log += print_and_log("\nTraining error (scaled back): (train&val)")
+        y_train_pred_scaled_back = scale_back(
+            y_train_pred, X_mnk_train, max_performances_ref
         )
-        y_test_scaled_back = pd.DataFrame(
-            scale_back(Y_test.values.flatten(), X_mnk_test, max_performances_ref)
+        y_train_scaled_back = pd.DataFrame(
+            scale_back(Y_train.values.flatten(), X_mnk_train, max_performances_ref)
         )
         log = print_error(
-            y_test_scaled_back, y_test_pred_scaled_back, X_mnk_test, log, False
+            y_train_scaled_back, y_train_pred_scaled_back, X_mnk_train, log, False
         )
+
+        if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+            # Test error (scaled-back)
+            log += print_and_log("\nTesting error (scaled back): (test&val)")
+            y_test_pred_scaled_back = scale_back(
+                y_test_pred, X_mnk_test, max_performances_ref
+            )
+            y_test_scaled_back = pd.DataFrame(
+                scale_back(Y_test.values.flatten(), X_mnk_test, max_performances_ref)
+            )
+            log = print_error(
+                y_test_scaled_back, y_test_pred_scaled_back, X_mnk_test, log, False
+            )
 
     # ===============================================================================
     # Print histogram for "best" estimator
@@ -1074,73 +1078,79 @@ def evaluate_model(
 
     # ===============================================================================
     # Plot prediction accuracy and goodness of choice for a few mnks (training-set)
-    n_samples = 10 if data_nrows < 100000000 else 2
-    mnks_to_plot = random.sample(X_mnk_train["mnk"].values.tolist(), n_samples)
+    if all([x is not None for x in [X_train, X_mnk_train, Y_train]]):
+        n_samples = 10 if data_nrows < 100000000 else 2
+        mnks_to_plot = random.sample(X_mnk_train["mnk"].values.tolist(), n_samples)
 
-    from matplotlib.backends.backend_pdf import PdfPages
+        from matplotlib.backends.backend_pdf import PdfPages
 
-    plot_file_path = os.path.join(folder, "evaluation_by_mnk_refit.pdf")
-    if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
-        plot_file_path = os.path.join(folder, "evaluation_by_mnk.pdf")
-    pp = PdfPages(plot_file_path)
+        plot_file_path = os.path.join(folder, "evaluation_by_mnk_refit.pdf")
+        if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+            plot_file_path = os.path.join(folder, "evaluation_by_mnk.pdf")
+        pp = PdfPages(plot_file_path)
 
-    for mnk_string in mnks_to_plot:
-
-        # Get performances per mnk
-        idx_mnk = np.where(X_mnk_train == mnk_string)[0].tolist()
-        assert len(idx_mnk) > 0, "idx_mnk is empty"
-        m_, n_, k_ = to_tuple(mnk_string)
-
-        log += print_and_log("Prediction accuracy plot: " + str(mnk_string))
-        plot_prediction_accuracy(
-            m_, n_, k_, Y_train.iloc[idx_mnk], y_train_pred[idx_mnk], True, pp
-        )
-
-        log += print_and_log("Goodness plot: " + str(mnk_string))
-        plot_choice_goodness(
-            m_,
-            n_,
-            k_,
-            baseline_performances_algo,
-            max_performances_ref,
-            Y_train.iloc[idx_mnk].values,
-            y_train_pred[idx_mnk],
-            True,
-            pp,
-            True,
-        )
-
-    # ===============================================================================
-    # Plot prediction accuracy for a few mnks (testing-set)
-    if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
-        mnks_to_plot = random.sample(X_mnk_test["mnk"].values.tolist(), n_samples)
         for mnk_string in mnks_to_plot:
 
             # Get performances per mnk
-            idx_mnk = np.where(X_mnk_test == mnk_string)[0].tolist()
+            idx_mnk = np.where(X_mnk_train == mnk_string)[0].tolist()
             assert len(idx_mnk) > 0, "idx_mnk is empty"
             m_, n_, k_ = to_tuple(mnk_string)
+            y_train_pred_mnk = y_train_pred[idx_mnk]
+            Y_train_mnk = Y_train.iloc[idx_mnk]
 
             log += print_and_log("Prediction accuracy plot: " + str(mnk_string))
+
             plot_prediction_accuracy(
-                m_, n_, k_, Y_test.iloc[idx_mnk], y_test_pred[idx_mnk], False, pp
+                m_, n_, k_,
+                Y_train_mnk,
+                y_train_pred_mnk, True, pp
             )
 
             log += print_and_log("Goodness plot: " + str(mnk_string))
+            Y_train_mnk_scaled_back = scale_back(
+                Y_train_mnk, X_mnk_train, max_performances_ref, mnk_string
+            )
             plot_choice_goodness(
                 m_,
                 n_,
                 k_,
                 baseline_performances_algo,
                 max_performances_ref,
-                Y_test.iloc[idx_mnk].values,
-                y_test_pred[idx_mnk],
-                False,
-                pp,
-                True,
+                Y_train["perf_scaled"].iloc[idx_mnk].values, y_train_pred_mnk, True, pp
             )
 
-    pp.close()
+        # ===============================================================================
+        # Plot prediction accuracy for a few mnks (testing-set)
+        if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+            mnks_to_plot = random.sample(X_mnk_test["mnk"].values.tolist(), n_samples)
+            for mnk_string in mnks_to_plot:
+
+                # Get performances per mnk
+                idx_mnk = np.where(X_mnk_test == mnk_string)[0].tolist()
+                assert len(idx_mnk) > 0, "idx_mnk is empty"
+                m_, n_, k_ = to_tuple(mnk_string)
+
+                log += print_and_log("Prediction accuracy plot: " + str(mnk_string))
+                plot_prediction_accuracy(
+                    m_, n_, k_, Y_test.iloc[idx_mnk], y_test_pred[idx_mnk], False, pp
+                )
+
+                log += print_and_log("Goodness plot: " + str(mnk_string))
+                plot_choice_goodness(
+                    m_,
+                    n_,
+                    k_,
+                    baseline_performances_algo,
+                    max_performances_ref,
+                    Y_test["perf_scaled"].iloc[idx_mnk].values,
+                    y_test_pred[idx_mnk],
+                    False,
+                    pp,
+                    True,
+                )
+
+        if all([x is not None for x in [X_train, X_mnk_train, Y_train]]):
+            pp.close()
 
     # ===============================================================================
     # Scale baseline and max performances
@@ -1198,145 +1208,148 @@ def evaluate_model(
 
     # ===============================================================================
     # 'Results' = y_true ( y_chosen )
-    predictive_model_perf_train, predictive_model_perf_train_scaled = get_predive_model_performances(
-        Y_train, y_train_pred, X_mnk_train, max_performances_ref, max_performances_algo
-    )
-
-    if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
-        predictive_model_perf_test, predictive_model_perf_test_scaled = get_predive_model_performances(
-            Y_test, y_test_pred, X_mnk_test, max_performances_ref, max_performances_algo
+    if all([x is not None for x in [X_train, X_mnk_train, Y_train]]):
+        predictive_model_perf_train, predictive_model_perf_train_scaled = get_predive_model_performances(
+            Y_train, y_train_pred, X_mnk_train, max_performances_ref, max_performances_algo
         )
+
+        if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+            predictive_model_perf_test, predictive_model_perf_test_scaled = get_predive_model_performances(
+                Y_test, y_test_pred, X_mnk_test, max_performances_ref, max_performances_algo
+            )
 
     # ===============================================================================
     # Plot results (training set: predictive modelling VS naïve)
     log += print_and_log("\nPredictive model VS baseline: ")
 
-    perf_gain_pred_train_over_baseline = performance_gain(
-        baseline_performances_algo, predictive_model_perf_train
-    )
-    plot_absolute_performance_gain(
-        perf_gain_pred_train_over_baseline,
-        "trained",
-        "baseline per algorithm",
-        "predictive model",
-        pp,
-    )
-
-    scaled_perf_gain_pred_train_over_baseline = performance_gain(
-        baseline_performances_algo_scaled, predictive_model_perf_train_scaled
-    )
-    plot_relative_performance_gain(
-        scaled_perf_gain_pred_train_over_baseline,
-        "trained",
-        "baseline per algorithm",
-        "predictive model",
-        pp,
-    )
-
-    if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
-        perf_gain_pred_test_over_baseline = performance_gain(
-            baseline_performances_algo, predictive_model_perf_test
+    if all([x is not None for x in [X_train, X_mnk_train, Y_train]]):
+        perf_gain_pred_train_over_baseline = performance_gain(
+            baseline_performances_algo, predictive_model_perf_train
         )
         plot_absolute_performance_gain(
-            perf_gain_pred_test_over_baseline,
-            "tested",
+            perf_gain_pred_train_over_baseline,
+            "trained",
             "baseline per algorithm",
             "predictive model",
             pp,
         )
 
-        scaled_perf_gain_pred_test_over_baseline = performance_gain(
-            baseline_performances_algo_scaled, predictive_model_perf_test_scaled
+        scaled_perf_gain_pred_train_over_baseline = performance_gain(
+            baseline_performances_algo_scaled, predictive_model_perf_train_scaled
         )
         plot_relative_performance_gain(
-            scaled_perf_gain_pred_test_over_baseline,
-            "tested",
+            scaled_perf_gain_pred_train_over_baseline,
+            "trained",
             "baseline per algorithm",
             "predictive model",
             pp,
         )
 
-    log += print_and_log("\nPredictive model VS autotuned: ")
-    perf_gain_pred_train_over_max = performance_gain(
-        max_performances_algo, predictive_model_perf_train
-    )
-    plot_absolute_performance_gain(
-        perf_gain_pred_train_over_max,
-        "trained",
-        "max. performance per algorithm",
-        "predictive model",
-        pp,
-    )
-    scaled_perf_gain_pred_train_over_max = performance_gain(
-        max_performances_algo_scaled, predictive_model_perf_train_scaled
-    )
-    plot_relative_performance_gain(
-        scaled_perf_gain_pred_train_over_max,
-        "trained",
-        "max. performance per algorithm",
-        "predictive model",
-        pp,
-    )
+        if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+            perf_gain_pred_test_over_baseline = performance_gain(
+                baseline_performances_algo, predictive_model_perf_test
+            )
+            plot_absolute_performance_gain(
+                perf_gain_pred_test_over_baseline,
+                "tested",
+                "baseline per algorithm",
+                "predictive model",
+                pp,
+            )
 
-    if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
-        perf_gain_pred_test_over_max = performance_gain(
-            max_performances_algo, predictive_model_perf_test
-        )
-        plot_absolute_performance_gain(
-            perf_gain_pred_test_over_max,
-            "tested",
-            "max. performance per algorithm",
-            "predictive model",
-            pp,
-        )
-        scaled_perf_gain_pred_test_over_max = performance_gain(
-            max_performances_algo_scaled, predictive_model_perf_test_scaled
-        )
-        plot_relative_performance_gain(
-            scaled_perf_gain_pred_test_over_max,
-            "tested",
-            "max. performance per algorithm",
-            "predictive model",
-            pp,
-        )
+            scaled_perf_gain_pred_test_over_baseline = performance_gain(
+                baseline_performances_algo_scaled, predictive_model_perf_test_scaled
+            )
+            plot_relative_performance_gain(
+                scaled_perf_gain_pred_test_over_baseline,
+                "tested",
+                "baseline per algorithm",
+                "predictive model",
+                pp,
+            )
 
-    log += print_and_log("\nCompare performances: ")
-    plot_performance_gains(
-        baseline_performances_algo,
-        predictive_model_perf_train,
-        "trained",
-        "baseline per algorithm",
-        "predictive model",
-        pp,
-    )
-    plot_performance_gains(
-        max_performances_algo,
-        predictive_model_perf_train,
-        "trained",
-        "max. performance per algorithm",
-        "predictive model",
-        pp,
-    )
+            log += print_and_log("\nPredictive model VS autotuned: ")
+            perf_gain_pred_train_over_max = performance_gain(
+                max_performances_algo, predictive_model_perf_train
+            )
+            plot_absolute_performance_gain(
+                perf_gain_pred_train_over_max,
+                "trained",
+                "max. performance per algorithm",
+                "predictive model",
+                pp,
+            )
+            scaled_perf_gain_pred_train_over_max = performance_gain(
+                max_performances_algo_scaled, predictive_model_perf_train_scaled
+            )
+            plot_relative_performance_gain(
+                scaled_perf_gain_pred_train_over_max,
+                "trained",
+                "max. performance per algorithm",
+                "predictive model",
+                pp,
+            )
 
-    if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
-        plot_performance_gains(
-            baseline_performances_algo,
-            predictive_model_perf_test,
-            "tested",
-            "baseline per algorithm",
-            "predictive model",
-            pp,
-        )
-        plot_performance_gains(
-            max_performances_algo,
-            predictive_model_perf_test,
-            "tested",
-            "max. performance per algorithm",
-            "predictive model",
-            pp,
-        )
+        if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+            perf_gain_pred_test_over_max = performance_gain(
+                max_performances_algo, predictive_model_perf_test
+            )
+            plot_absolute_performance_gain(
+                perf_gain_pred_test_over_max,
+                "tested",
+                "max. performance per algorithm",
+                "predictive model",
+                pp,
+            )
+            scaled_perf_gain_pred_test_over_max = performance_gain(
+                max_performances_algo_scaled, predictive_model_perf_test_scaled
+            )
+            plot_relative_performance_gain(
+                scaled_perf_gain_pred_test_over_max,
+                "tested",
+                "max. performance per algorithm",
+                "predictive model",
+                pp,
+            )
 
-    pp.close()
+        if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+            log += print_and_log("\nCompare performances: ")
+            plot_performance_gains(
+                baseline_performances_algo,
+                predictive_model_perf_train,
+                "trained",
+                "baseline per algorithm",
+                "predictive model",
+                pp,
+            )
+            plot_performance_gains(
+                max_performances_algo,
+                predictive_model_perf_train,
+                "trained",
+                "max. performance per algorithm",
+                "predictive model",
+                pp,
+            )
+
+        if all([x is not None for x in [X_test, X_mnk_test, Y_test]]):
+            plot_performance_gains(
+                baseline_performances_algo,
+                predictive_model_perf_test,
+                "tested",
+                "baseline per algorithm",
+                "predictive model",
+                pp,
+            )
+            plot_performance_gains(
+                max_performances_algo,
+                predictive_model_perf_test,
+                "tested",
+                "max. performance per algorithm",
+                "predictive model",
+                pp,
+            )
+
+        pp.close()
 
     return log
 
@@ -1398,7 +1411,7 @@ if __name__ == "__main__":
         default=-1,
         metavar="NUMBER",
         type=int,
-        help="Number of cross-validation splits used in RFECV and GridSearchCV",
+        help="Number of parallel jobs that Joblib will launch",
     )
     parser.add_argument(
         "-r",
@@ -1413,8 +1426,15 @@ if __name__ == "__main__":
         "--prefitted_model",
         metavar="filename",
         default="",
-        help="Path to pickled GridSearchCV object to load instead of recomputing",
+        help="Path to pickled model object to load instead of re-training model",
     )
+    parser.add_argument(
+        "-i",
+        "--intermediate_evaluation",
+        default=False,
+        help="Whether to perform evaluation of the model trained on part of the model",
+    )
+    parser.set_defaults(intermediate_evaluation=False)
 
     args = parser.parse_args()
     model_args = {
@@ -1430,4 +1450,5 @@ if __name__ == "__main__":
         model_args,
         args.nrows,
         args.prefitted_model,
+        args.intermediate_evaluation
     )
