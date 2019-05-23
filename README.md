@@ -68,7 +68,7 @@ Building with CMake is also supported:
     mkdir build
     cd build
     cmake ..
-    
+
 The configuration flags are (default first):
 
     -DUSE_MPI=<ON|OFF>

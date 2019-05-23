@@ -141,7 +141,7 @@ elseif (Fortran_COMPILER_NAME MATCHES "^pgf.*")
 else ()
   message(WARNING "\
 Unknown compiler, trying with just '-O2'/'-O0 -g'.\n\
-You will most likely have to pass additonal options for free-form Fortran 2003/2008 for your compiler!\n\
+You will most likely have to pass additional options for free-form Fortran 2003/2008 for your compiler!\n\
 Please open an issue at https://github.com/cp2k/dbcsr/issues with the reported compiler name and the required flags.")
   message("-- Fortran_COMPILER_NAME: " ${Fortran_COMPILER_NAME})
   message("-- CMAKE_Fortran_COMPILER full path: " ${CMAKE_Fortran_COMPILER})
