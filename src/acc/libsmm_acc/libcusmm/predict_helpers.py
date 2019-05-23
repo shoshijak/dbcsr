@@ -248,6 +248,45 @@ def plot_scaled_performance_gains(
         plt.show()
 
 
+def plot_choice_goodness_empty(
+    m,
+    n,
+    k,
+    y_true,
+    pp,
+    scaled=False,
+):
+    """aka toilet plot"""
+
+    # Sort in ascending performances
+    data_mnk = pd.DataFrame()
+    if scaled:
+        data_mnk["perf_true"] = (100 * y_true).tolist()
+    else:
+        data_mnk["perf_true"] = y_true.flatten().tolist()
+    data_mnk.sort_values(by="perf_true", inplace=True)
+
+    # Plot empty (for presentation)
+    plt.figure()
+    marker_size = 1
+    par_set_ids = range(len(data_mnk.index.values))
+    plt.plot(
+        par_set_ids,
+        data_mnk["perf_true"],
+        "b.",
+        markersize=marker_size,
+    )
+    plt.xlabel("Parameter set id")
+    plt.ylabel("Performance [Gflop/s]")
+    plt.title(
+        "Performance profile of parameter sets for "
+        + str((m, n, k))
+        + "-triplet"
+    )
+    pp.savefig()
+
+
+
 def plot_choice_goodness(
     m,
     n,
@@ -260,11 +299,12 @@ def plot_choice_goodness(
     pp,
     scaled=True,
 ):
+    """aka toilet plot"""
 
     # Sort in ascending performances
     data_mnk = pd.DataFrame()
     if scaled:
-        data_mnk["perf_true"] = (100 * y_true.flatten()).tolist()
+        data_mnk["perf_true"] = (100 * y_true).tolist()
         data_mnk["perf_pred"] = (100 * y_pred).tolist()
     else:
         data_mnk["perf_true"] = y_true.flatten().tolist()
@@ -283,7 +323,7 @@ def plot_choice_goodness(
         label="measured performances",
     )
     plt.xlabel("Parameter set id")
-    plt.ylabel("Performance scaled [%]")
+    plt.ylabel("Percentage of autotuned performance achieved [%]")
     type = "train" if train else "test"
     plt.title(
         "Performance profile of parameter sets for "
@@ -299,18 +339,19 @@ def plot_choice_goodness(
     perf_num = "{:2.2f}"
 
     # autotuning
-    perf_autotuned_algo = data_mnk["perf_true"].max()
-    plt.plot(
-        x,
-        perf_autotuned_algo * y,
-        "k-",
-        label="max (for this algo): " + perf_num.format(perf_autotuned_algo),
-    )
+    #perf_autotuned_algo = data_mnk["perf_true"].max()
+    #plt.plot(
+    #    x,
+    #    perf_autotuned_algo * y,
+    #    "k-",
+    #    label="max. : " + perf_num.format(perf_autotuned_algo),
+    #)
 
     # chosen
     idx_perf_chosen = data_mnk["perf_pred"].idxmax()
     perf_chosen = data_mnk["perf_true"][idx_perf_chosen]
-    plt.plot(x, perf_chosen * y, "r-", label="chosen: " + perf_num.format(perf_chosen))
+    plt.plot(x, perf_chosen * y, "r-", label="perf of chosen param set: " + perf_num.format(perf_chosen) + "%"
+    )
 
     # baseline
     if scaled:
@@ -323,7 +364,7 @@ def plot_choice_goodness(
     else:
         perf_baseline = baseline_performances[to_string(m, n, k)]
     plt.plot(
-        x, perf_baseline * y, "g-", label="baseline: " + perf_num.format(perf_baseline)
+        x, perf_baseline * y, "g-", label="perf of baseline param set: " + perf_num.format(perf_baseline) + "%"
     )
 
     plt.legend(loc="lower right")
