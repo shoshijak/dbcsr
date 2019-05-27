@@ -1102,7 +1102,6 @@ def evaluate_model(
     if all([x is not None for x in [X_train, X_mnk_train, Y_train]]):
         n_samples = 10 if data_nrows < 100000000 else 2
         mnks_to_plot = X_mnk_train["mnk"].sample(frac=0.01).compute().tolist()
-        mnks_to_plot.append("5x4x7")
 
         from matplotlib.backends.backend_pdf import PdfPages
 
