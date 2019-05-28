@@ -93,4 +93,4 @@ def get_files_to_read(folders_to_read, algo_to_read):
                 if not os.path.exists(derived_file):
                     print('\t...{:50} no file'.format(derived_file_base))
 
-    return files_to_read
+    return raw_files_to_read, derived_files_to_read
