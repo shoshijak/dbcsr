@@ -57,7 +57,6 @@ if (USE_CUDA)
   set(CMAKE_CUDA_FLAGS "-std=c++11 -arch=sm_${CUDA_ARCH_NUMBER} --cudart static")
 endif ()
 
-# Hints: https://github.com/ROCm-Developer-Tools/HIP/tree/master/samples/2_Cookbook/12_cmake_hip_add_executable
 if (USE_HIP)
   if(NOT DEFINED HIP_PATH)
     if(NOT DEFINED ENV{HIP_PATH})
@@ -77,8 +76,19 @@ endif()
 
 endif()
 
-
 # PACKAGE DISCOVERY:
+
+if (CMAKE_VERSION VERSION_LESS 3.12)
+    find_package(PythonInterp REQUIRED)
+    set(Python_EXECUTABLE ${PYTHON_EXECUTABLE})
+    find_package(NUMPY REQUIRED)
+elseif (CMAKE_VERSION VERSION_LESS 3.14)
+    find_package(Python COMPONENTS Interpreter REQUIRED)
+    find_package(NUMPY REQUIRED)
+else ()
+    # CMake 3.14+ allows to search for NumPy component at the same time
+    find_package(Python COMPONENTS Interpreter NumPy REQUIRED)
+endif ()
 
 find_package(BLAS REQUIRED)
 find_package(LAPACK REQUIRED)
