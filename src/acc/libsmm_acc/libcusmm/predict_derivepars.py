@@ -25,8 +25,11 @@ from kernels.cusmm_predict import (
 
 # ===============================================================================
 def update_maximums(dictionnary_to_update, dictionnary_partial):
-    for mnk, new_perf in dictionnary_partial.items();
-        if new_perf > dictionnary_to_update[mnk]:
+    for mnk, new_perf in dictionnary_partial.items():
+        if mnk in dictionnary_to_update.keys():
+            if new_perf > dictionnary_to_update[mnk]:
+                dictionnary_to_update[mnk] = new_perf
+        else:
             dictionnary_to_update[mnk] = new_perf
     return dictionnary_to_update
 
@@ -77,7 +80,7 @@ def main(data_folder, arch):
 
             # Get max_performance_per_mnk
             max_performances = get_max_performances_per_mnk(data_chunk)
-            max_performances_per_mnk = update_maximums(max_performances)
+            max_performances_per_mnk = update_maximums(max_performances_per_mnk, max_performances)
 
             # Get baseline_per_mnk
             baseline_performances_algo = get_baseline_performances_per_mnk(
@@ -152,6 +155,11 @@ def main(data_folder, arch):
         json.dump(max_performances_per_mnk, f)
     print("\nWrote maximum performances to:\n", max_performances_per_mnk_file)
 
+    # Make sure all baselines have been found:
+    for baseline_performances_per_mnk in baseline_performances_per_algo_per_mnk:
+        leftover_mnks = set(max_performances_per_mnk.keys()) - set(baseline_performances_per_mnk.keys())
+        assert len(leftover_mnks) == 0, "Following (m,n,k)s do not have a baseline:\n" + str(leftover_mnks)
+
     # Print baseline
     baseline_performances_per_algo_per_mnk_file = os.path.join(
         data_folder, "baseline_performances_by_algo.json"
@@ -181,7 +189,7 @@ if __name__ == "__main__":
         metavar="FOLDER",
         type=str,
         default=".",
-        help="Folder in which the folders tune_*x*x*x/ are to be found",
+        help="Folder in which the CSV files `raw_training_data_*.csv` are to be found",
     )
     parser.add_argument(
         "-a",
