@@ -16,6 +16,7 @@ import json
 import random
 import numpy as np
 import pandas as pd
+import xgboost as xgb
 import dask.dataframe as dd
 import matplotlib.pyplot as plt
 import argparse
@@ -502,6 +503,39 @@ def get_DecisionTree_model(algo, n_features):
 
     return model_perm, model_name, param_grid
 
+verbosity = 2
+def get_xgb_DecisionTree_model(algo, njobs, ntrees):
+    params = {
+        'max_depth': optimized_hyperparameters[algo]["max_depth"],
+        'learning_rate': 0.3,
+        #'gamma': 10,
+        'tree_method': "exact",
+        'n_estimators': ntrees,
+        'verbosity':verbosity,
+        'objective':'reg:squarederror',
+		'booster': 'gbtree',
+        'n_jobs': njobs,
+    }
+    model = xgb.XGBRegressor(**params)
+    return model, "XGB-DecisionTree", None
+
+def get_xgb_RandomForest_model(algo, njobs, ntrees):
+    params = {
+        'max_depth': optimized_hyperparameters[algo]["max_depth"],
+        'learning_rate': 0.3,
+        'tree_method': "exact",
+        'n_estimators': ntrees,
+        'nthread': njobs,
+        'subsample': 0.5,
+        'colsample_bynode': 0.8,
+        'num_parallel_tree': ntrees,
+        #'lambda': ,
+        'verbosity':verbosity,
+        'objective':'reg:squarederror'
+    }
+    #num_boost_round = 1
+    model = xgb.XGBRFRegressor(**params)
+    return model, "XGB-RandomForest", None
 
 def get_RandomForest_model(algo, njobs, ntrees):
     from itertools import chain
@@ -600,6 +634,14 @@ def train_model(X, X_mnk, Y, algo, model_options, folder, log):
         )
     elif model_to_train == "RF":
         model, model_name, param_grid = get_RandomForest_model(
+            algo, model_options["njobs"], model_options["ntrees"]
+        )
+    elif model_to_train == "xgb-DT":
+        model, model_name, param_grid = get_xgb_DecisionTree_model(
+            algo, model_options["njobs"], model_options["ntrees"]
+        )
+    elif model_to_train == "xgb-RF":
+        model, model_name, param_grid = get_xgb_RandomForest_model(
             algo, model_options["njobs"], model_options["ntrees"]
         )
     else:
@@ -1387,7 +1429,7 @@ if __name__ == "__main__":
         "-m",
         "--model",
         default="DT",
-        help="Model to train. Options: DT (Decision Trees), RF (Random Forests)",
+        help="Model to train. Options: DT (Decision Trees), RF (Random Forests), xgb-DT, xgb-RF",
     )
     parser.add_argument(
         "-s",

@@ -7,3 +7,4 @@ scikit-learn==0.20.2
 dask[dataframe]==1.2.2
 fastparquet==0.3.1
 python-snappy==0.5.4
+xgboost==0.90
