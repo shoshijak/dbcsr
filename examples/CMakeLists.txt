@@ -8,12 +8,20 @@ set(DBCSR_PROGRAM_SRCS
 # register each program source file as executable
 foreach (dbcsr_program_src ${DBCSR_PROGRAM_SRCS})
   get_filename_component(dbcsr_program_name ${dbcsr_program_src} NAME_WE)
-  add_executable(${dbcsr_program_name} ${dbcsr_program_src})
+  if (USE_HIP)
+    hip_add_executable(${dbcsr_program_name} ${dbcsr_program_src})
+  else ()
+    add_executable(${dbcsr_program_name} ${dbcsr_program_src})
+  endif ()
   target_link_libraries(${dbcsr_program_name} dbcsr)
 endforeach ()
 
 if (WITH_C_API)
-  add_executable(dbcsr_example_3_cpp dbcsr_example_3.cpp)
+  if (USE_HIP)
+    hip_add_executable(dbcsr_example_3_cpp dbcsr_example_3.cpp)
+  else ()
+    add_executable(dbcsr_example_3_cpp dbcsr_example_3.cpp)
+  endif ()
   target_link_libraries(dbcsr_example_3_cpp dbcsr_c MPI::MPI_CXX)
 
   if (CMAKE_CXX_COMPILER_ID STREQUAL "Cray")
