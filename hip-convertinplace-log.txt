@@ -1,0 +1,116 @@
+info: converted 3 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:3 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:98 in 'src/acc/libsmm_acc/libcusmm/libcusmm_benchmark.h'
+info: converted 1 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:1 tex:0 extern_shared:0 other:0 ) warn:0 LOC:225 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/include/xgboost/base.h'
+info: converted 14 CUDA->HIP refs( dev:3 mem:8 kern:1 coord_func:0 math_func:0 special_func:1 stream:0 event:0 err:0 def:0 tex:0 extern_shared:1 other:0 ) warn:0 LOC:541 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/predictor/gpu_predictor.cu'
+info: converted 7 CUDA->HIP refs( dev:3 mem:4 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:311 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/linear/updater_gpu_coordinate.cu'
+info: converted 10 CUDA->HIP refs( dev:1 mem:3 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:6 tex:0 extern_shared:0 other:0 ) warn:0 LOC:275 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/host_device_vector.h'
+info: converted 3 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:3 tex:0 extern_shared:0 other:0 ) warn:0 LOC:116 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/timer.h'
+  warning: src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/host_device_vector.cu:#17 : static void (*cudaSetDeviceHandler)(int) = nullptr;  // NOLINT
+  warning: src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/host_device_vector.cu:#20 :   cudaSetDeviceHandler = handler;
+  warning: src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/host_device_vector.cu:#149 :       if (cudaSetDeviceHandler == nullptr) {
+  warning: src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/host_device_vector.cu:#152 :         (*cudaSetDeviceHandler)(device_);
+info: converted 16 CUDA->HIP refs( dev:2 mem:14 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:4 LOC:620 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/host_device_vector.cu'
+info: converted 8 CUDA->HIP refs( dev:1 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:3 def:4 tex:0 extern_shared:0 other:0 ) warn:0 LOC:248 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/common.h'
+info: converted 52 CUDA->HIP refs( dev:25 mem:18 kern:2 coord_func:0 math_func:0 special_func:1 stream:6 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:1164 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/device_helpers.cuh'
+info: converted 8 CUDA->HIP refs( dev:1 mem:0 kern:1 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:6 tex:0 extern_shared:0 other:0 ) warn:0 LOC:209 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/transform.h'
+info: converted 9 CUDA->HIP refs( dev:2 mem:4 kern:2 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:1 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:402 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/hist_util.cu'
+info: converted 4 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:4 tex:0 extern_shared:0 other:0 ) warn:0 LOC:223 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/compressed_iterator.h'
+info: converted 2 CUDA->HIP refs( dev:2 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:20 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/common/common.cu'
+info: converted 1 CUDA->HIP refs( dev:1 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:261 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/metric/multiclass_metric.cu'
+info: converted 1 CUDA->HIP refs( dev:1 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:390 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/metric/elementwise_metric.cu'
+info: converted 2 CUDA->HIP refs( dev:0 mem:2 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:321 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/tree/updater_gpu_common.cuh'
+info: converted 44 CUDA->HIP refs( dev:8 mem:22 kern:3 coord_func:0 math_func:0 special_func:1 stream:8 event:0 err:1 def:0 tex:0 extern_shared:1 other:0 ) warn:0 LOC:1612 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/tree/updater_gpu_hist.cu'
+info: converted 12 CUDA->HIP refs( dev:0 mem:1 kern:9 coord_func:0 math_func:0 special_func:1 stream:0 event:0 err:0 def:0 tex:0 extern_shared:1 other:0 ) warn:0 LOC:830 in 'src/acc/libsmm_acc/libcusmm/pars-ml-env/lib/python3.7/site-packages/xgboost/src/tree/updater_gpu.cu'
+info: converted 16 CUDA->HIP refs( dev:0 mem:14 kern:0 coord_func:0 math_func:0 special_func:0 stream:2 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:357 in 'src/acc/libsmm_acc/libcusmm/libcusmm.cpp'
+info: converted 47 CUDA->HIP refs( dev:0 mem:47 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:454 in 'src/acc/libsmm_acc/libcusmm/libcusmm_benchmark.cu'
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_small.h:#131 : unsupported device function :     param_stack_s[i * npar    ] = __ldg(&param_stack[psp + i * npar    ]) - 1; /* value = index in a_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_small.h:#132 : unsupported device function :     param_stack_s[i * npar + 1] = __ldg(&param_stack[psp + i * npar + 1]) - 1; /* value = index in b_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_small.h:#133 : unsupported device function :     param_stack_s[i * npar + 2] = __ldg(&param_stack[psp + i * npar + 2]) - 1; /* value = index in c_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_small.h:#156 : unsupported device function :          buff_l[i] = __ldg(&a_data[srcA + i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_small.h:#157 : unsupported device function :          buff_r[i] = __ldg(&b_data[srcB + i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_small.h:#162 : unsupported device function :          buff_l[i] = __ldg(&a_data[srcA + i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_small.h:#166 : unsupported device function :          buff_r[i] = __ldg(&b_data[srcB + i]);
+info: converted 0 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:7 LOC:224 in 'src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_small.h'
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB2.h:#30 : unsupported device function :     dest[ri] = __ldg(&from[i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB2.h:#34 : unsupported device function :     dest[NR - 1] = __ldg(&from[i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB2.h:#241 : unsupported device function :     param_stack_s[i * npar    ] = __ldg(&param_stack[psp + i * npar    ]) - 1;
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB2.h:#242 : unsupported device function :     param_stack_s[i * npar + 1] = __ldg(&param_stack[psp + i * npar + 1]) - 1;
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB2.h:#243 : unsupported device function :     param_stack_s[i * npar + 2] = __ldg(&param_stack[psp + i * npar + 2]) - 1;
+info: converted 0 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:5 LOC:331 in 'src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB2.h'
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_common.h:#40 : unsupported device function : #define __ldg(x)  (*(x))
+info: converted 0 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:1 LOC:51 in 'src/acc/libsmm_acc/libcusmm/kernels/cusmm_common.h'
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#159 : unsupported device function :     param_stack_s[i * npar    ] = __ldg(&param_stack[psp + i * npar    ]) - 1; /* value = index in a_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#160 : unsupported device function :     param_stack_s[i * npar + 1] = __ldg(&param_stack[psp + i * npar + 1]) - 1; /* value = index in b_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#161 : unsupported device function :     param_stack_s[i * npar + 2] = __ldg(&param_stack[psp + i * npar + 2]) - 1; /* value = index in c_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#189 : unsupported device function :           lba_r[l] = __ldg(&a_data[srcA + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#190 : unsupported device function :           lbb_r[l] = __ldg(&b_data[srcB + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#198 : unsupported device function :           lba_r[l] = __ldg(&a_data[srcA + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#199 : unsupported device function :           lbb_r[l] = __ldg(&b_data[srcB + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#204 : unsupported device function :         lba_r[load_unroll_factor_1 + mkloads_remained] = __ldg(&a_data[srcA + left_to_finish_1]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#205 : unsupported device function :         lbb_r[load_unroll_factor_2 + knloads_remained] = __ldg(&b_data[srcB + left_to_finish_2]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#212 : unsupported device function :           lba_r[l] = __ldg(&a_data[srcA + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#220 : unsupported device function :           lbb_r[l] = __ldg(&b_data[srcB + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#228 : unsupported device function :           lba_r[l] = __ldg(&a_data[srcA + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#236 : unsupported device function :           lbb_r[l] = __ldg(&b_data[srcB + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#240 : unsupported device function :       if (left_to_finish_1 < mk) lba_r[load_unroll_factor_1 + mkloads_remained] = __ldg(&a_data[srcA + left_to_finish_1]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#241 : unsupported device function :       if (left_to_finish_2 < kn) lbb_r[load_unroll_factor_2 + knloads_remained] = __ldg(&b_data[srcB + left_to_finish_2]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#334 : unsupported device function :             lba_r[l] = __ldg(&a_data[srcA + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#335 : unsupported device function :             lbb_r[l] = __ldg(&b_data[srcB + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#343 : unsupported device function :             lba_r[l] = __ldg(&a_data[srcA + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#344 : unsupported device function :             lbb_r[l] = __ldg(&b_data[srcB + i +l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#349 : unsupported device function :           lba_r[load_unroll_factor_1 + mkloads_remained] = __ldg(&a_data[srcA + left_to_finish_1]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#350 : unsupported device function :           lbb_r[load_unroll_factor_2 + knloads_remained] = __ldg(&b_data[srcB + left_to_finish_2]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#357 : unsupported device function :             lba_r[l] = __ldg(&a_data[srcA + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#365 : unsupported device function :             lbb_r[l] = __ldg(&b_data[srcB + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#373 : unsupported device function :             lba_r[l] = __ldg(&a_data[srcA + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#381 : unsupported device function :             lbb_r[l] = __ldg(&b_data[srcB + i + l * threads]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#385 : unsupported device function :         if (left_to_finish_1 < mk) lba_r[load_unroll_factor_1 + mkloads_remained] = __ldg(&a_data[srcA + left_to_finish_1]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h:#386 : unsupported device function :         if (left_to_finish_2 < kn) lbb_r[load_unroll_factor_2 + knloads_remained] = __ldg(&b_data[srcB + left_to_finish_2]);
+info: converted 0 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:27 LOC:442 in 'src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_medium.h'
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_tiny.h:#116 : unsupported device function :     param_stack_s[i * npar    ] = __ldg(&param_stack[psp + i * npar    ]) - 1; /* value = index in a_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_tiny.h:#117 : unsupported device function :     param_stack_s[i * npar + 1] = __ldg(&param_stack[psp + i * npar + 1]) - 1; /* value = index in b_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_tiny.h:#118 : unsupported device function :     param_stack_s[i * npar + 2] = __ldg(&param_stack[psp + i * npar + 2]) - 1; /* value = index in c_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_tiny.h:#143 : unsupported device function :         buff_a[i] = __ldg(&a_data[srcA + i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_tiny.h:#144 : unsupported device function :         buff_b[i] = __ldg(&b_data[srcB + i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_tiny.h:#149 : unsupported device function :         buff_a[i] = __ldg(&a_data[srcA + i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_tiny.h:#153 : unsupported device function :         buff_b[i] = __ldg(&b_data[srcB + i]);
+info: converted 0 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:7 LOC:174 in 'src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_tiny.h'
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB1.h:#25 : unsupported device function :       dest[threadIdx.x] = __ldg(&from[threadIdx.x]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB1.h:#28 : unsupported device function :       dest[i] = __ldg(&from[i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB1.h:#40 : unsupported device function :       dest[0] = __ldg(&from[threadIdx.x]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB1.h:#45 : unsupported device function :         dest[ri] = __ldg(&from[i]);
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB1.h:#212 : unsupported device function :     param_stack_s[i * npar    ] = __ldg(&param_stack[psp + i * npar    ]) - 1; /* value = index in a_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB1.h:#213 : unsupported device function :     param_stack_s[i * npar + 1] = __ldg(&param_stack[psp + i * npar + 1]) - 1; /* value = index in b_data */
+  warning: src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB1.h:#214 : unsupported device function :     param_stack_s[i * npar + 2] = __ldg(&param_stack[psp + i * npar + 2]) - 1; /* value = index in c_data */
+info: converted 0 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:0 def:0 tex:0 extern_shared:0 other:0 ) warn:7 LOC:315 in 'src/acc/libsmm_acc/libcusmm/kernels/cusmm_dnt_largeDB1.h'
+  warning: src/acc/cuda/acc_cuda_stream.cu:#29 :   hipError_t cErr = cudaDeviceGetStreamPriorityRange(least, greatest);
+  warning: src/acc/cuda/acc_cuda_stream.cu:#48 :       cErr =  cudaStreamCreateWithPriority(custream, flags, priority);
+info: converted 18 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:11 event:0 err:7 def:0 tex:0 extern_shared:0 other:0 ) warn:2 LOC:85 in 'src/acc/cuda/acc_cuda_stream.cu'
+  warning: src/acc/cuda/acc_cuda_dev.cu:#35 :   cErr = cudaRuntimeGetVersion(&runtimeVersion);
+  warning: src/acc/cuda/acc_cuda_dev.cu:#56 :     cErr = cudaDeviceSetLimit(cudaLimitPrintfFifoSize, (size_t) 1000000000);
+info: converted 6 CUDA->HIP refs( dev:3 mem:1 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:2 def:0 tex:0 extern_shared:0 other:0 ) warn:2 LOC:62 in 'src/acc/cuda/acc_cuda_dev.cu'
+info: converted 7 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:7 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:26 in 'src/acc/cuda/acc_cuda_error.cu'
+info: converted 2 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:0 event:0 err:2 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:10 in 'src/acc/cuda/acc_cuda_error.h'
+info: converted 37 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:5 event:18 err:14 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:101 in 'src/acc/cuda/acc_cuda_event.cu'
+info: converted 42 CUDA->HIP refs( dev:0 mem:16 kern:0 coord_func:0 math_func:0 special_func:0 stream:8 event:0 err:18 def:0 tex:0 extern_shared:0 other:0 ) warn:0 LOC:188 in 'src/acc/cuda/acc_cuda_mem.cu'
+  warning: src/acc/cublaswrap/cublas.cu:#17 : extern "C" int cublas_create(cublasHandle_t **handle)
+  warning: src/acc/cublaswrap/cublas.cu:#19 :   *handle = (cublasHandle_t*)malloc(sizeof(cublasHandle_t));
+  warning: src/acc/cublaswrap/cublas.cu:#20 :   cublasStatus_t cStatus = cublasCreate(*handle);
+  warning: src/acc/cublaswrap/cublas.cu:#30 : extern "C" int cublas_destroy(cublasHandle_t *handle)
+  warning: src/acc/cublaswrap/cublas.cu:#32 :   cublasStatus_t cStatus = cublasDestroy(*handle);
+  warning: src/acc/cublaswrap/cublas.cu:#43 : extern "C" int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
+  warning: src/acc/cublaswrap/cublas.cu:#49 :   cublasStatus_t cStatus = cublasSetStream(*handle, *stream);
+  warning: src/acc/cublaswrap/cublas.cu:#54 :   cublasOperation_t cTransa = transa=='N' ? CUBLAS_OP_N : CUBLAS_OP_T;
+  warning: src/acc/cublaswrap/cublas.cu:#55 :   cublasOperation_t cTransb = transb=='N' ? CUBLAS_OP_N : CUBLAS_OP_T;
+  warning: src/acc/cublaswrap/cublas.cu:#59 :   cublasStatus_t stat = cublasDgemm(*handle, cTransa, cTransb,
+info: converted 4 CUDA->HIP refs( dev:0 mem:0 kern:0 coord_func:0 math_func:0 special_func:0 stream:1 event:0 err:3 def:0 tex:0 extern_shared:0 other:0 ) warn:10 LOC:69 in 'src/acc/cublaswrap/cublas.cu'
+
+info: TOTAL-converted 376 CUDA->HIP refs( dev:53 mem:154 kern:18 coord_func:0 math_func:0 special_func:4 stream:41 event:18 err:61 def:24 tex:0 extern_shared:3 other:0 ) warn:72 LOC:73579
+  warning: unconverted cublasStatus_t : 4
+  warning: unconverted cublasHandle_t : 4
+  warning: unconverted cudaSetDeviceHandler : 4
+  warning: unconverted cublasOperation_t : 2
+  warning: unconverted cudaRuntimeGetVersion : 1
+  warning: unconverted cudaStreamCreateWithPriority : 1
+  warning: unconverted cudaDeviceGetStreamPriorityRange : 1
+  warning: unconverted cudaDeviceSetLimit : 1
+  kernels (6 total) :   UnpackFeaturesK(1)  LaunchCUDAKernel(1)  MarkLeavesKernel(1)  CompressBinEllpackKernel(1)  PredictKernel(1)  LbsKernel(1)
