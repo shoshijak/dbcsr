@@ -13,9 +13,8 @@
 #include "parameters_utils.h"
 
 #include <cstdio>
-#include <cuda.h>
 #include <hip/hip_runtime.h>
-#include <nvrtc.h>
+#include<hip_runtime_api.h>
 #include <unordered_map>
 #include <vector>
 

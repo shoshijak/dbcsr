@@ -10,8 +10,8 @@
 #include "../include/libsmm_acc.h"
 #include "parameters.h"
 #include "parameters_utils.h"
-#include "libcusmm.h"
-#include "libcusmm_benchmark.h"
+#include "libhipsmm.h"
+#include "libhipsmm_benchmark.h"
 #include "cusmm_kernels.h"
 
 #include <sstream>

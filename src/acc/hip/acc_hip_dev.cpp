@@ -10,11 +10,9 @@
 #include <hip/hip_runtime.h>
 #include <stdio.h>
 #include <math.h>
-#include "acc_cuda_error.h"
+#include "acc_hip_error.h"
 #include "../include/acc.h"
 
-// for debug purpose
-static const int verbose_print = 1;
 
 /****************************************************************************/
 extern "C" int acc_get_ndevices(int *n_devices){
@@ -32,7 +30,7 @@ extern "C" int acc_set_active_device(int device_id){
   hipError_t cErr;
   int myDevice, runtimeVersion;
 
-  cErr = cudaRuntimeGetVersion(&runtimeVersion);
+  cErr = hipRuntimeGetVersion(&runtimeVersion);
   if (cuda_error_check (cErr))
     return -1;
 
@@ -51,12 +49,6 @@ extern "C" int acc_set_active_device(int device_id){
   cErr = hipFree(0);
   if (cuda_error_check (cErr))
     return -1;
-
-  if (verbose_print){
-    cErr = cudaDeviceSetLimit(cudaLimitPrintfFifoSize, (size_t) 1000000000);
-    if (cuda_error_check (cErr))
-      return -1;
-  }
 
   return 0;
 }

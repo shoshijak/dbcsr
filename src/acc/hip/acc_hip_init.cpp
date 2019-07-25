@@ -7,7 +7,6 @@
  * SPDX-License-Identifier: GPL-2.0+                                                              *
  *------------------------------------------------------------------------------------------------*/
 
-#include <cuda.h>
 #include <hip/hip_runtime.h>
 #include <stdio.h>
 #include "../include/acc.h"
@@ -16,12 +15,12 @@
 #include <nvToolsExtCudaRt.h>
 #endif
 
-#define CUDA_SAFE_CALL(name, x)                                   \
+#define HIP_SAFE_CALL(name, x)                                    \
   do {                                                            \
-    CUresult result = x;                                          \
-    if (result != CUDA_SUCCESS) {                                 \
+    hipError_t result = x;                                        \
+    if (result != hipSuccess) {                                   \
       const char *msg;                                            \
-      cuGetErrorName(result, &msg);                               \
+      msg = hipGetErrorName(result);                              \
       printf("\nerror: %s failed with error %s\n",                \
              name, msg);                                          \
       exit(1);                                                    \
@@ -32,24 +31,24 @@
 /****************************************************************************/
 extern "C" int acc_init(){
   // Driver boilerplate
-  CUDA_SAFE_CALL("cuInit", cuInit(0));
-  CUdevice cuDevice; 
-  CUDA_SAFE_CALL("cuDeviceGet", cuDeviceGet(&cuDevice, 0));
-  CUcontext ctx;
-  CUDA_SAFE_CALL("cuDevicePrimaryCtxRetain", cuDevicePrimaryCtxRetain(&ctx, cuDevice));
-  CUDA_SAFE_CALL("cuCtxPushCurrent", cuCtxPushCurrent(ctx));
+  HIP_SAFE_CALL("hipInit", hipInit(0));
+  hipDevice_t hipDevice;
+  HIP_SAFE_CALL("hipDeviceGet", hipDeviceGet(&hipDevice, 0));
+  hipCtx_t ctx;
+  HIP_SAFE_CALL("hipDevicePrimaryCtxRetain", hipDevicePrimaryCtxRetain(&ctx, hipDevice));
+  HIP_SAFE_CALL("hipCtxPushCurrent", hipCtxPushCurrent(ctx));
   return 0;
 }
 
 /****************************************************************************/
 extern "C" int acc_finalize(){
   // Release driver resources
-  CUcontext ctx;
-  CUDA_SAFE_CALL("cuCtxGetCurrent", cuCtxGetCurrent(&ctx)); 
-  CUDA_SAFE_CALL("cuCtxPopCurrent", cuCtxPopCurrent(&ctx)); 
-  CUdevice cuDevice;
-  CUDA_SAFE_CALL("cuDeviceGet", cuDeviceGet(&cuDevice, 0));
-  CUDA_SAFE_CALL("cuDevicePrimaryCtxRelease", cuDevicePrimaryCtxRelease(cuDevice));
+  hipCtx_t ctx;
+  HIP_SAFE_CALL("hipCtxGetCurrent", hipCtxGetCurrent(&ctx));
+  HIP_SAFE_CALL("hipCtxPopCurrent", hipCtxPopCurrent(&ctx));
+  hipDevice_t hipDevice;
+  HIP_SAFE_CALL("hipDeviceGet", hipDeviceGet(&hipDevice, 0));
+  HIP_SAFE_CALL("hipDevicePrimaryCtxRelease", hipDevicePrimaryCtxRelease(hipDevice));
   return 0;
 }
 

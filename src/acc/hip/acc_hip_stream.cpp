@@ -10,7 +10,7 @@
 #include <hip/hip_runtime.h>
 #include <stdio.h>
 #include <math.h>
-#include "acc_cuda_error.h"
+#include "acc_hip_error.h"
 #include "../include/acc.h"
 
 #ifdef __CUDA_PROFILING
@@ -26,7 +26,7 @@ extern "C" int acc_stream_priority_range(int* least, int* greatest){
   *greatest = -1;
 
 #ifndef __HAS_NO_CUDA_STREAM_PRIORITIES
-  hipError_t cErr = cudaDeviceGetStreamPriorityRange(least, greatest);
+  hipError_t cErr = hipDeviceGetStreamPriorityRange(least, greatest);
   if (cuda_error_check(cErr)) return -1;
   if (cuda_error_check(hipGetLastError())) return -1;
 #endif
@@ -45,7 +45,7 @@ extern "C" int acc_stream_create(void** stream_p, const char* name, int priority
 #ifndef __HAS_NO_CUDA_STREAM_PRIORITIES
   if(priority > 0){
       unsigned int flags = hipStreamNonBlocking;
-      cErr =  cudaStreamCreateWithPriority(custream, flags, priority);
+      cErr =  hipStreamCreateWithPriority(custream, flags, priority);
   }else
 #endif
       cErr = hipStreamCreate(custream);

@@ -10,7 +10,7 @@
 #include <hip/hip_runtime.h>
 #include <stdio.h>
 #include <math.h>
-#include "acc_cuda_error.h"
+#include "acc_hip_error.h"
 #include "../include/acc.h"
 
 static const int verbose_print = 0;

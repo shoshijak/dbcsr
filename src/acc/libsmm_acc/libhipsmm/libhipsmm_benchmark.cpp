@@ -9,9 +9,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <cuda.h>
+#include <hip/hip_runtime.h>
 #include <algorithm>
-#include "libcusmm_benchmark.h"
+#include "libhipsmm_benchmark.h"
 #include "parameters.h"
 #include "parameters_utils.h"
 
