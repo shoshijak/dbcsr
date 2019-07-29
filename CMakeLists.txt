@@ -84,6 +84,32 @@ find_package(BLAS REQUIRED)
 find_package(LAPACK REQUIRED)
 find_package(PkgConfig)
 
+# this module looks preferably for version 3 of Python. If not found, version 2 is searched
+# In CMake 3.15, if a python virtual environment is activated, it will search the virtual
+# environment for a python interpreter before searching elsewhere in the system.
+# In CMake <3.15, the system is searched before the virtual environment.
+if (NOT Python_EXECUTABLE)
+  # If the python interpreter isn't specified via the command line, look for it:
+  find_package(Python REQUIRED)
+endif()
+message(STATUS "Python executable: " ${Python_EXECUTABLE})
+
+# make sure numpy is installed
+execute_process(COMMAND ${Python_EXECUTABLE} -c "import numpy; print(numpy.__version__)"
+                OUTPUT_VARIABLE OUT
+                ERROR_VARIABLE ERR
+                RESULT_VARIABLE RES
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
+if (OUT STREQUAL "")
+  message(STATUS "python executable: " ${Python_EXECUTABLE})
+  message(STATUS "stdout: " ${OUT})
+  message(STATUS "stderr: " ${ERR})
+  message(STATUS "python process result: " ${RES})
+  message(FATAL_ERROR "Could not find Numpy")
+else()
+  message(STATUS "Numpy version: " ${OUT})
+endif()
+
 if (USE_MPI)
   get_property(REQUIRED_MPI_COMPONENTS GLOBAL PROPERTY ENABLED_LANGUAGES)
   list(REMOVE_ITEM REQUIRED_MPI_COMPONENTS CUDA)  # CUDA does not have a MPI component

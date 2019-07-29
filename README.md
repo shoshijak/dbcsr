@@ -89,6 +89,10 @@ detect the compiler behind the compiler wrappers:
 
     -DCMAKE_SYSTEM_NAME=CrayLinuxEnvironment
 
+If you want to use Python from a virtual environment and your CMake version is < 3.15, specify the desired python interpreter manually using:
+
+    -DPython_EXECUTABLE=/path/to/python
+
 ## Contributing to DBCSR
 
 Your contribution to the project is welcome! 
