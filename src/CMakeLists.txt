@@ -202,21 +202,15 @@ if (USE_CUDA)
 endif ()
 
 if (USE_HIP)
-  target_link_libraries(dbcsr PRIVATE hip_hcc)
 
   # add libhipsmm which has its own CMakeLists.txt due to code generation
   add_subdirectory(acc/libsmm_acc/libhipsmm)
-  target_link_libraries(dbcsr PRIVATE libhipsmm)
-
-  #target_link_libraries(dbcsr PRIVATE nvrtc)  ## I think I just don't need to do that
+  target_sources(dbcsr PRIVATE $<TARGET_OBJECTS:libhipsmm>)
 
   # Compile the rest of the HIP source files into a static library
   set_source_files_properties(${DBCSR_HIP_SRCS} PROPERTIES HIP_SOURCE_PROPERTY_FORMAT 1)
   hip_add_library(acc_hip STATIC ${DBCSR_HIP_SRCS})
-  # target_compile_options?
-  # target_include_directories ?
   target_compile_definitions(acc_hip PRIVATE -DARCH_NUMBER=${CUDA_ARCH_NUMBER})
-  target_link_libraries(dbcsr PRIVATE acc_hip)
 
   # tests need some of the libcusmm headers and for CMake <3.12
   # compatibility, we can't set it on the the object library itself
