@@ -29,10 +29,15 @@ set(LIBHIPSMM_SRC_FILES
 )
 
 set_source_files_properties(${LIBHIPSMM_SRC_FILES} PROPERTIES HIP_SOURCE_PROPERTY_FORMAT 1)
-hip_add_library(libhipsmm
-  STATIC ${LIBHIPSMM_SRC_FILES}
-  parameters.h
-  cusmm_kernels.h
+
+# Workaround bug in ROCm's "Findhip.cmake".
+hipcustom_add_library(libhipsmm OBJECT
+# once the bug is fixed, replace by the following line:
+# hip_add_library(libhipsmm OBJECT
+    libhipsmm.cpp
+    libhipsmm_benchmark.cpp
+    parameters.h
+    cusmm_kernels.h
 )
 
 if (OpenMP_FOUND)
