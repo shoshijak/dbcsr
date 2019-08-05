@@ -31,7 +31,7 @@ set(LIBHIPSMM_SRC_FILES
 set_source_files_properties(${LIBHIPSMM_SRC_FILES} PROPERTIES HIP_SOURCE_PROPERTY_FORMAT 1)
 
 # Workaround bug in ROCm's "Findhip.cmake".
-hipcustom_add_library(libhipsmm OBJECT
+hip_add_library(libhipsmm STATIC
 # once the bug is fixed, replace by the following line:
 # hip_add_library(libhipsmm OBJECT
     libhipsmm.cpp
@@ -39,6 +39,10 @@ hipcustom_add_library(libhipsmm OBJECT
     parameters.h
     cusmm_kernels.h
 )
+install(TARGETS libhipsmm
+  EXPORT libcusmmTargets
+  LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+  ARCHIVE DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 
 if (OpenMP_FOUND)
   # with CMake 3.12+ the following can be replaced by:
