@@ -76,6 +76,8 @@ The configuration flags are (default first):
     -DUSE_SMM=<blas|libxsmm>
     -DUSE_CUDA=<OFF|ON>
     -DUSE_CUBLAS=<OFF|ON>
+    -DUSE_HIP=<OFF|ON>
+    -DUSE_HIPBLAS=<OFF|ON>
     -DWITH_C_API=<ON|OFF>
     -DWITH_EXAMPLES=<ON|OFF>
     -DWITH_GPU=<P100|K20X|K40|K80|V100>
@@ -92,6 +94,9 @@ detect the compiler behind the compiler wrappers:
 If you want to use Python from a virtual environment and your CMake version is < 3.15, specify the desired python interpreter manually using:
 
     -DPython_EXECUTABLE=/path/to/python
+
+If you are using the HIP backend, please specify `export HIP_PATH=/opt/rocm/hip` as a workaround ...
+Specify $HIP_PLATFORM as well ?!
 
 ## Contributing to DBCSR
 
