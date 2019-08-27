@@ -279,6 +279,8 @@ if (USE_HIP)
 
   if (OpenMP_FOUND)
     set(HIP_HIPCC_FLAGS "${HIP_HIPCC_FLAGS} -fopenmp")
+    # dirty trick for ault
+    set(HIP_HIPCC_FLAGS "${HIP_HIPCC_FLAGS} -I/opt/rh/devtoolset-7/root/usr/lib/gcc/x86_64-redhat-linux/7/include -L/opt/rh/llvm-toolset-7/root/usr/lib64")
   endif ()
 
   # add libsmm which has its own CMakeLists.txt due to code generation
