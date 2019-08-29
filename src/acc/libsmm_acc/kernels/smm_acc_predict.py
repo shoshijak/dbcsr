@@ -14,11 +14,11 @@ import numpy as np
 # Dictionary of available kernel algorithms
 # keys: kernel name
 # values: kernel implementation class
-from kernels.cusmm_dnt_largeDB1 import Kernel_dnt_largeDB1
-from kernels.cusmm_dnt_largeDB2 import Kernel_dnt_largeDB2
-from kernels.cusmm_dnt_medium import Kernel_dnt_medium
-from kernels.cusmm_dnt_small import Kernel_dnt_small
-from kernels.cusmm_dnt_tiny import Kernel_dnt_tiny
+from kernels.smm_acc_dnt_largeDB1 import Kernel_dnt_largeDB1
+from kernels.smm_acc_dnt_largeDB2 import Kernel_dnt_largeDB2
+from kernels.smm_acc_dnt_medium import Kernel_dnt_medium
+from kernels.smm_acc_dnt_small import Kernel_dnt_small
+from kernels.smm_acc_dnt_tiny import Kernel_dnt_tiny
 
 kernel_algorithm = {
     "tiny": Kernel_dnt_tiny,
@@ -31,7 +31,7 @@ kernel_algorithm = {
 # ===============================================================================
 # Dictionary of available GPU architectures.
 # keys: parameter_file
-# values: CUDA compute versions
+# values: CUDA compute versions / AMD processor versions
 gpu_architectures = {
     "parameters_K20X.json": "sm_35",
     "parameters_K40.json": "sm_35",
@@ -39,7 +39,7 @@ gpu_architectures = {
     "parameters_P100.json": "sm_60",
     "parameters_V100.json": "sm_70",
     "parameters_Vega10.json": "gfx900",
-    "parameters_Vega20.json": "gfx906"
+    "parameters_Mi50.json": "gfx906"
 }
 
 
@@ -372,7 +372,7 @@ def get_baseline_performances_per_mnk(data, algorithm, gpu, autotuning):
 # ===============================================================================
 class PredictiveParameters:
     """
-    Class handling predictive features for the predictive modelling of libcusmm's performance
+    Class handling predictive features for the predictive modelling of libsmm_acc's performance
     """
 
     def __init__(

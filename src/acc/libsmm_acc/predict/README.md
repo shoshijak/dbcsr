@@ -1,4 +1,4 @@
-# Training Procedure for Predictive Modelling of Optimal Parameters in `libcusmm`
+# Training Procedure for Predictive Modelling of Optimal Parameters in `libsmm_acc`
 
 The performance of the matrix-matrix multiplication kernels is highly dependant on the choice of algorithm and parameters, this is why [*autotuning*](tune.md) is used to find optimal kernel parameters.
 
@@ -24,9 +24,7 @@ pip install -r requirements.txt
 
 The input features for the predictive models can be 'raw' parameters (left-most-column in the figure below), or hand-engineered features 'derived' from the raw features (matrix sizes, launch parameters and resource usage estimations).
 
-![libcusmm_predictive_modeling_features](../../../../docs/images/libcusmm_predictive_modeling_features.png)
-
-
+![libsmm_acc_predictive_modeling_features](../../../../../docs/images/libsmm_acc_predictive_modeling_features.png)
 
 ---
 
@@ -46,7 +44,7 @@ Get the data to be used for training, either by downloading data from the [dedic
   wget https://github.com/cp2k/dbcsr-data/blob/master/GPU/raw_training_data_ALGORITHM.csv
   ```
 
-- Compute derived parameters from raw parameters and create a record of baseline and maximum performances: run [`predict_derivepars.py`](predict_derivepars.py) , providing the CUDA architecture number and the location of the downloaded data:
+- Compute derived parameters from raw parameters and create a record of baseline and maximum performances: run [`predict_derivepars.py`](predict_derivepars.py), providing the CUDA/HIP architecture number and the location of the downloaded data:
 
   ```%bash
   ./predict_derivepars.py # –arch 60 --folder /scratch/autotuning_dataset, e.g.
@@ -120,7 +118,7 @@ This may take several hours. For example, generating parameters for the P100 too
 #### 5. Evaluate the predicted parameters
 
 ```%bash
-./predict_evaluate.py -f libcusmm_predicted.out -n libcusmm_baseline.out
+./predict_evaluate.py -f libsmm_acc_predicted.out -n libsmm_acc_baseline.out
 ```
 
 
@@ -145,4 +143,4 @@ Submit a pull request updating the `parameters_GPU.json` file in question.
 
 - Choose the new feature's name
 - Add the feature as a method of `class PredictiveParameters`, named `get_NAME`
-- Add the derived feature to the data structure `derived_parameters` in [`kernels/cusmm_predict.py`](kernels/cusmm_predict.py)
+- Add the derived feature to the data structure `derived_parameters` in [`kernels/smm_acc_predict.py`](kernels/smm_acc_predict.py)

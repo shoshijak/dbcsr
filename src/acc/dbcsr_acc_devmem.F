@@ -80,36 +80,36 @@ MODULE dbcsr_acc_devmem
 #if  defined (__DBCSR_ACC)
 
    INTERFACE
-      FUNCTION dc_dev_mem_info_cu(free, avail) RESULT(istat) BIND(C, name="acc_dev_mem_info")
+      FUNCTION acc_interface_dev_mem_info(free, avail) RESULT(istat) BIND(C, name="acc_dev_mem_info")
          IMPORT
          INTEGER(KIND=C_INT), INTENT(OUT)         :: free, avail
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_dev_mem_info_cu
+      END FUNCTION acc_interface_dev_mem_info
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_dev_mem_alloc(mem, n) RESULT(istat) BIND(C, name="acc_dev_mem_allocate")
+      FUNCTION acc_interface_dev_mem_alloc(mem, n) RESULT(istat) BIND(C, name="acc_dev_mem_allocate")
          IMPORT
          TYPE(C_PTR)                              :: mem
          INTEGER(KIND=C_SIZE_T), INTENT(IN), &
             VALUE                                  :: n
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_dev_mem_alloc
+      END FUNCTION acc_interface_dev_mem_alloc
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_dev_mem_dealloc(mem) RESULT(istat) BIND(C, name="acc_dev_mem_deallocate")
+      FUNCTION acc_interface_dev_mem_dealloc(mem) RESULT(istat) BIND(C, name="acc_dev_mem_deallocate")
          IMPORT
          TYPE(C_PTR), VALUE                       :: mem
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_dev_mem_dealloc
+      END FUNCTION acc_interface_dev_mem_dealloc
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_acc_dev_mem_set_ptr(mem, other, lb) RESULT(istat) BIND(C, name="acc_dev_mem_set_ptr")
+      FUNCTION acc_interface_dev_mem_set_ptr(mem, other, lb) RESULT(istat) BIND(C, name="acc_dev_mem_set_ptr")
          IMPORT
          TYPE(C_PTR)                              :: mem
          TYPE(C_PTR), VALUE                       :: other
@@ -117,11 +117,11 @@ MODULE dbcsr_acc_devmem
             VALUE                                :: lb
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_acc_dev_mem_set_ptr
+      END FUNCTION acc_interface_dev_mem_set_ptr
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_memzero_cu(this, offset, length, stream_ptr) RESULT(istat) BIND(C, name="acc_memset_zero")
+      FUNCTION acc_interface_memzero(this, offset, length, stream_ptr) RESULT(istat) BIND(C, name="acc_memset_zero")
          IMPORT
          TYPE(C_PTR), INTENT(IN), VALUE           :: this
          INTEGER(KIND=C_SIZE_T), INTENT(IN), &
@@ -129,11 +129,11 @@ MODULE dbcsr_acc_devmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_memzero_cu
+      END FUNCTION acc_interface_memzero
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_memcpy_h2d_cu(host, dev, count, stream_ptr) RESULT(istat) &
+      FUNCTION acc_interface_memcpy_h2d(host, dev, count, stream_ptr) RESULT(istat) &
          BIND(C, name="acc_memcpy_h2d")
          IMPORT
          TYPE(C_PTR), INTENT(IN), VALUE           :: host
@@ -143,11 +143,11 @@ MODULE dbcsr_acc_devmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_memcpy_h2d_cu
+      END FUNCTION acc_interface_memcpy_h2d
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_memcpy_d2h_cu(dev, host, count, stream_ptr) RESULT(istat) &
+      FUNCTION acc_interface_memcpy_d2h(dev, host, count, stream_ptr) RESULT(istat) &
          BIND(C, name="acc_memcpy_d2h")
          IMPORT
          TYPE(C_PTR), INTENT(IN), VALUE           :: dev
@@ -157,11 +157,11 @@ MODULE dbcsr_acc_devmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_memcpy_d2h_cu
+      END FUNCTION acc_interface_memcpy_d2h
    END INTERFACE
 
    INTERFACE
-      FUNCTION dc_memcpy_d2d_cu(dev_src, dev_dst, count, stream_ptr) RESULT(istat) &
+      FUNCTION acc_interface_memcpy_d2d(dev_src, dev_dst, count, stream_ptr) RESULT(istat) &
          BIND(C, name="acc_memcpy_d2d")
          IMPORT
          TYPE(C_PTR), INTENT(IN), VALUE           :: dev_src
@@ -171,7 +171,7 @@ MODULE dbcsr_acc_devmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION dc_memcpy_d2d_cu
+      END FUNCTION acc_interface_memcpy_d2d
    END INTERFACE
 
 #endif
@@ -220,7 +220,7 @@ CONTAINS
          old_cptr = this%cptr
 
          new_cptr = C_NULL_PTR
-         istat = dc_dev_mem_alloc(new_cptr, INT(new_size, KIND=C_SIZE_T))
+         istat = acc_interface_dev_mem_alloc(new_cptr, INT(new_size, KIND=C_SIZE_T))
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_ensure_size_bytes: alloc failed")
 
@@ -236,13 +236,13 @@ CONTAINS
          IF (PRESENT(nocopy)) my_nocopy = nocopy
          IF (.NOT. my_nocopy) THEN
             stream_cptr = acc_stream_cptr(stream)
-            istat = dc_memcpy_d2d_cu(old_cptr, new_cptr, INT(old_size, KIND=C_SIZE_T), stream_cptr)
+            istat = acc_interface_memcpy_d2d(old_cptr, new_cptr, INT(old_size, KIND=C_SIZE_T), stream_cptr)
             IF (istat /= 0) &
                DBCSR_ABORT("acc_devmem_ensure_size_bytes: memcpy failed")
          ENDIF
 
          CALL acc_stream_synchronize(stream)
-         istat = dc_dev_mem_dealloc(old_cptr)
+         istat = acc_interface_dev_mem_dealloc(old_cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_ensure_size_bytes: dealloc failed")
 
@@ -338,7 +338,7 @@ CONTAINS
          IF ((lb_in_bytes + size_in_bytes) .GT. pointee%size_in_bytes) &
             DBCSR_ABORT("acc_devmem_set_cptr: out-of-bounds")
          this%size_in_bytes = size_in_bytes
-         istat = dc_acc_dev_mem_set_ptr(this%cptr, pointee%cptr, INT(lb_in_bytes, KIND=C_SIZE_T))
+         istat = acc_interface_dev_mem_set_ptr(this%cptr, pointee%cptr, INT(lb_in_bytes, KIND=C_SIZE_T))
       ELSE
          ! Empty buffers
          this%size_in_bytes = pointee%size_in_bytes
@@ -348,7 +348,7 @@ CONTAINS
    END SUBROUTINE acc_devmem_set_cptr
 
 ! **************************************************************************************************
-!> \brief Fortran-wrapper for cudaMemGetInfo.
+!> \brief Fortran-wrapper for getting GPU memory info
 !> \param[out] free free device memory
 !> \param[out] avail available device memory
 !> \author  Ole Schuett
@@ -361,7 +361,7 @@ CONTAINS
       DBCSR_ABORT("__DBCSR_ACC not compiled in.")
 #else
       INTEGER                                  :: istat
-      istat = dc_dev_mem_info_cu(free, avail)
+      istat = acc_interface_dev_mem_info(free, avail)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_devmem_info: failed.")
 #endif
@@ -391,7 +391,7 @@ CONTAINS
          DBCSR_ABORT("acc_devmem_alloc: already allocated")
       this%size_in_bytes = size_in_bytes
       IF (size_in_bytes > 0) THEN
-         istat = dc_dev_mem_alloc(this%cptr, INT(this%size_in_bytes, KIND=C_SIZE_T))
+         istat = acc_interface_dev_mem_alloc(this%cptr, INT(this%size_in_bytes, KIND=C_SIZE_T))
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_allocate: failed.")
       END IF
@@ -418,7 +418,7 @@ CONTAINS
       IF (this%size_in_bytes < 0) &
          DBCSR_ABORT("acc_devmem_deallocate: double free")
       IF (this%size_in_bytes > 0) THEN
-         istat = dc_dev_mem_dealloc(this%cptr)
+         istat = acc_interface_dev_mem_dealloc(this%cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_deallocate: failed")
       END IF
@@ -463,7 +463,7 @@ CONTAINS
       stream_cptr = acc_stream_cptr(stream)
 
       IF (length > 0) THEN
-         istat = dc_memzero_cu(this%cptr, offset, length, stream_cptr)
+         istat = acc_interface_memzero(this%cptr, offset, length, stream_cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_setzero: failed")
       ENDIF
@@ -495,7 +495,7 @@ CONTAINS
 
       stream_cptr = acc_stream_cptr(stream)
       IF (n_bytes > 0) THEN
-         istat = dc_memcpy_h2d_cu(hostmem_cptr, this%cptr, &
+         istat = acc_interface_memcpy_h2d(hostmem_cptr, this%cptr, &
                                   INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_host2dev: failed")
@@ -531,7 +531,7 @@ CONTAINS
       stream_cptr = acc_stream_cptr(stream)
 
       IF (n_bytes > 0) THEN
-         istat = dc_memcpy_d2h_cu(this%cptr, hostmem_cptr, &
+         istat = acc_interface_memcpy_d2h(this%cptr, hostmem_cptr, &
                                   INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
          IF (istat /= 0) &
             DBCSR_ABORT("acc_devmem_dev2host: failed")
@@ -549,7 +549,7 @@ CONTAINS
 #:for nametype, size, type in instances
 
 ! **************************************************************************************************
-!> \brief Transfers 1D fortran-array from host to cuda devmem.
+!> \brief Transfers 1D fortran-array from host to GPU devmem.
 !> \param[in] this device memory
 !> \param hostmem host memory
 !> \param[in] stream stream
@@ -571,7 +571,7 @@ CONTAINS
    END SUBROUTINE host2dev_${nametype}$_1D
 
 ! **************************************************************************************************
-!> \brief Transfers 2D fortran-array from host to cuda devmem.
+!> \brief Transfers 2D fortran-array from host to GPU devmem.
 !> \param[in] this device memory
 !> \param hostmem host memory
 !> \param[in] stream stream
@@ -593,7 +593,7 @@ CONTAINS
    END SUBROUTINE host2dev_${nametype}$_2D
 
 ! **************************************************************************************************
-!> \brief Transfers cuda devmem to 1D fortran-array.
+!> \brief Transfers GPU devmem to 1D fortran-array.
 !> \param[in] this device memory
 !> \param hostmem host memory
 !> \param[in] stream stream

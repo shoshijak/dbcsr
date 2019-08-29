@@ -30,7 +30,7 @@ def round_down_to_nearest_multiple(x, step):
 # ===============================================================================
 class Kernel:
     """
-    Base class for libcusmm's kernels
+    Base class for libsmm_acc's kernels
     """
 
     def __repr__(self):
@@ -41,12 +41,12 @@ class Kernel:
 
     @property
     def include(self):
-        return "cusmm_dnt_" + self.algorithm + ".h"
+        return "smm_acc_dnt_" + self.algorithm + ".h"
 
     @property
     def name(self):
         return (
-            "cusmm_dnt_"
+            "smm_acc_dnt_"
             + self.algorithm
             + "_"
             + "_".join([str(self.__dict__[k]) for k in self.launch_parameters])

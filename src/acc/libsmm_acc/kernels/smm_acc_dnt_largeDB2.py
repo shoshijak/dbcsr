@@ -8,7 +8,7 @@
 # SPDX-License-Identifier: GPL-2.0+                                                                #
 ####################################################################################################
 
-from kernels.cusmm_dnt_base import Kernel, round_up_to_nearest_multiple
+from kernels.smm_acc_dnt_base import Kernel, round_up_to_nearest_multiple
 
 
 class Kernel_dnt_largeDB2(Kernel):
@@ -55,7 +55,7 @@ class Kernel_dnt_largeDB2(Kernel):
     @property
     def func_signature(self):
         return (
-            "cusmm_dnt_largeDB2"
+            "smm_acc_dnt_largeDB2"
             + "<%(m)d,%(n)d,%(k)d,%(tile_m)d,%(tile_n)d,%(w)d,%(v)d,%(threads)d,%(grouping)d,%(minblocks)d>;\n"
             % self.__dict__
         )

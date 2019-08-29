@@ -13,7 +13,7 @@ import os
 import json
 import pandas as pd
 import argparse
-from kernels.cusmm_predict import (
+from kernels.smm_acc_predict import (
     get_max_performances_per_mnk,
     get_baseline_performances_per_mnk,
     to_string,
@@ -26,7 +26,7 @@ from kernels.cusmm_predict import (
 # ===============================================================================
 def main(tunedir, arch):
     """
-    This script is part of the workflow for predictive modelling of optimal libcusmm parameters.
+    This script is part of the workflow for predictive modelling of optimal libsmm_acc parameters.
     For more details, see predict.md.
 
     After downloading raw data from the dedicated repository, use this script to
@@ -166,8 +166,8 @@ if __name__ == "__main__":
         description="""
         Compute derived training data from raw parameters.
 
-        This script is part of the workflow for predictive modelling of optimal libcusmm parameters.
-        For more details, see predict.md.
+        This script is part of the workflow for predictive modelling of optimal libsmm_acc parameters.
+        For more details, see README.md.
         """,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
