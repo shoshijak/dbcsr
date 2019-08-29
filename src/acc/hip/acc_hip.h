@@ -19,7 +19,6 @@
 #define ACC_DRV(x) ACC(x)
 #define ACC_RTC(x) hiprtc##x
 #define BACKEND "HIP"
-#define RTC_SUCCESS HIPRTC_SUCCESS
 
 #if defined(__HIP_PLATFORM_NVCC__) && defined(__HAS_NO_CUDA_STREAM_PRIORITIES)
 #define __ACC_HAS_NO_STREAM_PRIORITIES

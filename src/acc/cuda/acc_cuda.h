@@ -19,7 +19,6 @@
 #define ACC_DRV_FUNC_PREFIX(x) cu##x
 #define ACC_RTC(x) nvrtc##x
 #define BACKEND "CUDA"
-#define RTC_SUCCESS NVRTC_SUCCESS
 
 #ifdef __HAS_NO_CUDA_STREAM_PRIORITIES
 #define __ACC_HAS_NO_STREAM_PRIORITIES
