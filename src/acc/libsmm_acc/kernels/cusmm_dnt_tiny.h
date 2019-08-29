@@ -168,6 +168,8 @@ cusmm_dnt_tiny(const int* __restrict__ param_stack, int stack_size,
       myc = 0.0;
     }
 
+    printf("(b = %i, t = %i) C[%i] = %g\\n", bidx, tidx, (srcC + tidx), c_data[srcC + tidx]);
+
     if (need_sync) syncthreads ();
   }
 

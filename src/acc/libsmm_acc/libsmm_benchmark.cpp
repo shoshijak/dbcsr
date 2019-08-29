@@ -276,6 +276,7 @@ int libsmm_benchmark(libsmm_benchmark_t* h,
      n_warm = 1;
      break;
     }
+ printf("niter= %i, nwarm= %i\n", n_iter, n_warm);
 
  ACC_DRV(stream) stream;
  ACC_DRV_CALL(StreamCreate, (&stream, ACC_DRV(StreamDefault)));
@@ -302,6 +303,7 @@ int libsmm_benchmark(libsmm_benchmark_t* h,
      h->mat_c[i] *= n_iter;
 
  sumCPU =  checkSum(h->mat_c, h->n_c, mat_m, mat_n);
+ printf("sumCPU= %g\n", sumCPU);
 
  ACC_API_CALL(Memcpy, (h->d_mat_a, h->mat_a, h->n_a * mat_m * mat_k * sizeof(double), ACC(MemcpyHostToDevice)));
  ACC_API_CALL(Memcpy, (h->d_mat_b, h->mat_b, h->n_b * mat_k * mat_n * sizeof(double), ACC(MemcpyHostToDevice)));
@@ -332,6 +334,7 @@ int libsmm_benchmark(libsmm_benchmark_t* h,
         sprintf(msg_prefix, "params %d / %d\n",ikern+1, nkernels);
 
     sumGPU =  checkSum(h->mat_c, h->n_c, mat_m, mat_n);
+    printf("sumGPU= %g\n", sumGPU);
     if(sumGPU != sumCPU){
         printf("%sERROR %s checksum_diff: %g\n",msg_prefix, descr, sumGPU-sumCPU);
         error_counter++;
