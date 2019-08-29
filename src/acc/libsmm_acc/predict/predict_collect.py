@@ -37,9 +37,9 @@ def main(tunedir, arch):
     """
     # ===============================================================================
     # Read GPU properties and autotuning properties
-    with open("kernels/gpu_properties.json") as f:
-        gpu_properties = json.load(f)["sm_" + str(arch)]
-    with open("kernels/autotuning_properties.json") as f:
+    with open("../kernels/gpu_properties.json") as f:
+        gpu_properties = json.load(f)[str(arch)]
+    with open("../kernels/autotuning_properties.json") as f:
         autotuning_properties = json.load(f)
 
     # ===============================================================================
@@ -403,7 +403,7 @@ if __name__ == "__main__":
         metavar="ARCHITECTURE_NUMBER",
         type=int,
         default=60,
-        help="CUDA architecture number. Options: 35, 37, 60, 70",
+        help="GPU architecture code. Options: sm_35, sm_37, sm_60, sm_70, gfx900, gfx906",
     )
 
     args = parser.parse_args()
