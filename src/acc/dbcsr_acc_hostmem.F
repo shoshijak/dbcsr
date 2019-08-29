@@ -60,7 +60,7 @@ MODULE dbcsr_acc_hostmem
 #if defined (__DBCSR_ACC)
 
    INTERFACE
-      FUNCTION cuda_host_mem_alloc_cu(mem, n, stream_ptr) RESULT(istat) BIND(C, name="acc_host_mem_allocate")
+      FUNCTION acc_interface_host_mem_alloc(mem, n, stream_ptr) RESULT(istat) BIND(C, name="acc_host_mem_allocate")
          IMPORT
          TYPE(C_PTR)                              :: mem
          INTEGER(KIND=C_SIZE_T), INTENT(IN), &
@@ -68,16 +68,16 @@ MODULE dbcsr_acc_hostmem
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION cuda_host_mem_alloc_cu
+      END FUNCTION acc_interface_host_mem_alloc
    END INTERFACE
 
    INTERFACE
-      FUNCTION cuda_host_mem_dealloc_cu(mem, stream_ptr) RESULT(istat) bind(C, name="acc_host_mem_deallocate")
+      FUNCTION acc_interface_host_mem_dealloc(mem, stream_ptr) RESULT(istat) bind(C, name="acc_host_mem_deallocate")
          IMPORT
          TYPE(C_PTR), VALUE                       :: mem, stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION cuda_host_mem_dealloc_cu
+      END FUNCTION acc_interface_host_mem_dealloc
    END INTERFACE
 
 #endif
@@ -85,7 +85,7 @@ MODULE dbcsr_acc_hostmem
 CONTAINS
 
 ! **************************************************************************************************
-!> \brief Helper-routine performing allocation of host-pinned cuda memory.
+!> \brief Helper-routine performing allocation of host-pinned GPU memory.
 !> \param host_mem_c_ptr pointer to allocated memory
 !> \param n_bytes number of bytes to allocate
 !> \param stream ...
@@ -107,7 +107,7 @@ CONTAINS
 
       stream_cptr = acc_stream_cptr(stream)
 
-      istat = cuda_host_mem_alloc_cu(host_mem_c_ptr, INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
+      istat = acc_interface_host_mem_alloc(host_mem_c_ptr, INT(n_bytes, KIND=C_SIZE_T), stream_cptr)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_hostmem_alloc_raw: Could not allocate host pinned memory")
    END SUBROUTINE acc_hostmem_alloc_raw
@@ -137,7 +137,7 @@ CONTAINS
 
       stream_cptr = acc_stream_cptr(stream)
 
-      istat = cuda_host_mem_dealloc_cu(host_mem_c_ptr, stream_cptr)
+      istat = acc_interface_host_mem_dealloc(host_mem_c_ptr, stream_cptr)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_hostmem_dealloc_raw: Could not deallocate host pinned memory")
 !$OMP END CRITICAL
@@ -154,7 +154,7 @@ CONTAINS
 #:for nametype, size, type in instances
 
 ! **************************************************************************************************
-!> \brief Allocates 1D fortan-array as cuda host-pinned memory.
+!> \brief Allocates 1D fortan-array as GPU host-pinned memory.
 !> \param host_mem pointer to array
 !> \param n size given in terms of item-count (not bytes!)
 !> \param stream ...
@@ -178,7 +178,7 @@ CONTAINS
    END SUBROUTINE acc_hostmem_alloc_${nametype}$
 
 ! **************************************************************************************************
-!> \brief Allocates 2D fortan-array as cuda host-pinned memory.
+!> \brief Allocates 2D fortan-array as GPU host-pinned memory.
 !> \param host_mem pointer to array
 !> \param n1 sizes given in terms of item-count (not bytes!)
 !> \param n2 sizes given in terms of item-count (not bytes!)
@@ -206,7 +206,7 @@ CONTAINS
    END SUBROUTINE acc_hostmem_alloc_${nametype}$_2D
 
 ! **************************************************************************************************
-!> \brief Deallocates a 1D fortan-array, which is cuda host-pinned memory.
+!> \brief Deallocates a 1D fortan-array, which is GPU host-pinned memory.
 !> \param host_mem pointer to array
 !> \param stream ...
 !> \author  Ole Schuett
@@ -228,7 +228,7 @@ CONTAINS
    END SUBROUTINE acc_hostmem_dealloc_${nametype}$
 
 ! **************************************************************************************************
-!> \brief Deallocates a 2D fortan-array, which is cuda host-pinned memory.
+!> \brief Deallocates a 2D fortan-array, which is GPU host-pinned memory.
 !> \param host_mem pointer to array
 !> \param stream ...
 !> \author  Ole Schuett

@@ -20,7 +20,7 @@ from kernels.cusmm_predict import to_string, kernel_algorithm, parameter_types
 # ===============================================================================
 def main(tunedir):
     """
-    This script is part of the workflow for predictive modelling of optimal libcusmm parameters.
+    This script is part of the workflow for predictive modelling of optimal libsmm_acc parameters.
     For more details, see predict.md
 
     Once autotuning of new kernels has been run,
@@ -251,8 +251,8 @@ if __name__ == "__main__":
         Collect matrix-matrix multiplication parameters and performances measured during autotuning. For that,
         parse the log files created by the autotuning and record parameter sets and their performances to CSV files.
 
-        This script is part of the workflow for predictive modelling of optimal libcusmm parameters.
-        For more details, see predict.md.
+        This script is part of the workflow for predictive modelling of optimal libsmm_acc parameters.
+        For more details, see README.md.
         """,
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )

@@ -43,40 +43,40 @@ MODULE dbcsr_acc_stream
 #if defined (__DBCSR_ACC)
 
    INTERFACE
-      FUNCTION cuda_stream_create(stream_ptr, name, priority) RESULT(istat) BIND(C, name="acc_stream_create")
+      FUNCTION acc_interface_stream_create(stream_ptr, name, priority) RESULT(istat) BIND(C, name="acc_stream_create")
          IMPORT
          TYPE(C_PTR)                              :: stream_ptr
          CHARACTER(KIND=C_CHAR), DIMENSION(*)     :: name
          INTEGER(KIND=C_INT), VALUE               :: priority
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION cuda_stream_create
+      END FUNCTION acc_interface_stream_create
    END INTERFACE
 
    INTERFACE
-      FUNCTION cuda_stream_priority_range(least, greatest) RESULT(istat) BIND(C, name="acc_stream_priority_range")
+      FUNCTION acc_interface_stream_priority_range(least, greatest) RESULT(istat) BIND(C, name="acc_stream_priority_range")
          IMPORT
          INTEGER(KIND=C_INT)                      :: least, greatest, istat
 
-      END FUNCTION cuda_stream_priority_range
+      END FUNCTION acc_interface_stream_priority_range
    END INTERFACE
 
    INTERFACE
-      FUNCTION cuda_stream_destroy(stream_ptr) RESULT(istat) BIND(C, name="acc_stream_destroy")
+      FUNCTION acc_interface_stream_destroy(stream_ptr) RESULT(istat) BIND(C, name="acc_stream_destroy")
          IMPORT
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION cuda_stream_destroy
+      END FUNCTION acc_interface_stream_destroy
    END INTERFACE
 
    INTERFACE
-      FUNCTION cuda_stream_sync(stream_ptr) RESULT(istat) BIND(C, name="acc_stream_sync")
+      FUNCTION acc_interface_stream_sync(stream_ptr) RESULT(istat) BIND(C, name="acc_stream_sync")
          IMPORT
          TYPE(C_PTR), VALUE                       :: stream_ptr
          INTEGER(KIND=C_INT)                      :: istat
 
-      END FUNCTION cuda_stream_sync
+      END FUNCTION acc_interface_stream_sync
    END INTERFACE
 
 #endif
@@ -113,7 +113,7 @@ CONTAINS
 #endif
 
 ! **************************************************************************************************
-!> \brief Fortran-wrapper for cudaStreamCreate.
+!> \brief Fortran-wrapper for creation of a CUDA/HIP stream
 !> \param[out] this stream
 !> \param[in] name stream name
 !> \param[in] priority (optional) stream priority
@@ -139,7 +139,7 @@ CONTAINS
       IF (C_ASSOCIATED(this%cptr)) &
          DBCSR_ABORT("acc_stream_create: stream already allocated")
 
-      istat = cuda_stream_create(this%cptr, name//c_null_char, my_priority)
+      istat = acc_interface_stream_create(this%cptr, name//c_null_char, my_priority)
 
       IF (istat /= 0 .OR. .NOT. C_ASSOCIATED(this%cptr)) &
          DBCSR_ABORT("acc_stream_create failed")
@@ -147,7 +147,7 @@ CONTAINS
    END SUBROUTINE acc_stream_create
 
 ! **************************************************************************************************
-!> \brief Fortran-wrapper for cudaStreamDestroy.
+!> \brief Fortran-wrapper for destruction of a CUDA/HIP stream
 !> \param[in,out] this stream
 !> \author  Ole Schuett
 ! **************************************************************************************************
@@ -162,7 +162,7 @@ CONTAINS
       INTEGER                                  :: istat
       IF (.NOT. C_ASSOCIATED(this%cptr)) &
          DBCSR_ABORT("acc_stream_destroy: stream not allocated")
-      istat = cuda_stream_destroy(this%cptr)
+      istat = acc_interface_stream_destroy(this%cptr)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_stream_destroy failed")
       this%cptr = C_NULL_PTR
@@ -170,7 +170,7 @@ CONTAINS
    END SUBROUTINE acc_stream_destroy
 
 ! **************************************************************************************************
-!> \brief Fortran-wrapper for cudaStreamSynchronize.
+!> \brief Fortran-wrapper for waiting for CUDA/HIP stream tasks to complete
 !> \param[in] this stream
 !> \author  Ole Schuett
 ! **************************************************************************************************
@@ -185,14 +185,14 @@ CONTAINS
       INTEGER                                  :: istat
       IF (.NOT. C_ASSOCIATED(this%cptr)) &
          DBCSR_ABORT("acc_stream_synchronize: stream not allocated")
-      istat = cuda_stream_sync(this%cptr)
+      istat = acc_interface_stream_sync(this%cptr)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_stream_synchronize failed")
 #endif
    END SUBROUTINE acc_stream_synchronize
 
 ! **************************************************************************************************
-!> \brief Fortran-wrapper for cudaDeviceGetStreamPriorityRange.
+!> \brief Fortran-wrapper for getting CUDA/HIP streams' priority range
 !> \param[out] least least priority
 !> \param[out] greatest greatest priroity
 !> \author  Ole Schuett
@@ -205,7 +205,7 @@ CONTAINS
       DBCSR_ABORT("__DBCSR_ACC not compiled in.")
 #else
       INTEGER                                  :: istat
-      istat = cuda_stream_priority_range(least, greatest)
+      istat = acc_interface_stream_priority_range(least, greatest)
       IF (istat /= 0) &
          DBCSR_ABORT("acc_stream_priority_range failed")
 #endif

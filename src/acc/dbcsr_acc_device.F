@@ -90,7 +90,7 @@ CONTAINS
    END SUBROUTINE dbcsr_acc_set_active_device
 
 ! **************************************************************************************************
-!> \brief Clear CUDA errors
+!> \brief Clear GPU errors
 ! **************************************************************************************************
    SUBROUTINE dbcsr_acc_clear_errors()
 #if defined (__DBCSR_ACC)
