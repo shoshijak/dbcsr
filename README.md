@@ -1,4 +1,4 @@
-# DBCSR: Distributed Block Compressed Sparse Row matrix library 
+# DBCSR: Distributed Block Compressed Sparse Row matrix library
 
 [![Build Status](https://travis-ci.org/cp2k/dbcsr.svg?branch=develop)](https://travis-ci.org/cp2k/dbcsr) [![codecov](https://codecov.io/gh/cp2k/dbcsr/branch/develop/graph/badge.svg)](https://codecov.io/gh/cp2k/dbcsr)
 [![Licence](https://img.shields.io/badge/license-GPL%20v2.0-blue.svg)](./LICENSE)
@@ -47,7 +47,7 @@ Run
 
 to list all possible targets.
 
-Update the provided [Makefile.inc](Makefile.inc) to fit your needs 
+Update the provided [Makefile.inc](Makefile.inc) to fit your needs
 (read the documentation inside the file for further explanations) and then run
 
     make <target>
@@ -70,7 +70,7 @@ Building with CMake is also supported:
     mkdir build
     cd build
     cmake ..
-    
+
 The configuration flags are (default first):
 
     -DUSE_MPI=<ON|OFF>
@@ -107,5 +107,5 @@ before running on an AMD GPU.
 
 ## Contributing to DBCSR
 
-Your contribution to the project is welcome! 
+Your contribution to the project is welcome!
 Please see [Contributing.md](./CONTRIBUTING.md) and this [wiki page](https://github.com/cp2k/dbcsr/wiki/Development). For any help, please notify the other developers.

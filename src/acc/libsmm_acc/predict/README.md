@@ -16,8 +16,6 @@ Install all python packages required (if you do not want this project's requirem
 pip install -r requirements.txt
 ```
 
-
-
 ---
 
 ### Predictive parameters
@@ -34,8 +32,6 @@ The input features for the predictive models can be 'raw' parameters (left-most-
 
 Get the data to be used for training, either by downloading data from the [dedicated repository](https://github.com/cp2k/dbcsr-data), or by autotuning new kernels yourself and combining them with pre-existing data.
 
-
-
 ##### 1.a Download pre-collected data from dedicated repository
 
 - Download data from the dedicated repository:
@@ -49,8 +45,6 @@ Get the data to be used for training, either by downloading data from the [dedic
   ```%bash
   ./predict_derivepars.py # –arch 60 --folder /scratch/autotuning_dataset, e.g.
   ```
-
-
 
 ##### 1.b (optional) Aquire data from autotuning
 
@@ -72,20 +66,16 @@ Get the data to be used for training, either by downloading data from the [dedic
 
 ##### At the end, you should end up with the following files:
 
-- `raw_training_data_ALGORITHM.csv`  (containing all *raw* parameters for training a model for algorithm ALGORITHM)
+- `raw_training_data_ALGORITHM.csv` (containing all *raw* parameters for training a model for algorithm ALGORITHM)
 - `training_data_ALGORITHM.csv` (containing all *derived* parameters for training a model for algorithm ALGORITHM)
-
-
 
 #### 2. (optional) Explore the data
 
 Explore the data interactively using the [provided jupyter notebook](notebooks/inspect_training_data.ipynb).
 
-
-
 #### 3. Train
 
-For each algorithm, build a predictive model using decision trees and feature selection based on the features' permutation importance. 
+For each algorithm, build a predictive model using decision trees and feature selection based on the features' permutation importance.
 
 
 ```%bash
@@ -95,8 +85,6 @@ For each algorithm, build a predictive model using decision trees and feature se
 Repeat this step for all algorithms.
 This may take several hours. For example, training algorithm 'medium' for the P100 took 11 hours on a single Greina (CSCS) node.
 Moreover, depending on the size of the training data, large amounts of memory may be needed. For example, training algorithm 'medium' for the P100 was run on a 192 GB node.
-
-
 
 #### 4. Generate optimal parameters
 
@@ -113,15 +101,11 @@ Given predictive models (in the form of serialized [scikit-learn](https://scikit
 
 This may take several hours. For example, generating parameters for the P100 took 8 hours on a single Piz Daint (CSCS) node.
 
-
-
 #### 5. Evaluate the predicted parameters
 
 ```%bash
 ./predict_evaluate.py -f libsmm_acc_predicted.out -n libsmm_acc_baseline.out
 ```
-
-
 
 #### 6. Contribute your new parameters and data
 
@@ -132,8 +116,6 @@ See [instructions](https://github.com/cp2k/dbcsr-data#contributing) in our [dedi
 ##### Contribute predicted parameters
 
 Submit a pull request updating the `parameters_GPU.json` file in question.
-
-
 
 ---
 
