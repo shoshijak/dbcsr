@@ -51,7 +51,7 @@
  * - each element of c_block is computed by one thread
  * - no overlap between computation and memory loads
  */
-template <int m, int n, int k, int threads, int grouping, int minblocks>
+template <int m, int n, int k, int threads, int grouping, int minblocks, int warp_size>
 __global__ void
 __launch_bounds__(threads, minblocks)
 smm_acc_dnt_tiny(const int* __restrict__ param_stack, int stack_size,
@@ -73,9 +73,8 @@ smm_acc_dnt_tiny(const int* __restrict__ param_stack, int stack_size,
 
   /* Number of parameters per stack entry in parameter stack */
   const int  npar      = 3;
-  const int  warp_size = 32;
 
-  /* If multiple warps are running a single block multiplication,
+  /* If multiple warps (in HIP linguo, "wavefronts") are running a single block multiplication,
    * synchronization is needed */
   const bool need_sync = (mn > warp_size || mk > warp_size || kn > warp_size || threads > warp_size);
 

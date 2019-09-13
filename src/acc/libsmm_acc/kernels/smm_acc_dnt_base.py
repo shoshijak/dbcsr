@@ -124,7 +124,7 @@ class Kernel:
         d["source"] = "(predicted)" if not self.autotuned else ""
         return d
 
-    def launcher_code(self, compiler):
+    def launcher_code(self, compiler, warp_size):
         """
         Compiler: either "nvcc" or "hipcc": determines the C++ dialect to use for kernel launching: either CUDA or HIP
         """
@@ -142,7 +142,7 @@ class Kernel:
             indent
             + "typedef void (*kernel)(const int*, int, const double*, const double*, double*);\n"
         )
-        output += indent + "static kernel kern_func = " + self.func_signature
+        output += indent + "static kernel kern_func = " + self.func_signature(warp_size)
 
         # The syntax for kernel launching is different in CUDA and HIP
         if compiler == "nvcc":
@@ -163,8 +163,7 @@ class Kernel:
         output += "}\n"
         return output
 
-    @property
-    def func_signature(self):
+    def func_signature(self, warp_size):
         raise NotImplementedError("func_signature must be implemented in subclass")
 
     @staticmethod

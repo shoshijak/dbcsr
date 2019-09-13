@@ -141,7 +141,7 @@ def gen_benchmark(outdir, gpu_properties, autotuning_properties, compiler, m, n,
         for p in params:
             kern = kernclass(**p, source="autotuning_candidate", perf=0)
             includes.append("../../kernels/" + kern.include)
-            launcher_codes.append(kern.launcher_code(compiler))
+            launcher_codes.append(kern.launcher_code(compiler, gpu_properties["Threads_/_Warp"]))
             launchers.append("launch_" + kern.name)
             kernel_descr.append(kernclass.__name__ + format_params(p))
 

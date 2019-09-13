@@ -53,7 +53,7 @@
  * - the result tiles do not need to be shared between threads, it is therefore stored in registers
  * - T get decompressed to shared memory buffer before being written back to global memory via an atomic add
  */
-template <int m, int n, int k, int M, int N, int threads, int grouping, int minblocks>
+template <int m, int n, int k, int M, int N, int threads, int grouping, int minblocks, int warp_size>
 __global__ void
 __launch_bounds__(threads, minblocks)
 smm_acc_dnt_small(const int* __restrict__ param_stack, int stack_size,
@@ -84,9 +84,8 @@ smm_acc_dnt_small(const int* __restrict__ param_stack, int stack_size,
 
   /* Number of parameters per stack entry in parameter stack */
   const int  npar = 3;
-  const int  warp_size = 32; // in HIP linguo, "wavefront"
 
-  /* If multiple warps are running a single block multiplication,
+  /* If multiple warps (in HIP linguo, "wavefronts") are running a single block multiplication,
    * synchronization is needed */
   const bool need_sync = (mn > warp_size || mk > warp_size || kn > warp_size || threads > warp_size);
 

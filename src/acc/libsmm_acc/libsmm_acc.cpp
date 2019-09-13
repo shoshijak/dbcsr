@@ -109,20 +109,23 @@ inline void jit_kernel(ACC_DRV(function)& kern_func, libsmm_acc_algo algo, int t
             kernel_name = "smm_acc_dnt_medium<" +
                           std::to_string(m) + ", " + std::to_string(n) + ", " + std::to_string(k) + ", " +
                           std::to_string(tile_m) + ", " + std::to_string(tile_n) + ", " +
-                          std::to_string(threads) + ", " + std::to_string(grouping) + ", " + std::to_string(minblocks) + ">";
+                          std::to_string(threads) + ", " + std::to_string(grouping) + ", " + std::to_string(minblocks) + ", " +
+                          std::to_string(warpSize) + ">";
             break;
         case 4:
             kernel_code += smm_acc_dnt_small;
             kernel_name = "smm_acc_dnt_small<" +
                           std::to_string(m) + ", " + std::to_string(n) + ", " + std::to_string(k) + ", " +
                           std::to_string(tile_m) + ", " + std::to_string(tile_n) + ", " +
-                          std::to_string(threads) + ", " + std::to_string(grouping) + ", " + std::to_string(minblocks) + ">";
+                          std::to_string(threads) + ", " + std::to_string(grouping) + ", " + std::to_string(minblocks) + ", " +
+                          std::to_string(warpSize) + ">";
             break;
         case 5:
             kernel_code += smm_acc_dnt_tiny;
             kernel_name = "smm_acc_dnt_tiny<" +
                           std::to_string(m) + ", " + std::to_string(n) + ", " + std::to_string(k) + ", " +
-                          std::to_string(threads) + ", " + std::to_string(grouping) + ", " + std::to_string(minblocks) + ">";
+                          std::to_string(threads) + ", " + std::to_string(grouping) + ", " + std::to_string(minblocks) + ", " +
+                          std::to_string(warpSize) + ">";
             break;
         default:
             printf("\nerror: algorithm number %i is not encoded.", algo);
@@ -375,4 +378,9 @@ extern "C" int libsmm_acc_is_thread_safe() {
 #else
     return 0;  // i.e. false, libsmm_acc is not threaded
 #endif
+}
+
+//===========================================================================
+extern "C" int libsmm_acc_gpu_warp_size() {
+    return warpSize;
 }

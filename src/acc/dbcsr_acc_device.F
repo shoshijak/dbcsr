@@ -15,7 +15,7 @@ MODULE dbcsr_acc_device
 
    IMPLICIT NONE
 
-   PUBLIC :: dbcsr_acc_get_ndevices, dbcsr_acc_set_active_device, dbcsr_acc_clear_errors
+   PUBLIC :: dbcsr_acc_get_ndevices, dbcsr_acc_set_active_device, dbcsr_acc_get_gpu_warp_size, dbcsr_acc_clear_errors
 
    PRIVATE
 
@@ -38,6 +38,14 @@ MODULE dbcsr_acc_device
          INTEGER(KIND=C_INT)                      :: istat
 
       END FUNCTION acc_set_active_device_cu
+
+      FUNCTION acc_get_gpu_warp_size(warp_size) RESULT(istat) &
+         BIND(C, name="acc_get_gpu_warp_size")
+         IMPORT
+         INTEGER(KIND=C_INT), INTENT(OUT)         :: warp_size
+         INTEGER(KIND=C_INT)                      :: istat
+
+      END FUNCTION acc_get_gpu_warp_size
 
       SUBROUTINE acc_clear_errors_cu() &
          BIND(C, NAME="acc_clear_errors")
@@ -88,6 +96,27 @@ CONTAINS
       DBCSR_ABORT("__DBCSR_ACC not compiled in")
 #endif
    END SUBROUTINE dbcsr_acc_set_active_device
+
+! **************************************************************************************************
+!> \brief Get the warp size (number of threads per "warp" or in HIP linguo,
+!> "wavefront") as returned from the CUDA/HIP api
+!> \return warp size
+! **************************************************************************************************
+   FUNCTION dbcsr_acc_get_gpu_warp_size() RESULT(n)
+      INTEGER                                  :: n
+
+#if defined (__DBCSR_ACC)
+      INTEGER                                  :: istat
+#endif
+
+      n = 0
+#if defined (__DBCSR_ACC)
+      istat = acc_get_gpu_warp_size(n)
+      IF (istat /= 0) &
+         DBCSR_ABORT("dbcsr_acc_get_gpu_warp_size: failed")
+#endif
+   END FUNCTION dbcsr_acc_get_gpu_warp_size
+
 
 ! **************************************************************************************************
 !> \brief Clear GPU errors

@@ -52,12 +52,15 @@ class Kernel_dnt_largeDB1(Kernel):
         assert self.tile_m <= self.v
         assert self.tile_n <= self.w
 
-    @property
-    def func_signature(self):
+    def func_signature(self, warp_size=0):
+        """
+        LargeDB1's kernel code does not use the warp size
+        """
         return (
             "smm_acc_dnt_largeDB1"
-            + "<%(m)d,%(n)d,%(k)d,%(tile_m)d,%(tile_n)d,%(w)d,%(v)d,%(threads)d,%(grouping)d,%(minblocks)d>;\n"
-            % self.__dict__
+            + "< {m}, {n}, {k}, {threads}, {grouping}, {minblocks} >;\n".format(
+                **self.__dict__
+            )
         )
 
     @staticmethod

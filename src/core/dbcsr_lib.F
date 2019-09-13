@@ -14,6 +14,7 @@
 ! **************************************************************************************************
 
 MODULE dbcsr_lib
+   USE dbcsr_acc_device, ONLY: dbcsr_acc_get_gpu_warp_size
    USE dbcsr_config, ONLY: cublas_handles
    USE dbcsr_cublas, ONLY: cublas_handle_destroy, &
                            cublas_handle_init
@@ -90,6 +91,15 @@ MODULE dbcsr_lib
          INTEGER(KIND=C_INT)        :: thread_safe
 
       END FUNCTION libsmm_acc_is_thread_safe
+   END INTERFACE
+   INTERFACE
+      FUNCTION libsmm_acc_gpu_warp_size() &
+         RESULT(warp_size) &
+         BIND(C, name="libsmm_acc_gpu_warp_size")
+         IMPORT
+         INTEGER(KIND=C_INT)        :: warp_size
+
+      END FUNCTION libsmm_acc_gpu_warp_size
    END INTERFACE
 #endif
 
@@ -182,6 +192,8 @@ CONTAINS
 
 #if defined(__DBCSR_ACC)
       INTEGER :: dbcsr_thread_safe, libsmm_acc_thread_safe
+      INTEGER :: warp_size_json_records, warp_size_gpu_api
+      CHARACTER(len=128) :: warp_size_json_records_str, warp_size_gpu_api_str
 #endif
 
       IF (PRESENT(io_unit)) THEN
@@ -197,6 +209,9 @@ CONTAINS
 #endif
 
 #if defined(__DBCSR_ACC)
+
+      ! Checks related to DBCSR's GPU backend:
+      ! 1. Check threading level
       libsmm_acc_thread_safe = libsmm_acc_is_thread_safe()  ! 0: not threaded, 1: threaded
       dbcsr_thread_safe = 0  ! not threaded
 !$    dbcsr_thread_safe = 1  ! if DBCSR is compiled with openmp, set to threaded
@@ -208,6 +223,17 @@ CONTAINS
             DBCSR_ABORT("DBCSR compiled w/o threading support while libsmm_acc is compiled w/ threading support.")
          ENDIF
       ENDIF
+
+      ! 2. Check the consistency between warp sizes
+      warp_size_json_records = libsmm_acc_gpu_warp_size()  ! warp size as indicated in libsmm_acc's records of GPU properties
+      warp_size_gpu_api = dbcsr_acc_get_gpu_warp_size()    ! warp size as returned from the CUDA/HIP API.
+      IF (warp_size_json_records /= warp_size_gpu_api) then
+         write(warp_size_gpu_api_str , "(I2)") warp_size_gpu_api
+         write(warp_size_json_records_str , "(I2)") warp_size_json_records
+         DBCSR_ABORT("Inconsistency in warp sizes: Cuda/Hip indicates warp size = "//TRIM(warp_size_gpu_api_str)//", while the gpu_properties files indicates warp_size = "//TRIM(warp_size_json_records_str)//". Please check whether src/acc/libsmm_acc/kernels/gpu_properties.json contains the correct data about the GPU you are using.")
+      ENDIF
+
+
 #endif
    END SUBROUTINE dbcsr_init_lib_pre
 

@@ -29,11 +29,9 @@ class Kernel_dnt_tiny(Kernel):
         self.source = source
         assert self.m * self.n <= self.threads
 
-    @property
-    def func_signature(self):
-        return (
-            "smm_acc_dnt_tiny<%(m)d,%(n)d,%(k)d,%(threads)d,%(grouping)d,%(minblocks)d>;\n"
-            % self.__dict__
+    def func_signature(self, warp_size):
+        return "smm_acc_dnt_tiny< {m}, {n}, {k}, {threads}, {grouping}, {minblocks}, {warp_size} >;\n".format(
+            **dict(self.__dict__, **{"warp_size": warp_size})
         )
 
     @staticmethod

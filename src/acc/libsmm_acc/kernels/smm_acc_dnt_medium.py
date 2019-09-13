@@ -46,11 +46,12 @@ class Kernel_dnt_medium(Kernel):
         )
         assert min_threads <= self.threads
 
-    @property
-    def func_signature(self):
+    def func_signature(self, warp_size):
         return (
-            "smm_acc_dnt_medium<%(m)d,%(n)d,%(k)d,%(tile_m)d,%(tile_n)d,%(threads)d,%(grouping)d,%(minblocks)d>;\n"
-            % self.__dict__
+            "smm_acc_dnt_medium"
+            + "<{m}, {n}, {k}, {tile_m}, {tile_n}, {threads}, {grouping}, {minblocks}, {warp_size} >;\n".format(
+                **dict(self.__dict__, **{"warp_size": warp_size})
+            )
         )
 
     @staticmethod
