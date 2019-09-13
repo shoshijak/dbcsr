@@ -73,7 +73,7 @@ smm_acc_dnt_tiny(const int* __restrict__ param_stack, int stack_size,
 
   /* Number of parameters per stack entry in parameter stack */
   const int  npar      = 3;
-  const int  warp_size = 32;
+  const int  warp_size = 64;
 
   /* If multiple warps are running a single block multiplication,
    * synchronization is needed */
