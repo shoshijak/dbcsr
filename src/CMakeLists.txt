@@ -372,10 +372,10 @@ write_basic_package_version_file("${CMAKE_CURRENT_BINARY_DIR}/DBCSRConfigVersion
   VERSION "${VERSION_MAJOR}.${VERSION_MINOR}.${VERSION_PATCH}"
   COMPATIBILITY SameMajorVersion
   )
-install(EXPORT DBCSRTargets
-  NAMESPACE "${config_namespace}"
-  DESTINATION "${config_install_dir}"
-  )
+#install(EXPORT DBCSRTargets
+#  NAMESPACE "${config_namespace}"
+#  DESTINATION "${config_install_dir}"
+#  )
 install(FILES
   ${CMAKE_CURRENT_BINARY_DIR}/DBCSRConfig.cmake
   ${CMAKE_CURRENT_BINARY_DIR}/DBCSRConfigVersion.cmake
