@@ -125,7 +125,7 @@ if __name__ == "__main__":
         "-d",
         "--base_dir",
         metavar="BASE_DIR",
-        default=".",
+        default="parameters/",
         help="Set the base directory to look for the parameter files. Default: %(default)s",
     )
     args = parser.parse_args()
