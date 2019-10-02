@@ -31,7 +31,7 @@ void libsmm_acc_benchmark_init(libsmm_acc_benchmark_t** handle, benchmark_mode m
             h->n_a = 10000;
             h->n_b = 10000;
             h->n_c = 1000;
-            h->n_stack = 16005;
+            h->n_stack = 300000;
             h->n_stack_trs_a = 0;
             h->n_stack_trs_b = 0;
             break;
