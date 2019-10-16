@@ -7,26 +7,15 @@
  * SPDX-License-Identifier: GPL-2.0+                                                              *
  *------------------------------------------------------------------------------------------------*/
 
-#ifdef __CUDA
-#include "../../cuda/acc_cuda.h"
-#else
-#include "../../hip/acc_hip.h"
-#endif
-
-#ifdef __cplusplus
- extern "C" {
-#endif
-
-int libsmm_acc_process (void *param_stack, int stack_size,
-    int nparams, int datatype, void *a_data, void *b_data, void *c_data,
-    int m_max, int n_max, int k_max, int def_mnk, void* stream);
-
-int libsmm_acc_transpose (void *trs_stack, int offset, int nblks,
-    void *buffer, int datatype, int m, int n, void* stream);
+#ifndef LIBSMM_ACC_INIT_H
+#define LIBSMM_ACC_INIT_H
 
 int libsmm_acc_init (void);
+
+int libsmm_acc_check_gpu_warp_size_consistency (void);
+
+int acc_get_gpu_warp_size (void);
+
 int libsmm_acc_is_thread_safe (void);
 
-#ifdef __cplusplus
- }
-#endif
+#endif // LIBSMM_ACC_INIT_H
