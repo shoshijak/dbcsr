@@ -68,7 +68,7 @@ Building with CMake is also supported:
     mkdir build
     cd build
     cmake ..
-    
+
 The configuration flags are (default first):
 
     -DUSE_MPI=<ON|OFF>
@@ -88,6 +88,10 @@ Building on Cray requires an additional flag to make sure CMake is able to prope
 detect the compiler behind the compiler wrappers:
 
     -DCMAKE_SYSTEM_NAME=CrayLinuxEnvironment
+
+If you want to use Python from a virtual environment and your CMake version is < 3.15, specify the desired python interpreter manually using:
+
+    -DPython_EXECUTABLE=/path/to/python
 
 ## Contributing to DBCSR
 
