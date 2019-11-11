@@ -10,10 +10,10 @@
 
 # ===============================================================================
 #  Computing helpers
-import numpy as np
 
 
 def round_up_to_nearest_multiple(x, step):
+    import numpy as np
     result = np.where(x % step == 0, x, x + step - x % step).astype(float)
     if result.size == 1:
         result = result.item()  # extract single element of numpy array
@@ -21,6 +21,7 @@ def round_up_to_nearest_multiple(x, step):
 
 
 def round_down_to_nearest_multiple(x, step):
+    import numpy as np
     result = np.where(x % step == 0, x, x - x % step).astype(float)
     if result.size == 1:
         result = result.item()  # extract single element of numpy array
