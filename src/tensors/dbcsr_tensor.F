@@ -1638,6 +1638,10 @@ CONTAINS
       CALL dbcsr_tas_batched_mm_finalize(tensor%matrix_rep)
 
       IF (do_write .AND. PRESENT(unit_nr)) THEN
+         IF (unit_nr > 0) THEN
+            WRITE (unit_nr, "(T2,A)") &
+               "FINALIZING BATCHED PROCESSING OF MATMUL"
+         ENDIF
          CALL dbcsr_t_write_tensor_info(tensor, unit_nr)
          CALL dbcsr_t_write_tensor_dist(tensor, unit_nr)
       ENDIF

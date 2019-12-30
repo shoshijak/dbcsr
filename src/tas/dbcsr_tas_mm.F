@@ -98,7 +98,7 @@ CONTAINS
          !! only for testing: verbose output
 
       TYPE(dbcsr_tas_type), POINTER              :: matrix_b_rs, matrix_a_rs, matrix_c_rs, &
-                              matrix_c_rep, matrix_b_rep, matrix_a_rep
+                                                    matrix_c_rep, matrix_b_rep, matrix_a_rep
 
       REAL(KIND=real_8)                          :: filter_eps_prv
       INTEGER(KIND=int_8), DIMENSION(2)          :: dims_a, dims_b, dims_c
@@ -111,7 +111,7 @@ CONTAINS
       CHARACTER(LEN=1)                           :: tr_case, transa_prv, transb_prv, transc_prv
       TYPE(dbcsr_scalar_type)                    :: zero
       LOGICAL                                    :: new_a, new_b, new_c, simple_split_prv, opt_pgrid, &
-         move_a, move_b, do_batched
+                                                    move_a, move_b, do_batched
       TYPE(dbcsr_tas_split_info)                 :: info, info_a, info_b, info_c
       CHARACTER(LEN=*), PARAMETER                :: routineN = 'dbcsr_tas_multiply', &
                                                     routineP = moduleN//':'//routineN
@@ -127,7 +127,6 @@ CONTAINS
       ELSE
          io_unit_prv = 0
       ENDIF
-
 
       IF (PRESENT(simple_split)) THEN
          simple_split_prv = simple_split
@@ -214,7 +213,7 @@ CONTAINS
                WRITE (io_unit_prv, "(T2,A)") &
                   "BATCHED PROCESSING OF MATMUL"
                IF (batched_repl > 0) THEN
-                  WRITE (io_unit_prv, "(T4,A,T68,I1)") "reusing replicated matrix:", batched_repl
+                  WRITE (io_unit_prv, "(T4,A,T80,I1)") "reusing replicated matrix:", batched_repl
                ENDIF
             ENDIF
          ENDIF
