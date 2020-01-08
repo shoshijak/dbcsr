@@ -6079,8 +6079,8 @@ CONTAINS
       length = MAX(len, 1)
       CALL MPI_TYPE_SIZE(${mpi_type1}$, size, ierr)
       mp_size = INT(length, KIND=MPI_ADDRESS_KIND)*size
-      IF (mp_size .GT. mp_max_memory_size) THEN
-         DBCSR_ABORT("MPI cannot allocate more than 2 GiByte")
+      IF (length .GE. mp_max_memory_size) THEN
+         DBCSR_ABORT("MPI cannot allocate more than 2 GigaElements")
       ENDIF
       mp_info = MPI_INFO_NULL
       CALL MPI_ALLOC_MEM(mp_size, mp_info, mp_baseptr, mp_res)
