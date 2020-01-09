@@ -188,7 +188,7 @@ inline void jit_kernel(ACC_DRV(function)& kern_func, libsmm_acc_algo algo, int t
 
 kernel_map_iterator add_kernel_handle_to_jitted_kernels(ACC_DRV(function) kern_func, ACC_DRV(stream) stream, Triplet h_mnk, int& threads, int& grouping){
 
-    kernel_map_iterator kernel_it = NULL;
+    kernel_map_iterator kernel_it = kernel_handles.end();
 
     // Check whether autotuned parameters are given for this kernel, and if so, retrieve them
     if (ht.find(h_mnk) != ht.end()){
@@ -236,11 +236,12 @@ int libsmm_acc_process_d(const int *param_stack, int stack_size, ACC_DRV(stream)
 
         kernel_it = add_kernel_handle_to_jitted_kernels(kern_func, stream, h_mnk, threads, grouping);
 
-    }  // now the kernel has been jitted or, if this wasn't possible, is set to NULL
+    }  // if the kernel could be jited successfully, the kernel_it iterator now points to the kernel_launcher.
+       // if this wasn't possible, is set to kernel_handles.end()
 
 }
 
-    if (kernel_it == NULL){  // the kernel could not be JIT-ed, so we should fall back to CPU
+    if (kernel_it == kernel_handles.end()){  // the kernel could not be JIT-ed, so we should fall back to CPU
 
         return -2; // fall back to CPU
 

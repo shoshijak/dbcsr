@@ -81,6 +81,12 @@ PROGRAM dbcsr_unittest
    ! multiply ------------------------------------------------------------------
 
    ! ...
+   CALL dbcsr_test_multiplies("blocks_1_3_4", &
+                              group, mp_env, npdims, io_unit, matrix_sizes=(/496, 48, 48/), &
+                              sparsities=(/0.5_dp, 0.5_dp, 0.5_dp/), retain_sparsity=.FALSE., &
+                              alpha=CMPLX(1.0_dp, 0.0_dp, dp), beta=CMPLX(0.0_dp, 0.0_dp, dp), &
+                              bs_m=(/1, 1, 1, 3, 1, 4/), bs_n=(/1, 1, 1, 3, 1, 4/), bs_k=(/1, 1, 1, 3, 1, 4/), &
+                              limits=(/1, 496, 1, 48, 1, 48/))
    CALL dbcsr_test_multiplies("blocks_4_5_7", &
                               group, mp_env, npdims, io_unit, matrix_sizes=(/496, 48, 48/), &
                               sparsities=(/0.5_dp, 0.5_dp, 0.5_dp/), retain_sparsity=.FALSE., &
@@ -111,6 +117,12 @@ PROGRAM dbcsr_unittest
                               alpha=CMPLX(1.0_dp, 0.0_dp, dp), beta=CMPLX(0.0_dp, 0.0_dp, dp), &
                               bs_m=(/1, 23/), bs_n=(/1, 23/), bs_k=(/1, 23/), &
                               limits=(/1, 552, 1, 46, 1, 46/))
+   CALL dbcsr_test_multiplies("blocks_45_67_79", &
+                              group, mp_env, npdims, io_unit, matrix_sizes=(/573, 191, 191/), &
+                              sparsities=(/0.5_dp, 0.5_dp, 0.5_dp/), retain_sparsity=.FALSE., &
+                              alpha=CMPLX(1.0_dp, 0.0_dp, dp), beta=CMPLX(0.0_dp, 0.0_dp, dp), &
+                              bs_m=(/1, 45, 1, 67, 1, 79/), bs_n=(/1, 45, 1, 67, 1, 79/), bs_k=(/1, 45, 1, 67, 1, 79/), &
+                              limits=(/1, 573, 1, 191, 1, 191/))
 
    ! end of test cases ---------------------------------------------------------
 
