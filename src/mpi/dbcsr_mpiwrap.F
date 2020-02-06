@@ -68,6 +68,7 @@ MODULE dbcsr_mpiwrap
    INTEGER, PARAMETER, PUBLIC :: mp_proc_null = MPI_PROC_NULL
    ! Set max allocatable memory by MPI to 2 GiByte
    INTEGER(KIND=MPI_ADDRESS_KIND), PARAMETER, PRIVATE :: mp_max_memory_size = HUGE(INT(1, KIND=MPI_ADDRESS_KIND))
+   INTEGER(KIND=MPI_ADDRESS_KIND), PARAMETER, PRIVATE :: mp_max_memory_size_OLD = HUGE(INT(1, KIND=int_4))
 
 #if __MPI_VERSION > 2
    INTEGER, PARAMETER, PUBLIC :: mp_max_library_version_string = MPI_MAX_LIBRARY_VERSION_STRING
@@ -6079,8 +6080,15 @@ CONTAINS
       length = MAX(len, 1)
       CALL MPI_TYPE_SIZE(${mpi_type1}$, size, ierr)
       mp_size = INT(length, KIND=MPI_ADDRESS_KIND)*size
-         DBCSR_ABORT("MPI cannot allocate more than 2 GigaElements")
+      WRITE (*, *) " ----  mp_max_memory_size ", mp_max_memory_size
+      WRITE (*, *) " ----  mp_max_memory_size_OLD ", mp_max_memory_size_OLD
+      WRITE (*, *) " ----  mp_size ", mp_size
+      WRITE (*, *) " ----  length ", length
       IF (mp_size .GE. mp_max_memory_size) THEN
+         !DBCSR_ABORT("MPI cannot allocate more than 2 GigaElements")
+         WRITE (*, *) "############################################"
+         WRITE (*, *) "MPI cannot allocate more than 2 GigaElements"
+         WRITE (*, *) "############################################"
       ENDIF
       mp_info = MPI_INFO_NULL
       CALL MPI_ALLOC_MEM(mp_size, mp_info, mp_baseptr, mp_res)
