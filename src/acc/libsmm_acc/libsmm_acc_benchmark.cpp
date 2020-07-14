@@ -17,6 +17,22 @@
 
 
 //===========================================================================
+void print_matrix(int n_a, int m, int n, double* mat_trs_a){
+    int index = 0;
+    for(int s=0; s < n_a; s++){
+        printf("\t[s=%i]\n", s);
+        for(int mi=0; mi < m; mi++){
+            for(int ni=0; ni < n; ni++){
+                index = (s * n * m) + (ni * m + mi);
+                printf("(m=%i,n=%i,i=%i) %g", mi, ni, index, mat_trs_a[index]);
+            }
+            printf("\n");
+        }
+    }
+}
+
+
+//===========================================================================
 // Allocate memory and accelerator events
 void libsmm_acc_benchmark_init(libsmm_acc_benchmark_t** handle, benchmark_mode mode,
                                int max_m, int max_n, int max_k){
@@ -424,6 +440,7 @@ int libsmm_acc_benchmark_transpose_(int n_stack, int* stack, int* d_stack,
  clean_string(kernel_descr[0], descr);
 
  sumGPU = checkSumTransp(mat_trs, n_stack, mat_m, mat_n);
+
  if(sumGPU != sumCPU){
      printf("%sERROR %s checksum_diff: %g\n", msg_prefix, descr, sumGPU-sumCPU);
      error_counter++;

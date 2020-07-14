@@ -292,6 +292,22 @@ extern "C" int libsmm_acc_process (const libsmm_acc_stack_descriptor_type *param
 
 
 //===========================================================================
+void print_matrix_val(int n_a, int m, int n, double* mat_trs_a){
+    int index = 0;
+    for(int s=0; s < n_a; s++){
+        printf("\t[s=%i]\n", s);
+        for(int mi=0; mi < m; mi++){
+            for(int ni=0; ni < n; ni++){
+                index = (s * n * m) + (ni * m + mi);
+                printf("(m=%i,n=%i,i=%i) %g", mi, ni, index, mat_trs_a[index]);
+            }
+            printf("\n");
+        }
+    }
+}
+
+
+//===========================================================================
 inline void validate_transpose_kernel(ACC_DRV(function)& kern_func, int threads, ACC_DRV(stream) stream, int m, int n){
 
     libsmm_acc_benchmark_t* h;
@@ -348,7 +364,18 @@ void jit_transpose_handle(ACC_DRV(function)& kern_func, int m, int n){
     const char *compileOptions[] = {"-D__HIP"};
     size_t nOptions = 1;
 #endif
-    ACC_RTC_CALL(CompileProgram, (kernel_program, nOptions, compileOptions));
+    nvrtcResult compileResult = nvrtcCompileProgram(kernel_program, nOptions, compileOptions);
+
+    // Obtain compilation log from the program.
+    size_t logSize;
+    ACC_RTC_CALL(GetProgramLogSize, (kernel_program, &logSize));
+    char *log = new char[logSize];
+    ACC_RTC_CALL(GetProgramLog, (kernel_program, log));
+    std::cout << log << '\n';
+    delete[] log;
+    if (compileResult != NVRTC_SUCCESS) {
+        exit(1);
+    }
 
     // Obtain PTX from the program.
     size_t codeSize;

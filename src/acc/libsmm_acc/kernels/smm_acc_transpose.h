@@ -38,8 +38,13 @@
  * - the temporary buffer (of size m * n * 8 bytes) in which matrix elements are stored has to fit entirely into shared memory. Therefore, this kernel cannot be run for mattrix sizes such that m * n * 8 bytes > available shared memory per block.
  */
 
+#define TILE_DIM 16
+
+
 template <int m, int n>
 __global__ void transpose_d(int *trs_stack, double* mat){
+
+#ifdef TR_OLD
  __shared__ double buf[m*n];
 
  /* Get the offset in the transpose-stack that this block ID should handle */
@@ -62,5 +67,48 @@ __global__ void transpose_d(int *trs_stack, double* mat){
      /* Overwrite the matrix element */
      mat[offset + i] = buf[idx];
  }
+
+#else
+
+ __shared__ double buf[TILE_DIM][TILE_DIM];
+
+ /* Get the offset in the transpose-stack that this block ID should handle */
+ int num_tiles_row = (m + TILE_DIM - 1) / TILE_DIM;
+ int num_tiles_col = (n + TILE_DIM - 1) / TILE_DIM;
+ int num_tiles = num_tiles_row * num_tiles_col;
+ int trs_stack_offset = trs_stack[blockIdx.x / num_tiles];
+
+ /* Get indices in the matrix */
+ int block_id_local = blockIdx.x % num_tiles;
+ int block_id_local_row = block_id_local % num_tiles_row;
+ int block_id_local_col = block_id_local / num_tiles_row;
+ int i = threadIdx.x;
+ int irow = threadIdx.x % TILE_DIM;
+ int icol = threadIdx.x / TILE_DIM;
+ int irow_mat = block_id_local_row * TILE_DIM + irow;
+ int icol_mat = block_id_local_col * TILE_DIM + icol;
+
+ /* Loop over the elements in this matrix tile */
+ if((irow_mat < m) && (icol_mat < n)){
+     /* Convert to 2D index */
+     int mat_idx = icol_mat * m + irow_mat;
+     /* Load matrix elements into a temporary buffer */
+     buf[irow][icol] = mat[trs_stack_offset + mat_idx];
+ }
+ syncthreads();
+
+ int irow_trs = icol;
+ int icol_trs = irow;
+ int irow_mat_trs = block_id_local_row * TILE_DIM + icol;
+ int icol_mat_trs = block_id_local_col * TILE_DIM + irow;
+
+ /* Loop over elements of the matrix to be overwritten */
+ if((irow_mat_trs < m) && (icol_mat_trs < n)){
+     /* Overwrite the matrix element */
+     int mat_idx = irow_mat_trs * n + icol_mat_trs;
+     mat[trs_stack_offset + mat_idx] = buf[irow_trs][icol_trs];
+ }
+
+#endif
 
 }
