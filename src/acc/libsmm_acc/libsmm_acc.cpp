@@ -36,6 +36,8 @@
 #define CONCAT_NX(A, B) A ## B
 #define CONCAT(A, B) CONCAT_NX(A, B)
 
+#define TILE_DIM 16
+
 // The macro ARCH_OPTION, when expanded, is a string literal containing the
 // jit compiler option specifying the target architecture
 #if defined(__CUDA) || defined(__HIP_PLATFORM_NVCC__)
