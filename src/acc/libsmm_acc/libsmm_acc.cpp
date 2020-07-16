@@ -410,10 +410,10 @@ int libsmm_acc_transpose_d(const int *trs_stack, int offset, int stack_size,
                            double *buffer, int m, int n, ACC_DRV(stream) stream) {
 
     ACC_DRV(function) kern_func;
-    int threads = 128;
-    if (m * n + warp_size <= 128){
-        threads = m*n  - (m*n % warp_size) + warp_size;
-    }
+    int threads = 256;
+//    if (m * n + warp_size <= 128){
+//        threads = m*n  - (m*n % warp_size) + warp_size;
+//    }
 
     // Look up the kernel in the table of already JITed kernels
     Triplet h_mnk = { m, n, 0 };
