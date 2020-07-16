@@ -327,7 +327,11 @@ inline void validate_transpose_kernel(ACC_DRV(function)& kern_func, int threads,
     ACC_API_CALL(Memcpy, (h->d_stack_trs_a, h->stack_trs_a, h->n_stack_trs_a * sizeof(int), ACC(MemcpyHostToDevice)));
 
     void *args[] = {&h->d_stack_trs_a, &h->d_mat_a};
-    launch_kernel_from_handle(kern_func, h->n_stack_trs_a, threads, stream, args);
+    int num_tiles_row = (n + TILE_DIM - 1) / TILE_DIM;
+    int num_tiles_col = (m + TILE_DIM - 1) / TILE_DIM;
+    int num_tiles = num_tiles_row * num_tiles_col;
+
+    launch_kernel_from_handle(kern_func, h->n_stack_trs_a * num_tiles, threads, stream, args);
     ACC_API_CALL(Memcpy, (h->mat_trs_a, h->d_mat_a, h->n_a * m * n * sizeof(double), ACC(MemcpyDeviceToHost)));
 
     // Validate the kernel based on results
@@ -440,7 +444,10 @@ int libsmm_acc_transpose_d(const int *trs_stack, int offset, int stack_size,
     const int* trs_stack_ = trs_stack + offset;
     void *args[] = {&trs_stack_, &buffer};
 
-    return launch_kernel_from_handle(kern_func, stack_size, threads, stream, args);
+    int num_tiles_row = (n + TILE_DIM - 1) / TILE_DIM;
+    int num_tiles_col = (m + TILE_DIM - 1) / TILE_DIM;
+    int num_tiles = num_tiles_row * num_tiles_col;
+    return launch_kernel_from_handle(kern_func, stack_size * num_tiles, threads, stream, args);
 
 }
 
