@@ -118,6 +118,12 @@ PROGRAM dbcsr_unittest
                               alpha=CMPLX(1.0_dp, 0.0_dp, dp), beta=CMPLX(0.0_dp, 0.0_dp, dp), &
                               bs_m=(/1, 45, 1, 67, 1, 78/), bs_n=(/1, 45, 1, 67, 1, 78/), bs_k=(/1, 45, 1, 67, 1, 78/), &
                               limits=(/1, 570, 1, 190, 1, 190/))
+   CALL dbcsr_test_multiplies("blocks_45_80_100", &
+                              group, mp_env, npdims, io_unit, matrix_sizes=(/675, 225, 225/), &
+                              sparsities=(/0.5_dp, 0.5_dp, 0.5_dp/), retain_sparsity=.FALSE., &
+                              alpha=CMPLX(1.0_dp, 0.0_dp, dp), beta=CMPLX(0.0_dp, 0.0_dp, dp), &
+                              bs_m=(/1, 45, 1, 80, 1, 100/), bs_n=(/1, 45, 1, 80, 1, 100/), bs_k=(/1, 45, 1, 80, 1, 100/), &
+                              limits=(/1, 675, 1, 225, 1, 225/))
 
    ! end of test cases ---------------------------------------------------------
 
