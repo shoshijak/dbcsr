@@ -42,7 +42,7 @@ int main(int argc, char** argv){
     }
 
     libsmm_acc_benchmark_t* handle;
-    libsmm_acc_benchmark_init(&handle, test, max_m, max_n, max_k);
+    libsmm_acc_benchmark_init(&handle, test, 128, 128, 128);
 
     // Get (m,n) pairs to test transposition
     std::vector<std::pair<int,int> > libsmm_acc_transpose_pairs;
@@ -53,6 +53,25 @@ int main(int argc, char** argv){
         libsmm_acc_transpose_pairs.push_back(std::make_pair(m, k));
         libsmm_acc_transpose_pairs.push_back(std::make_pair(k, n));
     }
+    // 72, 76, 78, 79, 80, 100, 120, 128
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(20, 50));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(50, 50));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(50, 100));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(20, 100));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(72, 72));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(72, 76));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(76, 76));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(78, 78));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(78, 79));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(79, 79));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(79, 80));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(80, 80));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(80, 100));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(100, 100));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(120, 100));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(120, 120));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(120, 128));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(128, 128));
     std::sort(libsmm_acc_transpose_pairs.begin(), libsmm_acc_transpose_pairs.end(),
               [](std::pair<int,int> a, std::pair<int,int> b) {
         return (a.first > b.first) || (a.first == b.first && a.second > b.second) ;
