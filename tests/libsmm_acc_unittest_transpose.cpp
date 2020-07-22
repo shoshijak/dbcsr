@@ -42,7 +42,7 @@ int main(int argc, char** argv){
     }
 
     libsmm_acc_benchmark_t* handle;
-    libsmm_acc_benchmark_init(&handle, test, max_m, max_n, max_k);
+    libsmm_acc_benchmark_init(&handle, test, 128, 128, 128);
 
     // Get (m,n) pairs to test transposition
     std::vector<std::pair<int,int> > libsmm_acc_transpose_pairs;
