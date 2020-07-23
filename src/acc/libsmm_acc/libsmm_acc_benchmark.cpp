@@ -391,12 +391,6 @@ int libsmm_acc_benchmark_transpose_(int n_stack, int* stack, int* d_stack,
                                     int n, int mat_m, int mat_n,
                                     ACC_DRV(event) start, ACC_DRV(event) stop, char** kernel_descr,
                                     TransposeLauncher* launcher){
- if(mat_m > MAX_BLOCK_DIM || mat_n > MAX_BLOCK_DIM){
-     printf("Cannot transpose matrices with dimensions above %i, got (%i x %i)\n",
-            MAX_BLOCK_DIM, mat_m, mat_n);
-     exit(1);
- }
-
  ACC_DRV(stream) stream;
  ACC_DRV_CALL(StreamCreate, (&stream, ACC_DRV(StreamDefault)));
 

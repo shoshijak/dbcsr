@@ -284,10 +284,7 @@ extern "C" int libsmm_acc_process (const libsmm_acc_stack_descriptor_type *param
     if(def_mnk!=1)
         return -1; // inhomogeneous stacks not supported
     if(datatype==dbcsr_type_real_8) {
-      if(m>MAX_BLOCK_DIM || n>MAX_BLOCK_DIM || k>MAX_BLOCK_DIM)
-        return -1; // maximum size over any dimension
-      else
-        return (libsmm_acc_process_d ((const int *) param_stack, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
+      return (libsmm_acc_process_d ((const int *) param_stack, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
     }
     return -1; // datatype not supported
 };
@@ -458,7 +455,5 @@ int libsmm_acc_transpose_d(const int *trs_stack, int offset, int stack_size,
 extern "C" int libsmm_acc_transpose (const int *trs_stack, int offset, int stack_size, void *buffer, acc_data_t datatype, int m, int n, acc_stream_t* stream) {
     if(datatype != dbcsr_type_real_8)
         return 0; // transpose not needed
-    if(m>MAX_BLOCK_DIM || n>MAX_BLOCK_DIM)
-      return 0; // maximum size over any dimension
     return libsmm_acc_transpose_d(trs_stack, offset, stack_size, (double *) buffer, m, n, *((ACC_DRV(stream) *) stream));
 }
