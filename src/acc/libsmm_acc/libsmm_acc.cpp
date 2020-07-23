@@ -330,6 +330,7 @@ inline void validate_transpose_kernel(ACC_DRV(function)& kern_func, int threads,
     int num_tiles_col = (m + TILE_DIM - 1) / TILE_DIM;
     int num_tiles = num_tiles_row * num_tiles_col;
 
+    printf("[%i,%i](val) offset=%i, stack_size=%i, num_tiles=%i, threads=%i\n",m, n, 0, h->n_stack_trs_a, num_tiles, threads);
     launch_kernel_from_handle(kern_func, h->n_stack_trs_a * num_tiles, threads, stream, args);
     ACC_API_CALL(Memcpy, (h->mat_trs_a, h->d_mat_a, h->n_a * m * n * sizeof(double), ACC(MemcpyDeviceToHost)));
 
