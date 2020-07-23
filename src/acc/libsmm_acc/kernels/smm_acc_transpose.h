@@ -77,6 +77,9 @@ __global__ void transpose_d(int *trs_stack, double* mat){
  int num_tiles_col = (n + TILE_DIM - 1) / TILE_DIM;
  int num_tiles = num_tiles_row * num_tiles_col;
  int trs_stack_offset = trs_stack[blockIdx.x / num_tiles];
+ if(threadIdx.x == 0 or threadIdx == 1){
+    printf("[t=%i,b=%i](%ix%i=%i) offset = %i", threadIdx.x, blockIdx.x, num_tiles_row, num_tiles_col, num_tiles, trs_stack_offset);
+ }
 
  /* Get indices in the matrix */
  int block_id_local = blockIdx.x % num_tiles;
@@ -87,6 +90,10 @@ __global__ void transpose_d(int *trs_stack, double* mat){
  int icol = threadIdx.x / TILE_DIM;
  int irow_mat = block_id_local_row * TILE_DIM + irow;
  int icol_mat = block_id_local_col * TILE_DIM + icol;
+ if(threadIdx.x == 0 or threadIdx == 1){
+    printf("[t=%i,b=%i](%ix%i=%i) block_id_local = (%ix%i=%i), itile = (%ix%i), imat = (%ix%i)",
+            threadIdx.x, blockIdx.x, block_id_local_row, block_id_local_col, block_id_local, irow, icol, irow_mat, icol_mat);
+ }
 
  /* Loop over the elements in this matrix tile */
  if((irow_mat < m) && (icol_mat < n)){
