@@ -52,7 +52,7 @@ void libsmm_acc_benchmark_init(libsmm_acc_benchmark_t** handle, benchmark_mode m
             h->n_stack_trs_b = 0;
             break;
         case test:
-            h->n_a = 1;
+            h->n_a = 11;
             h->n_b = 1;
             h->n_c = 1;
             h->n_stack = 5;
