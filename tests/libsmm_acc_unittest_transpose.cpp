@@ -54,6 +54,10 @@ int main(int argc, char** argv){
         libsmm_acc_transpose_pairs.push_back(std::make_pair(k, n));
     }
     // 72, 76, 78, 79, 80, 100, 120, 128
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(20, 50));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(50, 50));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(50, 100));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(20, 100));
     libsmm_acc_transpose_pairs.push_back(std::make_pair(72, 72));
     libsmm_acc_transpose_pairs.push_back(std::make_pair(72, 76));
     libsmm_acc_transpose_pairs.push_back(std::make_pair(76, 76));
