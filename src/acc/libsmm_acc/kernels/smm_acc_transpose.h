@@ -44,11 +44,11 @@
 template <int m, int n>
 __global__ void transpose_d(int *trs_stack, double* mat){
 
-#ifdef TR_OLD
- __shared__ double buf[m*n];
-
  /* Get the offset in the transpose-stack that this block ID should handle */
  int offset = trs_stack[blockIdx.x];
+
+#ifdef TR_OLD
+ __shared__ double buf[m*n];
 
  /* Loop over m*n matrix elements */
  for(int i=threadIdx.x; i < m*n; i+=blockDim.x){
@@ -76,7 +76,7 @@ __global__ void transpose_d(int *trs_stack, double* mat){
  int num_tiles_row = (m + TILE_DIM - 1) / TILE_DIM;
  int num_tiles_col = (n + TILE_DIM - 1) / TILE_DIM;
  int num_tiles = num_tiles_row * num_tiles_col;
- int trs_stack_offset = trs_stack[blockIdx.x / num_tiles];
+ int trs_stack_offset = offset + trs_stack[blockIdx.x / num_tiles];
 
  /* Get indices in the matrix */
  int block_id_local = blockIdx.x % num_tiles;
