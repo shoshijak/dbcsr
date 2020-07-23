@@ -227,17 +227,14 @@ CONTAINS
       istat = 0
 
       ! Limits the call to small kernels
-      IF (m .LE. max_kernel_dim .AND. &
-          n .LE. max_kernel_dim) THEN
-         istat = libsmm_acc_transpose_cu(acc_devmem_cptr(trs_stack), &
-                                         INT(offset, KIND=C_INT), &
-                                         INT(nblks, KIND=C_INT), &
-                                         acc_devmem_cptr(buffer), &
-                                         INT(datatype, KIND=C_INT), &
-                                         INT(m, KIND=C_INT), &
-                                         INT(n, KIND=C_INT), &
-                                         acc_stream_cptr(stream))
-      ENDIF
+      istat = libsmm_acc_transpose_cu(acc_devmem_cptr(trs_stack), &
+                                      INT(offset, KIND=C_INT), &
+                                      INT(nblks, KIND=C_INT), &
+                                      acc_devmem_cptr(buffer), &
+                                      INT(datatype, KIND=C_INT), &
+                                      INT(m, KIND=C_INT), &
+                                      INT(n, KIND=C_INT), &
+                                      acc_stream_cptr(stream))
 
       IF (istat /= 0) DBCSR_ABORT("something went wrong.")
       IF (careful_mod) CALL timestop(error_handle)
