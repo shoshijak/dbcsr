@@ -446,7 +446,7 @@ int libsmm_acc_transpose_d(const int *trs_stack, int offset, int stack_size,
     int num_tiles_row = (n + TILE_DIM - 1) / TILE_DIM;
     int num_tiles_col = (m + TILE_DIM - 1) / TILE_DIM;
     int num_tiles = num_tiles_row * num_tiles_col;
-    printf("[%i,%i] offset=%i, stack_size=%i, num_tiles=%i, threads=%i",m, n, offset, stack_size, num_tiles, threads);
+    printf("[%i,%i] offset=%i, stack_size=%i, num_tiles=%i, threads=%i\n",m, n, offset, stack_size, num_tiles, threads);
     return launch_kernel_from_handle(kern_func, stack_size * num_tiles, threads, stream, args);
 
 }
