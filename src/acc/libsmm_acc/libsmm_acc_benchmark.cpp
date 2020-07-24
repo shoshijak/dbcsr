@@ -413,7 +413,7 @@ int libsmm_acc_benchmark_transpose_(int n_stack, int* stack, int* d_stack,
  stackTransp(stack, n_stack, mat, mat_trs, mat_m, mat_n);
  sumCPU = checkSumTransp(mat_trs, n_stack, mat_m, mat_n);
  printf("TRANSPOSE MATRIX CPU:\n");
- print_matrix(n, mat_m, mat_n, mat);
+ print_matrix(n, mat_n, mat_m, mat_trs);
 
  // Compute on GPU
  ACC_API_CALL(Memcpy, (d_mat, mat, n * mat_m * mat_n * sizeof(double), ACC(MemcpyHostToDevice)));
@@ -439,7 +439,7 @@ int libsmm_acc_benchmark_transpose_(int n_stack, int* stack, int* d_stack,
 
  sumGPU = checkSumTransp(mat_trs, n_stack, mat_m, mat_n);
  printf("TRANSPOSE MATRIX GPU:\n");
- print_matrix(n, mat_m, mat_n, mat);
+ print_matrix(n, mat_n, mat_m, mat_trs);
 
  if(sumGPU != sumCPU){
      printf("%sERROR %s checksum_diff: %g\n", msg_prefix, descr, sumGPU-sumCPU);
