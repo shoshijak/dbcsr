@@ -339,7 +339,7 @@ inline void validate_transpose_kernel(ACC_DRV(function)& kern_func, int threads,
     ACC_API_CALL(Memcpy, (h->mat_trs_a, h->d_mat_a, h->n_a * m * n * sizeof(double), ACC(MemcpyDeviceToHost)));
 
     // Validate the kernel based on results
-    printf("(VAL) TRANSPOSE MATRIX GPU:\n")
+    printf("(VAL) TRANSPOSE MATRIX GPU:\n");
     print_matrix_(h->n_stack_trs_a, n, m, h->mat_trs_a);
     double sumGPU = checkSumTransp(h->mat_trs_a, h->n_stack_trs_a, m, n);
     libsmm_acc_benchmark_finalize(h);
