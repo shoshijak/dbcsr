@@ -291,7 +291,7 @@ extern "C" int libsmm_acc_process (const libsmm_acc_stack_descriptor_type *param
 
 
 //===========================================================================
-void print_matrix(int n_a, int m, int n, double* mat_trs_a){
+void print_matrix_(int n_a, int m, int n, double* mat_trs_a){
     int index = 0;
     for(int s=0; s < n_a; s++){
         printf("\t[s=%i]\n", s);
@@ -315,14 +315,14 @@ inline void validate_transpose_kernel(ACC_DRV(function)& kern_func, int threads,
     // Initialize arrays
     matInit(h->mat_a, h->n_a, m, n, 42);
     printf("(VAL) TRANSPOSE MATRIX A:\n");
-    print_matrix_(h->n_stack_trs_a, m, n, mat);
+    print_matrix_(h->n_stack_trs_a, m, n, h->mat_a);
     memset(h->mat_trs_a, 0, h->n_a * m * n * sizeof(double));
     stackInitTransp(h->stack_trs_a, h->n_stack_trs_a, m, n);
 
     // Run the matrix-matrix multiplication on the CPU
     stackTransp(h->stack_trs_a, h->n_stack_trs_a, h->mat_a, h->mat_trs_a, m, n);
     printf("(VAL) TRANSPOSE MATRIX CPU:\n");
-    print_matrix_(h->n_stack_trs_a, n, m, mat_trs);
+    print_matrix_(h->n_stack_trs_a, n, m, h->mat_trs_a);
     double sumCPU = checkSumTransp(h->mat_trs_a, h->n_stack_trs_a, m, n);
 
     // Run the matrix-matrix multiplication kernel on the GPU
@@ -339,8 +339,8 @@ inline void validate_transpose_kernel(ACC_DRV(function)& kern_func, int threads,
     ACC_API_CALL(Memcpy, (h->mat_trs_a, h->d_mat_a, h->n_a * m * n * sizeof(double), ACC(MemcpyDeviceToHost)));
 
     // Validate the kernel based on results
-    printf("(VAL) TRANSPOSE MATRIX GPU:\n");
-    print_matrix_(h->n_stack_trs_a, n, m, mat_trs);]
+    printf("(VAL) TRANSPOSE MATRIX GPU:\n")
+    print_matrix_(h->n_stack_trs_a, n, m, h->mat_trs_a);
     double sumGPU = checkSumTransp(h->mat_trs_a, h->n_stack_trs_a, m, n);
     libsmm_acc_benchmark_finalize(h);
     if(sumGPU != sumCPU){
