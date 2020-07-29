@@ -46,27 +46,29 @@ int main(int argc, char** argv){
 
     // Get (m,n) pairs to test transposition
     std::vector<std::pair<int,int> > libsmm_acc_transpose_pairs;
-    for(int i=0; i<n_triplets; i++){
-        int m = libsmm_acc_triplets[i][0];
-        int n = libsmm_acc_triplets[i][1];
-        int k = libsmm_acc_triplets[i][2];
-        libsmm_acc_transpose_pairs.push_back(std::make_pair(m, k));
-        libsmm_acc_transpose_pairs.push_back(std::make_pair(k, n));
-    }
+//    for(int i=0; i<n_triplets; i++){
+//        int m = libsmm_acc_triplets[i][0];
+//        int n = libsmm_acc_triplets[i][1];
+//        int k = libsmm_acc_triplets[i][2];
+//        libsmm_acc_transpose_pairs.push_back(std::make_pair(m, k));
+//        libsmm_acc_transpose_pairs.push_back(std::make_pair(k, n));
+//    }
     // 72, 76, 78, 79, 80, 100, 120, 128
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(20, 50));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(50, 50));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(50, 100));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(20, 100));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(72, 72));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(72, 76));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(76, 76));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(78, 78));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(78, 79));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(79, 79));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(79, 80));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(80, 80));
-    libsmm_acc_transpose_pairs.push_back(std::make_pair(80, 100));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(4, 4));
+    libsmm_acc_transpose_pairs.push_back(std::make_pair(32, 32));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(20, 50));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(50, 50));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(50, 100));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(20, 100));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(72, 72));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(72, 76));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(76, 76));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(78, 78));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(78, 79));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(79, 79));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(79, 80));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(80, 80));
+//    libsmm_acc_transpose_pairs.push_back(std::make_pair(80, 100));
     libsmm_acc_transpose_pairs.push_back(std::make_pair(100, 100));
     libsmm_acc_transpose_pairs.push_back(std::make_pair(120, 100));
     libsmm_acc_transpose_pairs.push_back(std::make_pair(120, 120));
