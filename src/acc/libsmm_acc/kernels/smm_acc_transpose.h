@@ -85,8 +85,8 @@ __global__ void transpose_d(int *trs_stack, double* mat){
  int i = threadIdx.x;
  int irow_tile = threadIdx.x % TILE_DIM;
  int icol_tile = threadIdx.x / TILE_DIM;
- int irow_mat = block_id_local_row * TILE_DIM + irow;
- int icol_mat = block_id_local_col * TILE_DIM + icol;
+ int irow_mat = block_id_local_row * TILE_DIM + irow_tile;
+ int icol_mat = block_id_local_col * TILE_DIM + icol_tile;
 
  /* Loop over the elements in this matrix tile */
  if((irow_mat < m) && (icol_mat < n)){
