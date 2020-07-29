@@ -404,7 +404,7 @@ int libsmm_acc_benchmark_transpose_(int n_stack, int* stack, int* d_stack,
 
  // Matrix and stack initialization
  matInit(mat, n, mat_m, mat_n, 42);
- printf("TRANSPOSE MATRIX A:\n");
+ printf("\nTRANSPOSE MATRIX A:\n");
  print_matrix(n, mat_m, mat_n, mat);
  memset(mat_trs, 0, n * mat_m * mat_n * sizeof(double));
  stackInitTransp(stack, n_stack, mat_m, mat_n);
@@ -412,7 +412,7 @@ int libsmm_acc_benchmark_transpose_(int n_stack, int* stack, int* d_stack,
  // Reference result on CPU
  stackTransp(stack, n_stack, mat, mat_trs, mat_m, mat_n);
  sumCPU = checkSumTransp(mat_trs, n_stack, mat_m, mat_n);
- printf("TRANSPOSE MATRIX CPU:\n");
+ printf("\nTRANSPOSE MATRIX CPU:\n");
  print_matrix(n, mat_n, mat_m, mat_trs);
 
  // Compute on GPU
@@ -438,7 +438,7 @@ int libsmm_acc_benchmark_transpose_(int n_stack, int* stack, int* d_stack,
  clean_string(kernel_descr[0], descr);
 
  sumGPU = checkSumTransp(mat_trs, n_stack, mat_m, mat_n);
- printf("TRANSPOSE MATRIX GPU:\n");
+ printf("\nTRANSPOSE MATRIX GPU:\n");
  print_matrix(n, mat_n, mat_m, mat_trs);
 
  if(sumGPU != sumCPU){
