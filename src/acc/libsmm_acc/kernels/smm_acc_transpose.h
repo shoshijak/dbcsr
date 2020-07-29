@@ -94,7 +94,7 @@ __global__ void transpose_d(int *trs_stack, double* mat){
      int mat_idx = icol_mat * m + irow_mat;
      /* Load matrix elements into a temporary buffer */
      buf[irow][icol] = mat[trs_stack_offset + mat_idx];
-     if(icol_mat == 16 or icol_mat == 17 or irow_mat == 16 or irow_mat == 17){
+     if(icol_mat == 0 or icol_mat == 60 or icol_mat == 80 or icol_mat == 99 or irow_mat == 0 or irow_mat == 60 or irow_mat == 80 or irow_mat == 99){
        printf("[t=%i,b=%i,offset=%i]{%g} block_id_local = (%ix%i=%i), itile = (%ix%i) <-- imat = (%ix%i)%c", threadIdx.x, blockIdx.x, trs_stack_offset, mat[trs_stack_offset + mat_idx], block_id_local_row, block_id_local_col, block_id_local, irow, icol, irow_mat, icol_mat, 0x0A);
      }
  }
@@ -111,7 +111,7 @@ __global__ void transpose_d(int *trs_stack, double* mat){
      /* Overwrite the matrix element */
      int mat_idx = irow_mat_trs * n + icol_mat_trs;
      mat[trs_stack_offset + mat_idx] = buf[irow_trs][icol_trs];
-     if(icol_mat_trs == 16 or icol_mat_trs == 17 or irow_mat_trs == 16 or irow_mat_trs == 17){
+     if(icol_mat == 0 or icol_mat == 60 or icol_mat == 80 or icol_mat == 99 or irow_mat == 0 or irow_mat == 60 or irow_mat == 80 or irow_mat == 99){
        printf("[t=%i,b=%i,offset=%i]{%g} block_id_local = (%ix%i=%i), itile = (%ix%i) --> imat = (%ix%i)%c", threadIdx.x, blockIdx.x, trs_stack_offset, buf[irow_trs][icol_trs], block_id_local_row, block_id_local_col, block_id_local, irow_trs, icol_trs, irow_mat_trs, icol_mat_trs, 0x0A);
      }
 }
