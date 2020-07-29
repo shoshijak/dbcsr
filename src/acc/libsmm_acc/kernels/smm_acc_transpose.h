@@ -83,8 +83,8 @@ __global__ void transpose_d(int *trs_stack, double* mat){
  int block_id_local_row = block_id_local % num_tiles_row;
  int block_id_local_col = block_id_local / num_tiles_row;
  int i = threadIdx.x;
- int irow = threadIdx.x % TILE_DIM;
- int icol = threadIdx.x / TILE_DIM;
+ int irow_tile = threadIdx.x % TILE_DIM;
+ int icol_tile = threadIdx.x / TILE_DIM;
  int irow_mat = block_id_local_row * TILE_DIM + irow;
  int icol_mat = block_id_local_col * TILE_DIM + icol;
 
@@ -93,27 +93,27 @@ __global__ void transpose_d(int *trs_stack, double* mat){
      /* Convert to 2D index */
      int mat_idx = icol_mat * m + irow_mat;
      /* Load matrix elements into a temporary buffer */
-     buf[irow][icol] = mat[trs_stack_offset + mat_idx];
-     if(icol_mat == 0 or icol_mat == 60 or icol_mat == 80 or icol_mat == 99 or irow_mat == 0 or irow_mat == 60 or irow_mat == 80 or irow_mat == 99){
-       printf("[t=%i,b=%i,offset=%i]{%g} block_id_local = (%ix%i=%i), itile = (%ix%i) <-- imat = (%ix%i)%c", threadIdx.x, blockIdx.x, trs_stack_offset, mat[trs_stack_offset + mat_idx], block_id_local_row, block_id_local_col, block_id_local, irow, icol, irow_mat, icol_mat, 0x0A);
-     }
+     buf[irow_tile][icol_tile] = mat[trs_stack_offset + mat_idx];
+//     if(icol_mat == 0 or icol_mat == 60 or icol_mat == 80 or icol_mat == 99 or irow_mat == 0 or irow_mat == 60 or irow_mat == 80 or irow_mat == 99){
+       printf("[t=%i,b=%i,offset=%i]{%g} block_id_local = (%ix%i=%i), itile = (%ix%i) <-- imat = (%ix%i)%c", threadIdx.x, blockIdx.x, trs_stack_offset, mat[trs_stack_offset + mat_idx], block_id_local_row, block_id_local_col, block_id_local, irow_tile, icol_tile, irow_mat, icol_mat, 0x0A);
+//     }
  }
 
  syncthreads();
 
- int irow_trs = icol;
- int icol_trs = irow;
- int irow_mat_trs = block_id_local_row * TILE_DIM + icol;
- int icol_mat_trs = block_id_local_col * TILE_DIM + irow;
+ int irow_tile_trs = icol_tile;
+ int icol_tile_trs = irow_tile;
+ int irow_mat_trs = block_id_local_row * TILE_DIM + icol_tile;
+ int icol_mat_trs = block_id_local_col * TILE_DIM + irow_tile;
 
  /* Loop over elements of the matrix to be overwritten */
  if((irow_mat_trs < m) && (icol_mat_trs < n)){
      /* Overwrite the matrix element */
      int mat_idx = irow_mat_trs * n + icol_mat_trs;
-     mat[trs_stack_offset + mat_idx] = buf[irow_trs][icol_trs];
-     if(icol_mat == 0 or icol_mat == 60 or icol_mat == 80 or icol_mat == 99 or irow_mat == 0 or irow_mat == 60 or irow_mat == 80 or irow_mat == 99){
-       printf("[t=%i,b=%i,offset=%i]{%g} block_id_local = (%ix%i=%i), itile = (%ix%i) --> imat = (%ix%i)%c", threadIdx.x, blockIdx.x, trs_stack_offset, buf[irow_trs][icol_trs], block_id_local_row, block_id_local_col, block_id_local, irow_trs, icol_trs, irow_mat_trs, icol_mat_trs, 0x0A);
-     }
+     mat[trs_stack_offset + mat_idx] = buf[irow_tile_trs][icol_tile_trs];
+//     if(icol_mat == 0 or icol_mat == 60 or icol_mat == 80 or icol_mat == 99 or irow_mat == 0 or irow_mat == 60 or irow_mat == 80 or irow_mat == 99){
+       printf("[t=%i,b=%i,offset=%i]{%g} block_id_local = (%ix%i=%i), itile = (%ix%i) --> imat = (%ix%i)%c", threadIdx.x, blockIdx.x, trs_stack_offset, buf[irow_tile_trs][icol_tile_trs], block_id_local_row, block_id_local_col, block_id_local, irow_tile_trs, icol_tile_trs, irow_mat_trs, icol_mat_trs, 0x0A);
+//     }
 }
 
 #endif
