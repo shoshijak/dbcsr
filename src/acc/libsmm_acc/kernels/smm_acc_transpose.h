@@ -44,6 +44,7 @@
 template <int m, int n>
 __global__ void transpose_d(int *trs_stack, double* mat){
 
+// if m, n < TILE_DIM or than 32, or 79, do this:
 #ifdef TR_OLD
  __shared__ double buf[m*n];
 
@@ -69,8 +70,10 @@ __global__ void transpose_d(int *trs_stack, double* mat){
  }
 
 #else
+// otherwise:
 
- __shared__ double buf[TILE_DIM][TILE_DIM];
+ __shared__ double buf_up[TILE_DIM][TILE_DIM];
+ __shared__ double buf_down[TILE_DIM][TILE_DIM];
 
  /* Get the offset in the transpose-stack that this block ID should handle */
  int num_tiles_row = (m + TILE_DIM - 1) / TILE_DIM;
@@ -78,43 +81,141 @@ __global__ void transpose_d(int *trs_stack, double* mat){
  int num_tiles = num_tiles_row * num_tiles_col;
  int trs_stack_offset = trs_stack[blockIdx.x];
 
- /* Get indices in the matrix */
- for(int tile=0; tile<num_tiles; tile+=1){
-   int block_id_local_row = tile % num_tiles_row;
-   int block_id_local_col = tile / num_tiles_row;
-   int i = threadIdx.x;
-   int irow = threadIdx.x % TILE_DIM;
-   int icol = threadIdx.x / TILE_DIM;
-   int irow_mat = block_id_local_row * TILE_DIM + irow;
-   int icol_mat = block_id_local_col * TILE_DIM + icol;
+ for(int tile_row=0; tile_row<num_tiles_row; tile_row+=1){
+   for(int tile_col=tile_row; tile_col<num_tiles_col; tile_col+=1){
+       //TODO this will write off some tiles for non-rectangular matrices!
+       //possible solution: just add a loop that handles the leftover
 
-   /* Loop over the elements in this matrix tile */
-   if((irow_mat < m) && (icol_mat < n)){
-       /* Convert to 2D index */
-       int mat_idx = icol_mat * m + irow_mat;
-       /* Load matrix elements into a temporary buffer */
-       buf[irow][icol] = mat[trs_stack_offset + mat_idx];
+     if(tile_row == tile_col or ((tile_row > n) or (tile_col > m))){ // we're on the diagonal!
+         //but also if our tile does not have a "corresponding on" to come in its place!
+
+       /* Get indices in the matrix */
+       int i = threadIdx.x;
+       int irow = threadIdx.x % TILE_DIM;
+       int icol = threadIdx.x / TILE_DIM;
+       int irow_mat = tile_row * TILE_DIM + irow;
+       int icol_mat = tile_col * TILE_DIM + icol;
+
+       /* Loop over the elements in this matrix tile */
+       if((irow_mat < m) && (icol_mat < n)){
+           /* Convert to 2D index */
+           int mat_idx = icol_mat * m + irow_mat;
+           /* Load matrix elements into a temporary buffer */
+           buf_up[irow][icol] = mat[trs_stack_offset + mat_idx];
+       }
+
+       syncthreads();
+
+       int irow_trs = icol;
+       int icol_trs = irow;
+       int irow_mat_trs = tile_row * TILE_DIM + icol;
+       int icol_mat_trs = tile_col * TILE_DIM + irow;
+
+       /* Loop over elements of the matrix to be overwritten */
+       if((irow_mat_trs < m) && (icol_mat_trs < n)){
+           /* Overwrite the matrix element */
+           int mat_idx = irow_mat_trs * n + icol_mat_trs;
+           mat[trs_stack_offset + mat_idx] = buf[irow_trs][icol_trs];
+       }
+
+     } else { // we're off the diagonal, we need to use 2 buffers so that we don't overwrite!
+
+       /* --- Write upper tile to buffer_up */
+       /* Get indices in the matrix */
+       int i = threadIdx.x;
+       int irow = threadIdx.x % TILE_DIM;
+       int icol = threadIdx.x / TILE_DIM;
+       int irow_mat = tile_row * TILE_DIM + irow;
+       int icol_mat = tile_col * TILE_DIM + icol;
+
+       /* Loop over the elements in this matrix tile */
+       if((irow_mat < m) && (icol_mat < n)){
+           /* Convert to 2D index */
+           int mat_idx = icol_mat * m + irow_mat;
+           /* Load matrix elements into a temporary buffer */
+           buf_up[irow][icol] = mat[trs_stack_offset + mat_idx];
+       }
+
+       syncthreads();
+
+       /* --- Write lower tile to buffer_down */
+       /* Get indices in the matrix */
+       int irow_mat_low = icol_mat;
+       int icol_mat_low = irow_mat;
+
+       /* Loop over the elements in this matrix tile */
+       if((irow_mat_low < m) && (icol_mat_low < n)){
+           /* Convert to 2D index */
+           int mat_idx = icol_mat_low * m + irow_mat_low;
+           /* Load matrix elements into a temporary buffer */
+           buf_down[irow][icol] = mat[trs_stack_offset + mat_idx];
+       }
+
+       syncthreads();
+
+       /* --- Write buffer_down to upper tile */
+       int irow_trs = icol;
+       int icol_trs = irow;
+       int irow_mat_low_trs = tile_col * TILE_DIM + icol;
+       int icol_mat_low_trs = tile_row * TILE_DIM + irow;
+
+       /* Loop over elements of the matrix to be overwritten */
+       if((irow_mat_low_trs < m) && (icol_mat_low_trs < n)){
+           /* Overwrite the matrix element */
+           int mat_idx = irow_mat_low_trs * n + icol_mat_low_trs;
+           mat[trs_stack_offset + mat_idx] = buf_down[irow_trs][icol_trs];
+       }
+
+       syncthreads();
+
+       /* --- Write buffer_up to lower tile */
+       int irow_mat_trs = tile_row * TILE_DIM + icol;
+       int icol_mat_trs = tile_col * TILE_DIM + irow;
+
+       /* Loop over elements of the matrix to be overwritten */
+       if((irow_mat_trs < m) && (icol_mat_trs < n)){
+           /* Overwrite the matrix element */
+           int mat_idx = irow_mat_trs * n + icol_mat_trs;
+           mat[trs_stack_offset + mat_idx] = buf_up[irow_trs][icol_trs];
+       }
+     }
    }
  }
- syncthreads();
 
- for(int tile=0; tile<num_tiles; tile+=1){
-   int block_id_local_row = tile % num_tiles_row;
-   int block_id_local_col = tile / num_tiles_row;
-   int i = threadIdx.x;
-   int irow = threadIdx.x % TILE_DIM;
-   int icol = threadIdx.x / TILE_DIM;
-   int irow_trs = icol;
-   int icol_trs = irow;
-   int irow_mat_trs = block_id_local_row * TILE_DIM + icol;
-   int icol_mat_trs = block_id_local_col * TILE_DIM + irow;
+ if(m > n){ // if the matrix has more rows than columns, we transpose the "leftover rows"
 
-   /* Loop over elements of the matrix to be overwritten */
-   if((irow_mat_trs < m) && (icol_mat_trs < n)){
-       /* Overwrite the matrix element */
-       int mat_idx = irow_mat_trs * n + icol_mat_trs;
-       mat[trs_stack_offset + mat_idx] = buf[irow_trs][icol_trs];
-   }
+ for(int tile_row=n; tile_row<num_tiles_row; tile_row+=1){
+   for(int tile_col=0; tile_col<num_tiles_col; tile_col+=1){
+
+       /* Get indices in the matrix */
+       int i = threadIdx.x;
+       int irow = threadIdx.x % TILE_DIM;
+       int icol = threadIdx.x / TILE_DIM;
+       int irow_mat = tile_row * TILE_DIM + irow;
+       int icol_mat = tile_col * TILE_DIM + icol;
+
+       /* Loop over the elements in this matrix tile */
+       if((irow_mat < m) && (icol_mat < n)){
+           /* Convert to 2D index */
+           int mat_idx = icol_mat * m + irow_mat;
+           /* Load matrix elements into a temporary buffer */
+           buf_up[irow][icol] = mat[trs_stack_offset + mat_idx];
+       }
+
+       syncthreads();
+
+       int irow_trs = icol;
+       int icol_trs = irow;
+       int irow_mat_trs = tile_row * TILE_DIM + icol;
+       int icol_mat_trs = tile_col * TILE_DIM + irow;
+
+       /* Loop over elements of the matrix to be overwritten */
+       if((irow_mat_trs < m) && (icol_mat_trs < n)){
+           /* Overwrite the matrix element */
+           int mat_idx = irow_mat_trs * n + icol_mat_trs;
+           mat[trs_stack_offset + mat_idx] = buf[irow_trs][icol_trs];
+       }
+    }
  }
 
 #endif
