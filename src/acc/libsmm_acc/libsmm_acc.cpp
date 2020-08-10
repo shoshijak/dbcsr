@@ -11,6 +11,7 @@
 #include "parameters_utils.h"
 #include "libsmm_acc.h"
 #include "libsmm_acc_benchmark.h"
+#include "../cuda/cublas.h"
 #include "smm_acc_kernels.h"
 
 #include <sstream>
@@ -236,6 +237,38 @@ kernel_map_iterator add_kernel_handle_to_jitted_kernels(ACC_DRV(function) kern_f
 
 
 //===========================================================================
+int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data){
+
+#if defined _OPENMP
+    int ithread = omp_get_num_threads();
+#endif
+
+    int istat = 0;
+    for(int stack_entry = 0; stack_entry < stack_size; stack_entry++){
+#if defined _OPENMP
+        printf("            (ithread=%i/vector_size=%i,ompi=%i/%i)\n", ithread, int(cublas_handles.size()), omp_get_thread_num(), omp_get_num_threads());
+#else
+        //printf("            (ithread=%i/vector_size=%i)\n", ithread, int(cublas_handles.size()));
+#endif
+        istat = cublas_dgemm(cublas_handle,
+                             'N', 'N',
+                             m, n, k,
+                             // parameter stack is 1-based, convert here to 0-based
+                             param_stack[3 * stack_entry] - 1,
+                             param_stack[3 * stack_entry + 1] - 1,
+                             param_stack[3 * stack_entry + 2] - 1,
+                             a_data, b_data, c_data,
+                             1.f, 1.f, &stream);
+        ACC_API_CALL(StreamSynchronize, (stream));
+    }
+    ACC_API_CALL(StreamSynchronize, (stream));
+
+    // does this makes sense or should we do "tasking" with omp to give this to all threads? or just launch in parallel basically?
+
+    return istat;
+}
+
+//===========================================================================
 int libsmm_acc_process_d(const int *param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data){
 
     ACC_DRV(function) kern_func = NULL;
@@ -243,8 +276,10 @@ int libsmm_acc_process_d(const int *param_stack, int stack_size, ACC_DRV(stream)
     Triplet h_mnk = { m, n, k };
     kernel_map_iterator kernel_it;
 
+#if defined _OPENMP
 #pragma omp critical (jit_multiplication)
 {
+#endif
 
     // Look up the kernel in the table of already JITed kernels
     kernel_it = kernel_handles.find(h_mnk);
@@ -255,7 +290,9 @@ int libsmm_acc_process_d(const int *param_stack, int stack_size, ACC_DRV(stream)
     }  // if the kernel could be jited successfully, the kernel_it iterator now points to the kernel_launcher.
        // if this wasn't possible, is set to kernel_handles.end()
 
+#if defined _OPENMP
 }
+#endif
 
     if (kernel_it == kernel_handles.end()){  // the kernel could not be JIT-ed, so we should fall back to CPU
 
@@ -278,14 +315,17 @@ int libsmm_acc_process_d(const int *param_stack, int stack_size, ACC_DRV(stream)
 
 
 //===========================================================================
-extern "C" int libsmm_acc_process (const libsmm_acc_stack_descriptor_type *param_stack, int stack_size, int nparams, acc_data_t datatype, const void *a_data, const void *b_data, void *c_data, int m, int n, int k, int def_mnk, acc_stream_t *stream){
+extern "C" int libsmm_acc_process (const int* param_stack_host, const libsmm_acc_stack_descriptor_type *param_stack_dev, int stack_size, int nparams, acc_data_t datatype, const void *a_data, const void *b_data, void *c_data, int m, int n, int k, int def_mnk, acc_stream_t *stream){
+    //printf("[libsmm_acc_process](%ix%ix%i) handle_size=%i\n", m, n, k, int(cublas_handle));
+    printf("[libsmm_acc_process](%ix%ix%i)\n", m, n, k);
     if(def_mnk!=1)
         return -1; // inhomogeneous stacks not supported
     if(datatype==dbcsr_type_real_8) {
       if(m>MAX_BLOCK_DIM || n>MAX_BLOCK_DIM || k>MAX_BLOCK_DIM)
-        return -1; // maximum size over any dimension
+        // maximum size over any dimension
+        return (libsmm_acc_process_blas ((const int *) param_stack_host, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
       else
-        return (libsmm_acc_process_d ((const int *) param_stack, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
+        return (libsmm_acc_process_d ((const int *) param_stack_dev, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
     }
     return -1; // datatype not supported
 };
@@ -392,8 +432,10 @@ int libsmm_acc_transpose_d(const int *trs_stack, int offset, int stack_size,
     Triplet h_mnk = { m, n, 0 };
     std::unordered_map<std::array<int, 3>, ACC_DRV(function)>::iterator kernel_it;
 
+#if defined _OPENMP
 #pragma omp critical (jit_transpose)
 {
+#endif
 
     kernel_it = transpose_handles.find(h_mnk);
     if(kernel_it == transpose_handles.end()){  // the kernel has not been JIT-ed yet
@@ -406,7 +448,9 @@ int libsmm_acc_transpose_d(const int *trs_stack, int offset, int stack_size,
 
     }
 
+#if defined _OPENMP
 }
+#endif
 
     // Construct argument pointer list and launch function
     kern_func = kernel_it->second; // retrieve handle

@@ -7,25 +7,20 @@
  * SPDX-License-Identifier: GPL-2.0+                                                              *
  *------------------------------------------------------------------------------------------------*/
 
-#ifndef LIBSMM_ACC_INIT_H
-#define LIBSMM_ACC_INIT_H
+#include <stdio.h>
+#include "acc_cuda.h"
+#include "../acc_error.h"
 
-#ifdef __CUDA
-# include "../cuda/acc_cuda.h"
-#else
-# include "../hip/acc_hip.h"
-#endif
 
-extern "C" int libsmm_acc_init (void);
+/****************************************************************************/
+int cublas_create(cublasHandle_t **handle);
 
-int libsmm_acc_gpu_blas_init();
+/****************************************************************************/
+int cublas_destroy(cublasHandle_t *handle);
 
-int libsmm_acc_check_gpu_warp_size_consistency (void);
-
-int acc_get_gpu_warp_size (void);
-
-extern "C" int libsmm_acc_is_thread_safe (void);
-
-extern cublasHandle_t* cublas_handle;
-
-#endif /*LIBSMM_ACC_INIT_H*/
+/****************************************************************************/
+int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
+		         int m, int n, int k,
+			     int a_offset, int b_offset, int c_offset,
+			     const double *a_data, const double *b_data, double *c_data,
+			     double alpha, double beta, cudaStream_t *stream);
