@@ -236,6 +236,33 @@ kernel_map_iterator add_kernel_handle_to_jitted_kernels(ACC_DRV(function) kern_f
 
 
 //===========================================================================
+int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data){
+
+#if defined _OPENMP
+    int ithread = omp_get_num_thread();
+#else
+    int ithread = 0;
+#endif
+
+    int istat = 0;
+    for(stack_entry = 0; stack_entry < stack_size; stack_entry++){
+        istat = cublas_dgemm(cublas_handles[ithread],
+                             'N', 'N',
+                             m, n, k,
+                             param_stack[0], param_stack[1], param_stack[2],
+                             a_data, b_data, c_data,
+                             1.f, 1.f, stream);
+        if(istat != 0){
+            // WE HAVE A BIG PROBLEM; ABORT!
+        }
+    }
+    ACC_API_CALL(StreamSynchronize, stream);
+
+    // does this makes sense or should we do "tasking" with omp to give this to all threads? or just launch in parallel basically?
+
+}
+
+//===========================================================================
 int libsmm_acc_process_d(const int *param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data){
 
     ACC_DRV(function) kern_func = NULL;
@@ -283,7 +310,8 @@ extern "C" int libsmm_acc_process (const libsmm_acc_stack_descriptor_type *param
         return -1; // inhomogeneous stacks not supported
     if(datatype==dbcsr_type_real_8) {
       if(m>MAX_BLOCK_DIM || n>MAX_BLOCK_DIM || k>MAX_BLOCK_DIM)
-        return -1; // maximum size over any dimension
+        // maximum size over any dimension
+        return (libsmm_acc_process_blas ((const int *) param_stack, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
       else
         return (libsmm_acc_process_d ((const int *) param_stack, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
     }

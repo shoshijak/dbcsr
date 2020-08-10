@@ -12,6 +12,7 @@
 
 #include <cuda.h>
 #include <cuda_runtime.h>
+#include <cublas_v2>
 #include <nvrtc.h>
 
 #define ACC(x) cuda##x

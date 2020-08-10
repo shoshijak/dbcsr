@@ -17,18 +17,9 @@ MODULE dbcsr_acc_operations
    USE dbcsr_acc_stream, ONLY: acc_stream_cptr, &
                                acc_stream_type, &
                                acc_stream_synchronize
-   USE dbcsr_config, ONLY: max_kernel_dim, &
-                           cublas_handles, &
-                           hipblas_handles
    USE dbcsr_mm_types, ONLY: dbcsr_ps_width
    USE dbcsr_kinds, ONLY: real_8, dp
    USE dbcsr_types, ONLY: dbcsr_type_real_8
-
-#if (__CUDA)
-   USE dbcsr_cublas, ONLY: cublas_dgemm_cu
-#elif (__HIP)
-   USE dbcsr_hipblas, ONLY: hipblas_dgemm_hip
-#endif
 
 !$ USE OMP_LIB, ONLY: omp_get_thread_num, omp_get_num_threads
 
@@ -125,71 +116,19 @@ CONTAINS
       IF (def_mnk) mnk = 1
       istat = -100 ! big kernels
 
-      ! Limits the call to small kernels
-      IF (m_max .LE. max_kernel_dim .AND. &
-          n_max .LE. max_kernel_dim .AND. &
-          k_max .LE. max_kernel_dim) THEN
-         istat = libsmm_acc_process_cu(acc_devmem_cptr(param_stack_dev), &
-                                       INT(stack_size, KIND=C_INT), &
-                                       INT(dbcsr_ps_width, KIND=C_INT), &
-                                       INT(datatype, KIND=C_INT), &
-                                       acc_devmem_cptr(a_data), &
-                                       acc_devmem_cptr(b_data), &
-                                       acc_devmem_cptr(c_data), &
-                                       INT(m_max, KIND=C_INT), &
-                                       INT(n_max, KIND=C_INT), &
-                                       INT(k_max, KIND=C_INT), &
-                                       mnk, acc_stream_cptr(stream))
-         IF (istat == 100) DBCSR_ABORT("failed due to accGetLastError().")
-      ENDIF
-
-      ! Call Cublas/Hipblas for big kernels
-      IF (datatype .EQ. dbcsr_type_real_8 .AND. istat .EQ. -100) THEN
-         ithread = 0
-!$       ithread = omp_get_thread_num()
-         DO istack = 1, stack_size
-            IF (param_stack_host(2, istack) .LE. max_kernel_dim .AND. &
-                param_stack_host(3, istack) .LE. max_kernel_dim) THEN
-               ! Transpose for B-blocks
-               transb = 'T'
-            ELSE
-               transb = 'N'
-            ENDIF
-#if (__CUDA)
-            istat = cublas_dgemm_cu(cublas_handles(ithread + 1)%handle_ptr, &
-                                    'N', transb, &
-                                    INT(param_stack_host(1, istack), KIND=C_INT), &
-                                    INT(param_stack_host(2, istack), KIND=C_INT), &
-                                    INT(param_stack_host(3, istack), KIND=C_INT), &
-                                    INT(param_stack_host(4, istack) - 1, KIND=C_INT), &
-                                    INT(param_stack_host(5, istack) - 1, KIND=C_INT), &
-                                    INT(param_stack_host(6, istack) - 1, KIND=C_INT), &
+      ! Call batched matrix-matrix multiplication in libsmm_acc
+      istat = libsmm_acc_process_cu(acc_devmem_cptr(param_stack_dev), &
+                                    INT(stack_size, KIND=C_INT), &
+                                    INT(dbcsr_ps_width, KIND=C_INT), &
+                                    INT(datatype, KIND=C_INT), &
                                     acc_devmem_cptr(a_data), &
                                     acc_devmem_cptr(b_data), &
                                     acc_devmem_cptr(c_data), &
-                                    1.0_dp, 1.0_dp, &
-                                    acc_stream_cptr(stream))
-            IF (istat /= 0) DBCSR_ABORT("failed to run CUBLAS.")
-#elif (__HIP)
-            istat = hipblas_dgemm_hip(hipblas_handles(ithread + 1)%handle_ptr, &
-                                      'N', transb, &
-                                      INT(param_stack_host(1, istack), KIND=C_INT), &
-                                      INT(param_stack_host(2, istack), KIND=C_INT), &
-                                      INT(param_stack_host(3, istack), KIND=C_INT), &
-                                      INT(param_stack_host(4, istack) - 1, KIND=C_INT), &
-                                      INT(param_stack_host(5, istack) - 1, KIND=C_INT), &
-                                      INT(param_stack_host(6, istack) - 1, KIND=C_INT), &
-                                      acc_devmem_cptr(a_data), &
-                                      acc_devmem_cptr(b_data), &
-                                      acc_devmem_cptr(c_data), &
-                                      1.0_dp, 1.0_dp, &
-                                      acc_stream_cptr(stream))
-            IF (istat /= 0) DBCSR_ABORT("failed to run HIPBLAS.")
-#endif
-         ENDDO
-         CALL acc_stream_synchronize(stream)
-      ENDIF
-
+                                    INT(m_max, KIND=C_INT), &
+                                    INT(n_max, KIND=C_INT), &
+                                    INT(k_max, KIND=C_INT), &
+                                    mnk, acc_stream_cptr(stream))
+      IF (istat == 100) DBCSR_ABORT("failed due to accGetLastError().")
       success = (istat == 0) ! false if no suitable kernel was found
 
       IF (careful_mod) CALL timestop(error_handle)
@@ -226,18 +165,15 @@ CONTAINS
       IF (careful_mod) CALL timeset(routineN, error_handle)
       istat = 0
 
-      ! Limits the call to small kernels
-      IF (m .LE. max_kernel_dim .AND. &
-          n .LE. max_kernel_dim) THEN
-         istat = libsmm_acc_transpose_cu(acc_devmem_cptr(trs_stack), &
-                                         INT(offset, KIND=C_INT), &
-                                         INT(nblks, KIND=C_INT), &
-                                         acc_devmem_cptr(buffer), &
-                                         INT(datatype, KIND=C_INT), &
-                                         INT(m, KIND=C_INT), &
-                                         INT(n, KIND=C_INT), &
-                                         acc_stream_cptr(stream))
-      ENDIF
+      ! Call batched in-place transpose in libsmm_acc
+      istat = libsmm_acc_transpose_cu(acc_devmem_cptr(trs_stack), &
+                                      INT(offset, KIND=C_INT), &
+                                      INT(nblks, KIND=C_INT), &
+                                      acc_devmem_cptr(buffer), &
+                                      INT(datatype, KIND=C_INT), &
+                                      INT(m, KIND=C_INT), &
+                                      INT(n, KIND=C_INT), &
+                                      acc_stream_cptr(stream))
 
       IF (istat /= 0) DBCSR_ABORT("something went wrong.")
       IF (careful_mod) CALL timestop(error_handle)

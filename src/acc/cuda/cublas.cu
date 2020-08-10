@@ -7,13 +7,11 @@
  * SPDX-License-Identifier: GPL-2.0+                                                              *
  *------------------------------------------------------------------------------------------------*/
 
-#include <stdio.h>
-#include "cublas_v2.h"
-#include "../acc_error.h"
+#include "cublas.h"
 
 
 /****************************************************************************/
-extern "C" int cublas_create(cublasHandle_t **handle)
+int cublas_create(cublasHandle_t **handle)
 {
   *handle = (cublasHandle_t*)malloc(sizeof(cublasHandle_t));
   cublasStatus_t cStatus = cublasCreate(*handle);
@@ -26,7 +24,7 @@ extern "C" int cublas_create(cublasHandle_t **handle)
 }
 
 /****************************************************************************/
-extern "C" int cublas_destroy(cublasHandle_t *handle)
+int cublas_destroy(cublasHandle_t *handle)
 {
   cublasStatus_t cStatus = cublasDestroy(*handle);
   free(handle);
@@ -39,7 +37,7 @@ extern "C" int cublas_destroy(cublasHandle_t *handle)
 }
 
 /****************************************************************************/
-extern "C" int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
+int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
 		            int m, int n, int k,
 			    int a_offset, int b_offset, int c_offset,
 			    double *a_data, double *b_data, double *c_data,

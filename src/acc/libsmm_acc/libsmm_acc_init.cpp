@@ -11,15 +11,50 @@
 #include "libsmm_acc_init.h"
 #include "parameters.h"
 
+//TOFIX there's an include missing here!!
+
 #if defined _OPENMP
 #include <omp.h>
 #endif
 
 //===========================================================================
 int libsmm_acc_init() {
+
+    // check warp size consistency
     libsmm_acc_check_gpu_warp_size_consistency();
+
+#if defined _OPENMP
+    // allocate memory for cublas handles
+#pragma omp master {
+    int nthreads = omp_get_num_threads();
+    cublas_handles.resize(nthreads);
+}
+#pragma omp barrier
+    int ithread = omp_get_thread_num();
+    // initialize cublas and store cublas handles
+    // one handle per thread!
+    cublas_create(cublas_handles[ithread]);
+#else
+    cublas_handles.push_back(cublasHandle_t*);
+    cublas_create(cublas_handles[0]);
+#endif
+
     return 0;
 }
+
+//===========================================================================
+int libsmm_acc_finalize() {
+
+    // deallocate memory for cublas handles
+    int ithread = omp_get_thread_num();
+    // initialize cublas and store cublas handles
+    // one handle per thread!
+    cublas_destroy(cublas_handles[ithread]);
+#pragma omp barrier
+
+    return 0;
+}
+
 
 //===========================================================================
 int libsmm_acc_check_gpu_warp_size_consistency() {
