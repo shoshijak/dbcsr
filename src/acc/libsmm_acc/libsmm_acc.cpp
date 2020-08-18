@@ -250,6 +250,7 @@ int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stre
 #else
         //printf("            (ithread=%i/vector_size=%i)\n", ithread, int(cublas_handles.size()));
 #endif
+        printf("[libsmm_acc_process_blas] offsets= (%i, %i, %i)\n", param_stack[3 * stack_entry] - 1, param_stack[3 * stack_entry + 1] - 1, param_stack[3 * stack_entry + 2] - 1);
         istat = cublas_dgemm(cublas_handle,
                              'N', 'N',
                              m, n, k,
@@ -269,7 +270,9 @@ int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stre
 }
 
 //===========================================================================
-int libsmm_acc_process_d(const int *param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data){
+int libsmm_acc_process_d(const int* param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data){
+
+    printf("    [libsmm_acc_process_d](%ix%ix%i)\n", m, n, k);
 
     ACC_DRV(function) kern_func = NULL;
     int threads, grouping;

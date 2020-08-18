@@ -23,6 +23,7 @@
 
 /****************************************************************************/
 extern "C" int acc_init(){
+  printf("[CPP acc_init] start");
   int myDevice;
   // Driver boilerplate
   ACC_DRV_CALL(Init, (0));
@@ -33,7 +34,9 @@ extern "C" int acc_init(){
   ACC_DRV_CALL(DevicePrimaryCtxRetain, (&ctx, acc_device));
 
   // Initialize libsmm_acc, DBCSR's GPU backend
+  printf("[CPP acc_init] before libsmm_acc_init");
   int i = libsmm_acc_init();
+  printf("[CPP acc_init] exit");
   return i;
 }
 

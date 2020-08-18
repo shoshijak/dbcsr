@@ -160,6 +160,8 @@ void smm_acc_dnt_largeDB1(const int* param_stack, const int stack_size,
 
   using namespace ns_smm_acc_dnt_largeDB1;
 
+  printf("[largeDB1] PARAM_STACK %i", param_stack[0]);
+
   /* Number of parameters per stack entry in parameter stack */
   const int npar = 3;
 

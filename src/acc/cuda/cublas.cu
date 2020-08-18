@@ -43,21 +43,35 @@ int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
 			    const double *a_data, const double *b_data, double *c_data,
 			    double alpha, double beta, cudaStream_t *stream)
 {
-  cublasStatus_t cStatus = cublasSetStream(*handle, *stream);
-  if (cStatus != CUBLAS_STATUS_SUCCESS) {
-    printf ("CUBLAS SetStream failed\n");
-    return(-1);
-  }
+  printf ("[cublas_dgemm - %ix%ix%i] start!\n", m, n, k);
+
   cublasOperation_t cTransa = transa=='N' ? CUBLAS_OP_N : CUBLAS_OP_T;
   cublasOperation_t cTransb = transb=='N' ? CUBLAS_OP_N : CUBLAS_OP_T;
   int &lda = transa=='N' ? m : k;
   int &ldb = transb=='N' ? k : n;
+
+  printf ("[cublas_dgemm - %ix%ix%i] leading dims = (%i, %i)\n", m, n, k, lda, ldb);
+  printf ("[cublas_dgemm - %ix%ix%i] offsets = (%i, %i, %i)\n", m, n, k, a_offset, b_offset, c_offset);
+  printf ("[cublas_dgemm - %ix%ix%i] parameters: alpha = %g, beta = %g)\n", m, n, k, alpha, beta);
+
+  printf ("[cublas_dgemm - %ix%ix%i] get version ...\n", m, n, k);
+  int cublasVersion = 0;
+  cublasGetVersion(*handle, &cublasVersion);
+  printf ("[cublas_dgemm - %ix%ix%i] version %i\n", m, n, k, cublasVersion);
+
+  cublasStatus_t cStatus = cublasSetStream(*handle, *stream);
+  printf ("[cublas_dgemm - %ix%ix%i] stream set!\n", m, n, k);
+  if (cStatus != CUBLAS_STATUS_SUCCESS) {
+    printf ("CUBLAS SetStream failed\n");
+    return(-1);
+  }
 
   cublasStatus_t stat = cublasDgemm(*handle, cTransa, cTransb,
 				    m, n, k,
 				    &alpha, &a_data[ a_offset ], lda,
 				    &b_data[ b_offset], ldb,
 				    &beta, &c_data[ c_offset], lda);
+  printf ("[cublas_dgemm - %ix%ix%i] launched!\n", m, n, k);
   if (stat != CUBLAS_STATUS_SUCCESS) return(-1);
   if (acc_error_check(cudaGetLastError())) return(-1);
   return(0);

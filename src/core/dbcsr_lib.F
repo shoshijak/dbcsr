@@ -233,6 +233,7 @@ CONTAINS
 
       INTEGER                                            :: error_handle
 
+      WRITE(*,*) "[dbcsr_init_lib_low] start"
       CALL timeset(routineN, error_handle)
       !
       IF (int_1_size /= 1) &
@@ -249,12 +250,15 @@ CONTAINS
       ENDIF
 
 !$OMP     PARALLEL DEFAULT(NONE) SHARED(ext_io_unit, default_group)
+      WRITE(*,*) "[dbcsr_init_lib_low] before parallel region"
       CALL dbcsr_multiply_lib_init()
 !$OMP     END PARALLEL
+      WRITE(*,*) "[dbcsr_init_lib_low] after parallel region"
 
       is_initialized = .TRUE.
 
       CALL timestop(error_handle)
+      WRITE(*,*) "[dbcsr_init_lib_low] exit"
    END SUBROUTINE dbcsr_init_lib_low
 
    SUBROUTINE dbcsr_finalize_lib()

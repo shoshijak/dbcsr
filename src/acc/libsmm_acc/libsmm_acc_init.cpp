@@ -32,18 +32,24 @@ int libsmm_acc_gpu_blas_init(){
     int nthreads = 0;
 #pragma omp master
 {
+    printf("[libsmm_acc_init](%i) get nthreads\n", omp_get_thread_num());
     nthreads = omp_get_num_threads();
+    printf("[libsmm_acc_init](%i) got nthreads\n", nthreads);
     cublas_handles.resize(nthreads);
+    printf("[libsmm_acc_init](%i) resizes\n", int(cublas_handles.size()));
 }
 #pragma omp barrier
     int ithread = omp_get_thread_num();
+    printf("[libsmm_acc_init](%i) got ithread\n", ithread);
     // initialize cublas and store cublas handles
     // one handle per thread!
     cublasHandle_t* c_handle;
     cublas_create(&c_handle);
     cublas_handles.emplace(ithread, c_handle);
+    printf("[libsmm_acc_init](%i) cublas_handle created\n", ithread);
 #else
     cublas_create(&cublas_handle);
+    printf("[libsmm_acc_init] cublas_handle created\n");
 #endif
 
     return 0;
@@ -68,6 +74,7 @@ int libsmm_acc_init() {
 //===========================================================================
 int libsmm_acc_finalize() {
 
+    printf("[libsmm_acc_finalize] exit\n");
     // deallocate memory for cublas handles
 #if defined _OPENMP
     int ithread = omp_get_thread_num();
