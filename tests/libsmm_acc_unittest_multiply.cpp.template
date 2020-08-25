@@ -22,7 +22,7 @@
 
 int main(int argc, char** argv){
 
-    KernelLauncher launcher_mm = libsmm_acc_process_d;
+    KernelLauncher launcher_mm = libsmm_acc_process;
 
     char buffer[1000];
     char * kernel_descr[1] = {buffer};

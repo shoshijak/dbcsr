@@ -17,6 +17,23 @@
 
 
 //===========================================================================
+void print_matrix(int n_a, int m, int n, const double* mat_trs_a){
+    int index = 0;
+    for(int s=0; s < n_a; s++){
+        printf("\t[s=%i]\n", s);
+        for(int mi=0; mi < m; mi++){
+            for(int ni=0; ni < n; ni++){
+                index = (s * n * m) + (ni * m + mi);
+                printf("(m=%i,n=%i,i=%i) %g", mi, ni, index, mat_trs_a[index]);
+            }
+            printf("\n");
+            printf("\n");
+        }
+    }
+}
+
+
+//===========================================================================
 // Allocate memory and accelerator events
 void libsmm_acc_benchmark_init(libsmm_acc_benchmark_t** handle, benchmark_mode mode,
                                int max_m, int max_n, int max_k){
@@ -36,10 +53,10 @@ void libsmm_acc_benchmark_init(libsmm_acc_benchmark_t** handle, benchmark_mode m
             h->n_stack_trs_b = 0;
             break;
         case test:
-            h->n_a = 100;
-            h->n_b = 100;
-            h->n_c = 10;
-            h->n_stack = 100;
+            h->n_a = 1;
+            h->n_b = 1;
+            h->n_c = 1;
+            h->n_stack = 1;
             h->n_stack_trs_a = h->n_a;
             h->n_stack_trs_b = h->n_b;
             break;
@@ -296,6 +313,11 @@ int libsmm_acc_benchmark(libsmm_acc_benchmark_t* h,
  matInit(h->mat_a, h->n_a, mat_m, mat_k, 42);
  matInit(h->mat_b, h->n_b, mat_k, mat_n, 24);
 
+  printf("\n\nMATRIX A\n\n");
+  print_matrix(h->n_a, mat_m, mat_k, h->mat_a);
+  printf("\n\nMATRIX B\n\n");
+  print_matrix(h->n_b, mat_k, mat_n, h->mat_b);
+
  if(h->mode == tune)
      printf("Initializing ...\n");
  stackInit(h->stack, h->n_stack, h->n_c, h->mat_c, h->n_a, h->mat_a, h->n_b, h->mat_b, mat_m, mat_n, mat_k);
@@ -316,14 +338,18 @@ int libsmm_acc_benchmark(libsmm_acc_benchmark_t* h,
  for(int ikern=0; ikern < nkernels; ikern++){
 
     // Warmup run (more often if n_iter is small)
+    printf("[libsmm_acc_benchmark] stack_size = %i\n", h->n_stack);
+    printf("[libsmm_acc_benchmark] mnk = (%i, %i, %i)\n", mat_m, mat_n, mat_k);
+    printf("[libsmm_acc_benchmark](first run) offsets = (%i, %i, %i)\n", h->stack[0]-1, h->stack[1]-1, h->stack[2]-1);
+    printf("[libsmm_acc_benchmark](first run) matrix elements = (%g, %g, %g)\n", h->mat_a[h->stack[0]-1], h->mat_b[h->stack[1]-1], h->mat_c[h->stack[2]-1]);
     for(int i=0; i<n_warm; i++)
-        launchers[ikern](h->d_stack, h->n_stack, stream, mat_m, mat_n, mat_k, h->d_mat_a, h->d_mat_b, h->d_mat_c);
+        launchers[ikern](h->stack, h->d_stack, h->n_stack, 3, ACC_DATA_F64, h->d_mat_a, h->d_mat_b, h->d_mat_c, mat_m, mat_n, mat_k, true, stream);
     ACC_API_CALL(Memset, (h->d_mat_c, 0, h->n_c * mat_m * mat_n * sizeof(double)));
 
     ACC_DRV_CALL(EventRecord, (h->t_start, stream));
 
     for(int i=0; i<n_iter; i++)
-        launchers[ikern](h->d_stack, h->n_stack, stream, mat_m, mat_n, mat_k, h->d_mat_a, h->d_mat_b, h->d_mat_c);
+        launchers[ikern](h->stack, h->d_stack, h->n_stack, 3, ACC_DATA_F64, h->d_mat_a, h->d_mat_b, h->d_mat_c, mat_m, mat_n, mat_k, true, stream);
 
     ACC_DRV_CALL(EventRecord, (h->t_stop, stream));
     ACC_DRV_CALL(EventSynchronize, (h->t_stop));

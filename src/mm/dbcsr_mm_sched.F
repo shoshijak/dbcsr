@@ -105,9 +105,16 @@ CONTAINS
    SUBROUTINE stats_init(stats)
       !! Initialize a stats_type
       TYPE(stats_type), INTENT(INOUT)                    :: stats
+      INTEGER                                            :: ithread
 
+      ithread = 0
+!$    ithread = OMP_GET_THREAD_NUM()
+
+      WRITE(*,*) "[stats_init](", ithread, ") start"
       ALLOCATE (stats%num_mnk_stacks(1, 9))
+      WRITE(*,*) "[stats_init] blob"
       stats%num_mnk_stacks(1, :) = 0 ! entry for the default stack
+      WRITE(*,*) "[stats_init] exit"
    END SUBROUTINE stats_init
 
    SUBROUTINE dbcsr_mm_sched_lib_init()

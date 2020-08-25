@@ -28,6 +28,11 @@ typedef enum acc_data_t {
   ACC_DATA_UNKNOWN = -1
 } acc_data_t;
 
+#define dbcsr_type_real_4     1
+#define dbcsr_type_real_8     3
+#define dbcsr_type_complex_4  5
+#define dbcsr_type_complex_8  7
+
 /** accelerator driver initialization and finalization */
 int acc_init(void);
 int acc_finalize(void);

@@ -10,7 +10,7 @@ set(SMM_ACC_KERNELS
 )
 
 set(LIBSMM_ACC_SRC_FILES
-  libsmm_acc.cpp
+  libsmm_acc.cu
   libsmm_acc_benchmark.cpp
   libsmm_acc_init.cpp
 )

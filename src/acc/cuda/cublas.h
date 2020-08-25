@@ -24,3 +24,7 @@ int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
 			     int a_offset, int b_offset, int c_offset,
 			     const double *a_data, const double *b_data, double *c_data,
 			     double alpha, double beta, cudaStream_t *stream);
+
+__global__ void print_matrices_on_gpu_before(int m, int n, int k, const double *a_data, const double *b_data, const double *c_data);
+
+__global__ void print_matrices_on_gpu_after(int m, int n, int k, const double *a_data, const double *b_data, const double *c_data);

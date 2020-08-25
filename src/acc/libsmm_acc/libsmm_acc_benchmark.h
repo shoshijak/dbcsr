@@ -16,12 +16,16 @@
 #include "../hip/acc_hip.h"
 #endif
 
+#include "../include/acc_libsmm.h"
+
 #define MAX_BLOCK_DIM 80
 
-typedef int (*KernelLauncher)(const int *param_stack, int stack_size,
-                              ACC_DRV(stream) stream,
-                              int m_max, int n_max, int k_max,
-                              const double *a_data, const double *b_data, double *c_data);
+typedef int (*KernelLauncher)(const int* host_param_stack,
+                              const int* dev_param_stack,
+                              int stack_size, int nparams, acc_data_t datatype,
+                              const void* dev_a_data, const void* dev_b_data, void* dev_c_data,
+                              int m_max, int n_max, int k_max, acc_bool_t def_mnk,
+                              acc_stream_t* stream);
 
 typedef int (*TransposeLauncher)(const int *param_stack, int offset, int nblks,
                                  double *buffer, int m, int n, ACC_DRV(stream) stream);
@@ -45,6 +49,8 @@ typedef struct {
     int    *d_stack, *d_stack_trs_a, *d_stack_trs_b;
     /* events for measuring the runtime */
     ACC_DRV(event) t_start, t_stop;
+    /* events for measuring the runtime */
+    ACC_BLAS(Handle_t) acc_blas_handle;
 } libsmm_acc_benchmark_t;
 
 void matInit(double* mat, int mat_n, int x, int y, int seed);
