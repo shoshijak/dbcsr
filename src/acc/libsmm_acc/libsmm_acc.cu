@@ -262,6 +262,11 @@ int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stre
 
     int istat = 0;
 
+    char transb = 'N';
+    if(n <= MAX_BLOCK_DIM && k <= MAX_BLOCK_DIM){
+        transb = 'T';
+    }
+
     for(int stack_entry = 0; stack_entry < stack_size; stack_entry++){
 #if defined _OPENMP
         printf("            (ithread=%i/vector_size=%i,ompi=%i/%i)\n", ithread, int(cublas_handles.size()), omp_get_thread_num(), omp_get_num_threads());
@@ -270,7 +275,7 @@ int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stre
 #endif
         printf("[libsmm_acc_process_blas] offsets= (%i, %i, %i)\n", param_stack[3 * stack_entry] - 1, param_stack[3 * stack_entry + 1] - 1, param_stack[3 * stack_entry + 2] - 1);
         istat = cublas_dgemm(cublas_handle,
-                             'N', 'T',
+                             'N', transb,
                              m, n, k,
                              param_stack[3 * stack_entry] - 1,
                              param_stack[3 * stack_entry + 1] - 1,

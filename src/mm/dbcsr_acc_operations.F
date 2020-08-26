@@ -171,6 +171,8 @@ CONTAINS
       istat = 0
 
       ! Call batched in-place transpose in libsmm_acc
+      IF(m .LE. 80 .AND. &
+         n .LE. 80) THEN
       istat = libsmm_acc_transpose_cu(acc_devmem_cptr(trs_stack), &
                                       INT(offset, KIND=C_INT), &
                                       INT(nblks, KIND=C_INT), &
@@ -179,6 +181,7 @@ CONTAINS
                                       INT(m, KIND=C_INT), &
                                       INT(n, KIND=C_INT), &
                                       acc_stream_cptr(stream))
+      ENDIF
 
       IF (istat /= 0) DBCSR_ABORT("something went wrong.")
       IF (careful_mod) CALL timestop(error_handle)
