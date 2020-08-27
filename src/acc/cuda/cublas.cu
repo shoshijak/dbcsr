@@ -174,9 +174,9 @@ int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
   int &lda = transa=='N' ? m : k;
   int &ldb = transb=='N' ? k : n;
 
-  printf ("[cublas_dgemm - %ix%ix%i] leading dims = (%i, %i)\n", m, n, k, lda, ldb);
-  printf ("[cublas_dgemm - %ix%ix%i] offsets = (%i, %i, %i)\n", m, n, k, a_offset, b_offset, c_offset);
-  printf ("[cublas_dgemm - %ix%ix%i] parameters: alpha = %g, beta = %g)\n", m, n, k, alpha, beta);
+//  printf ("[cublas_dgemm - %ix%ix%i] leading dims = (%i, %i)\n", m, n, k, lda, ldb);
+//  printf ("[cublas_dgemm - %ix%ix%i] offsets = (%i, %i, %i)\n", m, n, k, a_offset, b_offset, c_offset);
+//  printf ("[cublas_dgemm - %ix%ix%i] parameters: alpha = %g, beta = %g)\n", m, n, k, alpha, beta);
 
   //printf ("[cublas_dgemm - %ix%ix%i] get version ...\n", m, n, k);
   int cublasVersion = 0;
@@ -190,11 +190,11 @@ int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
     return(-1);
   }
 
-  check_kernel<<<1,1>>>(*handle, cTransa, cTransb,
-				    m, n, k,
-				    &alpha, &a_data[ a_offset ], lda,
-				    &b_data[ b_offset], ldb,
-				    &beta, &c_data[ c_offset], lda);
+//  check_kernel<<<1,1>>>(*handle, cTransa, cTransb,
+//				    m, n, k,
+//				    &alpha, &a_data[ a_offset ], lda,
+//				    &b_data[ b_offset], ldb,
+//				    &beta, &c_data[ c_offset], lda);
 
 // FIXME translate this part of the ftn code!!!
 //-      ! Call Cublas/Hipblas for big kernels
@@ -230,11 +230,11 @@ int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
 //-                                    acc_stream_cptr(stream))
 //-            IF (istat /= 0) DBCSR_ABORT("failed to run CUBLAS.")
 
-  print_matrices_on_gpu_before<<<1,1>>>(
-				    m, n, k,
-				    &a_data[a_offset],
-				    &b_data[b_offset],
-				    &c_data[c_offset]);
+//  print_matrices_on_gpu_before<<<1,1>>>(
+//				    m, n, k,
+//				    &a_data[a_offset],
+//				    &b_data[b_offset],
+//				    &c_data[c_offset]);
 
   // TMP VALIDATION STEP:
   double* val_mat_a = (double*) malloc(m * k * sizeof(double));
@@ -269,11 +269,11 @@ int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
 				    &b_data[ b_offset], ldb,
 				    &beta, &c_data[ c_offset], lda);
   //printf ("[cublas_dgemm - %ix%ix%i] launched!\n", m, n, k);
-  print_matrices_on_gpu_after<<<1,1>>>(
-				    m, n, k,
-				    &a_data[a_offset],
-				    &b_data[b_offset],
-				    &c_data[c_offset]);
+//  print_matrices_on_gpu_after<<<1,1>>>(
+//				    m, n, k,
+//				    &a_data[a_offset],
+//				    &b_data[b_offset],
+//				    &c_data[c_offset]);
 
   double checkSum_CPU = checkSum(val_mat_c, m, n);
   //printf ("[cublas_dgemm - %ix%ix%i] 5\n", m, n, k);
@@ -281,17 +281,17 @@ int cublas_dgemm(cublasHandle_t *handle, char transa, char transb,
   //printf ("[cublas_dgemm - %ix%ix%i] 6\n", m, n, k);
   double checkSum_GPU = checkSum(val_mat_c, m, n);
 
-  printf ("[cublas_dgemm validation- %ix%i] CPU MATRIX C\n", m, n);
-  print_matrix_val(m, n, val_mat_c);
+//  printf ("[cublas_dgemm validation- %ix%i] CPU MATRIX C\n", m, n);
+//  print_matrix_val(m, n, val_mat_c);
 
-  if(checkSum_GPU != checkSum_CPU){
-      printf("Kernel validation FAIL for multiplication kernel %ix%ix%i\nchecksum CPU: %g, checksum GPU: %g\nchecksum_diff: %g\n", m, n, k, checkSum_CPU, checkSum_GPU, checkSum_GPU-checkSum_CPU);
-      //exit(1);
-  } else {
-      printf("Kernel validation SUCCESS for multiplication kernel %ix%ix%i\nchecksum CPU: %g, checksum GPU: %g\nchecksum_diff: %g\n", m, n, k, checkSum_CPU, checkSum_GPU, checkSum_GPU-checkSum_CPU);
-  }
+//  if(checkSum_GPU != checkSum_CPU){
+//      printf("Kernel validation FAIL for multiplication kernel %ix%ix%i\nchecksum CPU: %g, checksum GPU: %g\nchecksum_diff: %g\n", m, n, k, checkSum_CPU, checkSum_GPU, checkSum_GPU-checkSum_CPU);
+//      //exit(1);
+//  } else {
+//      printf("Kernel validation SUCCESS for multiplication kernel %ix%ix%i\nchecksum CPU: %g, checksum GPU: %g\nchecksum_diff: %g\n", m, n, k, checkSum_CPU, checkSum_GPU, checkSum_GPU-checkSum_CPU);
+//  }
 
-  printf ("[cublas_dgemm - %ix%ix%i] exiting!\n", m, n, k);
+//  printf ("[cublas_dgemm - %ix%ix%i] exiting!\n", m, n, k);
   if (stat != CUBLAS_STATUS_SUCCESS) return(-1);
   if (acc_error_check(cudaGetLastError())) return(-1);
   return(0);

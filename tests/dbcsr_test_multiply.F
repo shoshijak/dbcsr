@@ -435,14 +435,14 @@ CONTAINS
       CALL dbcsr_distribution_release(dist_c)
       CALL dbcsr_redistribute(matrix_c, m_c)
 
-      IF (.TRUE.) THEN
+      IF (.FALSE.) THEN
          blk_offsets => dbcsr_row_block_offsets(matrix_c)
          WRITE (*, *) 'row_block_offsets(matrix_c)', blk_offsets
          blk_offsets => dbcsr_col_block_offsets(matrix_c)
          WRITE (*, *) 'col_block_offsets(matrix_c)', blk_offsets
       END IF
 
-      IF (.TRUE.) THEN
+      IF (.FALSE.) THEN
          CALL dbcsr_print(m_c, matlab_format=.FALSE., variable_name='c_in_')
          CALL dbcsr_print(m_a, matlab_format=.FALSE., variable_name='a_')
          CALL dbcsr_print(m_b, matlab_format=.FALSE., variable_name='b_')
@@ -471,7 +471,7 @@ CONTAINS
 
       occ_c_out = dbcsr_get_occupation(m_c)
 
-      IF (.TRUE.) THEN
+      IF (.FALSE.) THEN
          PRINT *, 'retain_sparsity', retain_sparsity, occ_a, occ_b, occ_c_in, occ_c_out
          CALL dbcsr_print(m_a, matlab_format=.TRUE., variable_name='a_')
          CALL dbcsr_print(m_b, matlab_format=.TRUE., variable_name='b_')
