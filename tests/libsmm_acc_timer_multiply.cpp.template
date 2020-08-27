@@ -67,7 +67,7 @@ int main(int argc, char* argv[]){
     }
 
     // Build benchmark
-    KernelLauncher launcher = libsmm_acc_process;
+    KernelLauncher launcher = libsmm_acc_process_d;
     char buffer[1000];
     char * kernel_descr[1] = {buffer};
 

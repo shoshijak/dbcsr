@@ -338,18 +338,14 @@ int libsmm_acc_benchmark(libsmm_acc_benchmark_t* h,
  for(int ikern=0; ikern < nkernels; ikern++){
 
     // Warmup run (more often if n_iter is small)
-    printf("[libsmm_acc_benchmark] stack_size = %i\n", h->n_stack);
-    printf("[libsmm_acc_benchmark] mnk = (%i, %i, %i)\n", mat_m, mat_n, mat_k);
-    printf("[libsmm_acc_benchmark](first run) offsets = (%i, %i, %i)\n", h->stack[0]-1, h->stack[1]-1, h->stack[2]-1);
-    printf("[libsmm_acc_benchmark](first run) matrix elements = (%g, %g, %g)\n", h->mat_a[h->stack[0]-1], h->mat_b[h->stack[1]-1], h->mat_c[h->stack[2]-1]);
     for(int i=0; i<n_warm; i++)
-        launchers[ikern](h->stack, h->d_stack, h->n_stack, 3, ACC_DATA_F64, h->d_mat_a, h->d_mat_b, h->d_mat_c, mat_m, mat_n, mat_k, true, stream);
+        launchers[ikern](h->d_stack, h->n_stack, stream, mat_m, mat_n, mat_k, h->d_mat_a, h->d_mat_b, h->d_mat_c);
     ACC_API_CALL(Memset, (h->d_mat_c, 0, h->n_c * mat_m * mat_n * sizeof(double)));
 
     ACC_DRV_CALL(EventRecord, (h->t_start, stream));
 
     for(int i=0; i<n_iter; i++)
-        launchers[ikern](h->stack, h->d_stack, h->n_stack, 3, ACC_DATA_F64, h->d_mat_a, h->d_mat_b, h->d_mat_c, mat_m, mat_n, mat_k, true, stream);
+        launchers[ikern](h->d_stack, h->n_stack, stream, mat_m, mat_n, mat_k, h->d_mat_a, h->d_mat_b, h->d_mat_c);
 
     ACC_DRV_CALL(EventRecord, (h->t_stop, stream));
     ACC_DRV_CALL(EventSynchronize, (h->t_stop));

@@ -303,7 +303,7 @@ int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stre
 }
 
 //===========================================================================
-int libsmm_acc_process_d(const int * param_stack_host, const int* param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data){
+int libsmm_acc_process_d(const int* param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data){
 
 //    printf("\t[libsmm_acc_process_d](%ix%ix%i) stack_size=%i\n", m, n, k, stack_size);
 
@@ -346,12 +346,12 @@ int libsmm_acc_process_d(const int * param_stack_host, const int* param_stack, i
 
 //        printf("offsets = (%i, %i, %i)\n", param_stack_host[0]-1, param_stack_host[1]-1, param_stack_host[2]-1);
 //        printf("[libsmm_acc_process_d] - nblocks=%i, nthreads=%i", ((stack_size + grouping - 1) / grouping), threads);
-        print_matrices_on_gpu_before<<<1,1>>>(m, n, k, &a_data[param_stack_host[0]-1], &b_data[param_stack_host[1]-1], &c_data[param_stack_host[2]-1]);
-        ACC_API_CALL(StreamSynchronize, (stream));
+//        print_matrices_on_gpu_before<<<1,1>>>(m, n, k, &a_data[param_stack_host[0]-1], &b_data[param_stack_host[1]-1], &c_data[param_stack_host[2]-1]);
+//        ACC_API_CALL(StreamSynchronize, (stream));
         int ret = launch_kernel_from_handle(kern_func, ((stack_size + grouping - 1) / grouping), threads, stream, args);
-        ACC_API_CALL(StreamSynchronize, (stream));
-        print_matrices_on_gpu_after<<<1,1>>>(m, n, k, &a_data[param_stack_host[0]-1], &b_data[param_stack_host[1]-1], &c_data[param_stack_host[2]-1]);
-        ACC_API_CALL(StreamSynchronize, (stream));
+//        ACC_API_CALL(StreamSynchronize, (stream));
+//        print_matrices_on_gpu_after<<<1,1>>>(m, n, k, &a_data[param_stack_host[0]-1], &b_data[param_stack_host[1]-1], &c_data[param_stack_host[2]-1]);
+//        ACC_API_CALL(StreamSynchronize, (stream));
         return ret;
 
     }
@@ -370,7 +370,7 @@ int libsmm_acc_process (const int* param_stack_host, const int *param_stack_dev,
         // maximum size over any dimension
         return (libsmm_acc_process_blas ((const int *) param_stack_host, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
       else
-        return (libsmm_acc_process_d ((const int *) param_stack_host, (const int *) param_stack_dev, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
+        return (libsmm_acc_process_d ((const int *) param_stack_dev, stack_size, *((ACC_DRV(stream) *) stream), m, n, k, (const double *) a_data, (const double *) b_data, (double *) c_data));
     }
     return -1; // datatype not supported
 };

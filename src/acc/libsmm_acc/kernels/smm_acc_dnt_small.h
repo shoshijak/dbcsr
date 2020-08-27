@@ -59,8 +59,6 @@ __launch_bounds__(threads, minblocks)
 smm_acc_dnt_small(const int* __restrict__ param_stack, int stack_size,
      const double* __restrict__ a_data, const double* __restrict__ b_data, double* c_data){
 
-  printf("[small] PARAM_STACK %i", param_stack[0]);
-
   /* Total number of elements in block matrices */
   const int mn = m * n; /* c_block */
   const int mk = m * k; /* a_block */

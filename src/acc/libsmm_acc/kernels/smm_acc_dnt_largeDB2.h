@@ -182,8 +182,6 @@ smm_acc_dnt_largeDB2(const int *__restrict__ param_stack, const int stack_size,
 
   using namespace ns_smm_acc_dnt_largeDB2;
 
-  printf("[largeDB2] PARAM_STACK %i", param_stack[0]);
-
   const int mw = m * w;
   const int wn = w * n;
   const int wa = k - (k / w) * w;

@@ -398,10 +398,6 @@ smm_acc_dnt_medium(const int* __restrict__ param_stack, int stack_size,
           for (int j = 0; j < N; j++){
             /* Compute c_ij = sum_k (a_ik * b_kj) in shared memory */
             myc[N * i + j] += buff_l[l * m + M * r + i] * buff_r[l * n + N * c + j];
-            printf("myc[%i] += buff_l[l * m + M * r + i] * buff_r[l * n + N * c + j]",
-                N * i + j,
-                myc[N * i + j],
-                += buff_l[l * m + M * r + i] * buff_r[l * n + N * c + j]);
           }
         }
       }
@@ -431,14 +427,12 @@ smm_acc_dnt_medium(const int* __restrict__ param_stack, int stack_size,
         /* Add results from shared memory buffer to global C block. */
 #pragma unroll
         for (int i = tidx; i < mn; i += threads){
-          printf("xxx buff(index=%i) = buff_val=%g --ata--> c_data(%i) = %g", i, buff[i], srcC + i, c_data[srcC + i]);
           atomicAdd (&c_data[srcC + i], buff[i]);
         }
       } else {
         /* Add results from registers to global C block. */
 #pragma unroll
         for (int i = tidx; i < mn; i += threads){
-          printf("xxx [tidx=%i/%i, bidx=%i/%i] myc(0) = buff_val=%g --ata--> c_data(%i) = %g", threadIdx.x, blockDim.x, blockIdx.x, gridDim.x, buff[i], srcC + i, c_data[srcC + i]);
           atomicAdd (&c_data[srcC + i], myc[0]);
         }
         myc[0] = 0.0;
