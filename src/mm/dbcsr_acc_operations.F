@@ -112,7 +112,7 @@ CONTAINS
       INTEGER(KIND=C_INT)                      :: mnk
       INTEGER, DIMENSION(:,:), POINTER         :: param_stack_host_ptr
 
-      param_stack_host_ptr => param_stack_host(:, :)
+      param_stack_host_ptr => param_stack_host
 
       IF (careful_mod) CALL timeset(routineN, error_handle)
 

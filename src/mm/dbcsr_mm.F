@@ -129,7 +129,6 @@ CONTAINS
       !! Initialize the library
 
       INTEGER                                            :: ithread, nthreads
-      WRITE(*,*) "[dbcsr_multiply_lib_init] start"
 
 !$OMP     MASTER
       IF (has_acc) &
@@ -137,13 +136,10 @@ CONTAINS
 !$OMP     END MASTER
 !$OMP     BARRIER
 
-      WRITE(*,*) "[dbcsr_multiply_lib_init] after barrier"
       nthreads = 1; ithread = 0
 !$    nthreads = OMP_GET_NUM_THREADS(); ithread = OMP_GET_THREAD_NUM()
 
-      WRITE(*,*) "[dbcsr_multiply_lib_init] call dbcsr_mm_multrec_lib_init"
       CALL dbcsr_mm_multrec_lib_init()
-      WRITE(*,*) "[dbcsr_multiply_lib_init] after dbcsr_mm_multrec_lib_init"
 
 !$OMP     MASTER
       dbcsr_mpi_statistics%last_mpi_ranks_used = 0
@@ -158,13 +154,11 @@ CONTAINS
       ALLOCATE (memtype_product_wm(0:nthreads - 1))
 !$OMP     END MASTER
 !$OMP     BARRIER
-      WRITE(*,*) "[dbcsr_multiply_lib_init] after barrier #2"
 
       ! Each thread has its own working-matrix and its own mempool
       ALLOCATE (memtype_product_wm(ithread)%p)
       CALL dbcsr_memtype_setup(memtype_product_wm(ithread)%p, has_pool=dbcsr_cfg%use_mempools_cpu .OR. has_acc)
       CALL dbcsr_mempool_limit_capacity(memtype_product_wm(ithread)%p%pool, capacity=MAX(1, dbcsr_cfg%num_layers_3D))
-      WRITE(*,*) "[dbcsr_multiply_lib_init] exit"
    END SUBROUTINE dbcsr_multiply_lib_init
 
    SUBROUTINE dbcsr_multiply_lib_finalize()

@@ -94,7 +94,6 @@ inline void validate_kernel(ACC_DRV(function)& kern_func, ACC_DRV(stream) stream
     ACC_API_CALL(Memset, (h->d_mat_c, 0, h->n_c * m * n * sizeof(double)));
 
     void *args[] = { &h->d_stack, &h->n_stack, &h->d_mat_a, &h->d_mat_b, &h->d_mat_c };
-    printf("[validate_kernel] - nblocks=%i, nthreads=%i", ((h->n_stack + grouping - 1) / grouping), threads);
     launch_kernel_from_handle(kern_func, ((h->n_stack + grouping - 1) / grouping), threads, stream, args);
     ACC_API_CALL(Memcpy, (h->mat_c, h->d_mat_c, h->n_c * m * n * sizeof(double), ACC(MemcpyDeviceToHost)));
 
@@ -238,28 +237,7 @@ kernel_map_iterator add_kernel_handle_to_jitted_kernels(ACC_DRV(function) kern_f
 
 
 //===========================================================================
-void print_matrix_val(int n_a, int m, int n, const double* mat_trs_a){
-    int index = 0;
-    for(int s=0; s < n_a; s++){
-        printf("\t[s=%i]\n", s);
-        for(int mi=0; mi < m; mi++){
-            for(int ni=0; ni < n; ni++){
-                index = (s * n * m) + (ni * m + mi);
-                printf("(m=%i,n=%i,i=%i) %g", mi, ni, index, mat_trs_a[index]);
-            }
-            printf("\n");
-            printf("\n");
-        }
-    }
-}
-
-//===========================================================================
 int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data, cublasHandle_t *handle = cublas_handle){
-
-//    printf("\t[libsmm_acc_process_blas](%ix%ix%i), stack_size=%i\n", m, n, k, stack_size);
-//    if(stack_size > 1){
-//        printf("\t[libsmm_acc_process_blas](%ix%ix%i), OMGGGGGGGGG stack_size=%i\n", m, n, k, stack_size);
-//    }
 
 #if defined _OPENMP
     int ithread = omp_get_num_threads();
@@ -272,18 +250,12 @@ int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stre
         transb = 'T';
     }
 
-    for(size_t stack_entry = 0; stack_entry < stack_size; stack_entry++){
+    for(int stack_entry = 0; stack_entry < stack_size; stack_entry++){
 #if defined _OPENMP
         printf("            (ithread=%i/vector_size=%i,ompi=%i/%i)\n", ithread, int(cublas_handles.size()), omp_get_thread_num(), omp_get_num_threads());
 #else
         //printf("            (ithread=%i/vector_size=%i)\n", ithread, int(cublas_handles.size()));
 #endif
-//        printf("[libsmm_acc_process_blas] offsets= (%i, %i, %i, %i, %i, %i)\n", param_stack[6 * stack_entry], param_stack[6 * stack_entry + 1], param_stack[6 * stack_entry + 2], param_stack[6 * stack_entry + 3], param_stack[6 * stack_entry + 4], param_stack[6 * stack_entry + 5]);
-//        if(stack_entry == 0){
-//            for(size_t s = 0; s < stack_size; s++){
-//                printf("\t--- %i, %i, %i, %i, %i, %i\n", param_stack[s*6], param_stack[s*6 + 1], param_stack[s*6 + 2], param_stack[s*6 + 3], param_stack[s*6 + 4], param_stack[s*6 + 5]);
-//            }
-//        }
 
         istat = cublas_dgemm(cublas_handle,
                              'N', transb,
@@ -304,8 +276,6 @@ int libsmm_acc_process_blas(const int *param_stack, int stack_size, ACC_DRV(stre
 
 //===========================================================================
 int libsmm_acc_process_d(const int* param_stack, int stack_size, ACC_DRV(stream) stream, int m, int n, int k, const double *a_data, const double *b_data, double *c_data){
-
-//    printf("\t[libsmm_acc_process_d](%ix%ix%i) stack_size=%i\n", m, n, k, stack_size);
 
     ACC_DRV(function) kern_func = NULL;
     int threads, grouping;
@@ -344,15 +314,7 @@ int libsmm_acc_process_d(const int* param_stack, int stack_size, ACC_DRV(stream)
         // Construct argument pointer list and launch kernel
         void *args[] = { &param_stack, &stack_size, &a_data, &b_data, &c_data };
 
-//        printf("offsets = (%i, %i, %i)\n", param_stack_host[0]-1, param_stack_host[1]-1, param_stack_host[2]-1);
-//        printf("[libsmm_acc_process_d] - nblocks=%i, nthreads=%i", ((stack_size + grouping - 1) / grouping), threads);
-//        print_matrices_on_gpu_before<<<1,1>>>(m, n, k, &a_data[param_stack_host[0]-1], &b_data[param_stack_host[1]-1], &c_data[param_stack_host[2]-1]);
-//        ACC_API_CALL(StreamSynchronize, (stream));
-        int ret = launch_kernel_from_handle(kern_func, ((stack_size + grouping - 1) / grouping), threads, stream, args);
-//        ACC_API_CALL(StreamSynchronize, (stream));
-//        print_matrices_on_gpu_after<<<1,1>>>(m, n, k, &a_data[param_stack_host[0]-1], &b_data[param_stack_host[1]-1], &c_data[param_stack_host[2]-1]);
-//        ACC_API_CALL(StreamSynchronize, (stream));
-        return ret;
+        return launch_kernel_from_handle(kern_func, ((stack_size + grouping - 1) / grouping), threads, stream, args);
 
     }
 
@@ -361,9 +323,6 @@ int libsmm_acc_process_d(const int* param_stack, int stack_size, ACC_DRV(stream)
 
 //===========================================================================
 int libsmm_acc_process (const int* param_stack_host, const int *param_stack_dev, int stack_size, int nparams, acc_data_t datatype, const void *a_data, const void *b_data, void *c_data, int m, int n, int k, int def_mnk, acc_stream_t *stream){
-    //printf("[libsmm_acc_process](%ix%ix%i) handle_size=%i\n", m, n, k, int(cublas_handle));
-    //printf("[libsmm_acc_process](%ix%ix%i), stack_size=%i\n", m, n, k, stack_size);
-    //if(def_mnk!=1)
         return -1; // inhomogeneous stacks not supported
     if(datatype==dbcsr_type_real_8) {
       if(m>MAX_BLOCK_DIM || n>MAX_BLOCK_DIM || k>MAX_BLOCK_DIM)

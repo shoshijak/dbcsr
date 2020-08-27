@@ -19,7 +19,7 @@
 #include "include/acc.h"
 
 // for debug purpose
-//static const int verbose_print = 1;
+static const int verbose_print = 1;
 
 /****************************************************************************/
 extern "C" int acc_get_ndevices(int *n_devices){

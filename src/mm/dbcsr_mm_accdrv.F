@@ -131,7 +131,6 @@ CONTAINS
 
       INTEGER                                            :: nthreads
 
-      WRITE(*,*) "[dbcsr_mm_accdrv_lib_init] start"
       nthreads = 1
 !$    nthreads = OMP_GET_NUM_THREADS()
 
@@ -139,7 +138,6 @@ CONTAINS
       ALLOCATE (all_thread_privates(0:nthreads - 1))
 !$OMP     END MASTER
 !$OMP     BARRIER
-      WRITE(*,*) "[dbcsr_mm_accdrv_lib_init] exit"
    END SUBROUTINE dbcsr_mm_accdrv_lib_init
 
    SUBROUTINE dbcsr_mm_accdrv_lib_finalize()

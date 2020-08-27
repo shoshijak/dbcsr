@@ -47,12 +47,10 @@ CONTAINS
       DBCSR_ABORT("__DBCSR_ACC not compiled in.")
 #else
       INTEGER                                  :: istat
-      WRITE(*,*) "[acc_init] start"
       istat = acc_interface_drv_init()
       IF (istat /= 0) &
          DBCSR_ABORT("acc_init failed")
 #endif
-    WRITE(*,*) "[acc_init] exit"
    END SUBROUTINE acc_init
 
    SUBROUTINE acc_finalize()

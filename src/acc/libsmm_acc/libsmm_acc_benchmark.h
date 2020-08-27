@@ -20,7 +20,8 @@
 
 #define MAX_BLOCK_DIM 80
 
-typedef int (*KernelLauncher)(const int *param_stack, int stack_size, ACC_DRV(stream) stream,
+typedef int (*KernelLauncher)(const int *param_stack, int stack_size,
+                              ACC_DRV(stream) stream,
                               int m_max, int n_max, int k_max,
                               const double *a_data, const double *b_data, double *c_data);
 
@@ -46,8 +47,6 @@ typedef struct {
     int    *d_stack, *d_stack_trs_a, *d_stack_trs_b;
     /* events for measuring the runtime */
     ACC_DRV(event) t_start, t_stop;
-    /* events for measuring the runtime */
-    ACC_BLAS(Handle_t) acc_blas_handle;
 } libsmm_acc_benchmark_t;
 
 void matInit(double* mat, int mat_n, int x, int y, int seed);
