@@ -29,6 +29,13 @@ set(LIBSMM_ACC_FILES
   ${LIBSMM_ACC_HEADER_FILES}
 )
 
+set(DBCSR_TIMING_SRCS_FTN
+  ../dbcsr_acc_timings.F
+  ../../base/dbcsr_base_hooks.F
+  ../../base/dbcsr_machine.F
+  ../../base/dbcsr_machine_internal.F
+)
+
 add_custom_command(
   COMMAND ${Python_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/generate_parameters.py --gpu_version=${WITH_GPU} --base_dir=${CMAKE_CURRENT_SOURCE_DIR}/parameters
   DEPENDS generate_parameters.py parameters/parameters_${WITH_GPU}.json
@@ -54,6 +61,11 @@ else () # i.e. USE_HIP
   set_source_files_properties(${LIBSMM_ACC_SRC_FILES} PROPERTIES HIP_SOURCE_PROPERTY_FORMAT 1)
   # hip_add_library does not support OBJECT libraries. For this reason, we are forced to use a static library
   hip_add_library(libsmm_acc STATIC ${LIBSMM_ACC_FILES})
+
+  # ....
+  add_library(dbcsr_timings OBJECT ${DBCSR_TIMING_SRCS_FTN})
+  target_include_directories(dbcsr_timings PRIVATE "${CMAKE_SOURCE_DIR}/src")
+  target_sources(libsmm_acc PRIVATE $<TARGET_OBJECTS:dbcsr_timings>)
 
   # Workaround issue in hip_add_library: explicitely write dependency between
   # the generation of header files and the compilation of the libsmm_acc files
