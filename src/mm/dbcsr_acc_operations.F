@@ -74,6 +74,9 @@ MODULE dbcsr_acc_operations
 
 CONTAINS
 
+   ! Max dimension for any block dimension
+   INTEGER, PARAMETER :: max_kernel_dim = 80
+
    SUBROUTINE dbcsr_acc_do_mm_stack(param_stack_host, param_stack_dev, stack_size, datatype, &
       !! Launch an accelerated kernel for processing a stack.
                                     a_data, b_data, c_data, m_max, n_max, k_max, def_mnk, stream, success)
@@ -132,6 +135,7 @@ CONTAINS
                                     INT(m_max, KIND=C_INT), &
                                     INT(n_max, KIND=C_INT), &
                                     INT(k_max, KIND=C_INT), &
+                                    INT(max_kernel_dim, KIND=C_INT), &
                                     mnk, acc_stream_cptr(stream))
       IF (istat == 100) DBCSR_ABORT("failed due to accGetLastError().")
       success = (istat == 0) ! false if no suitable kernel was found
@@ -171,8 +175,8 @@ CONTAINS
       istat = 0
 
       ! Call batched in-place transpose in libsmm_acc
-      IF (m .LE. 80 .AND. &
-          n .LE. 80) THEN
+      IF (m .LE. max_kernel_dim .AND. &
+          n .LE. max_kernel_dim) THEN
          istat = libsmm_acc_transpose_cu(acc_devmem_cptr(trs_stack), &
                                          INT(offset, KIND=C_INT), &
                                          INT(nblks, KIND=C_INT), &
@@ -180,6 +184,7 @@ CONTAINS
                                          INT(datatype, KIND=C_INT), &
                                          INT(m, KIND=C_INT), &
                                          INT(n, KIND=C_INT), &
+                                         INT(max_kernel_dim, KIND=C_INT), &
                                          acc_stream_cptr(stream))
       ENDIF
 
