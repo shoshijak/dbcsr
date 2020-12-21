@@ -99,6 +99,9 @@ extern CUevent_flags CUEventDefault;
 extern CUstream_flags CUStreamDefault;
 extern CUsharedconfig CUSharedMemBankSizeEightByte;
 
+/* NVRTC error status */
+extern nvrtcResult ACC_RTC_SUCCESS;
+
 /* CUBLAS status and operations */
 extern cublasStatus_t ACC_BLAS_STATUS_SUCCESS;
 extern cublasOperation_t ACC_BLAS_OP_N;

@@ -39,6 +39,7 @@ hipError_t hipLaunchJITKernel(hipFunction_t f, unsigned int gridDimX, unsigned i
   return hipModuleLaunchKernel(f, gridDimX, gridDimY, gridDimZ, blockDimX, blockDimY, blockDimZ, sharedMemBytes, stream, kernelParams, extra);
 }
 
+hiprtcResult ACC_RTC_SUCCESS = HIPRTC_SUCCESS;
 hipblasStatus_t ACC_BLAS_STATUS_SUCCESS = HIPBLAS_STATUS_SUCCESS;
 hipblasOperation_t ACC_BLAS_OP_N = HIPBLAS_OP_N;
 hipblasOperation_t ACC_BLAS_OP_T = HIPBLAS_OP_T;

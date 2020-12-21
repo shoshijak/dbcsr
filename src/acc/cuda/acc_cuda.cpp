@@ -26,6 +26,7 @@ CUevent_flags CUEventDefault = CU_EVENT_DEFAULT;
 CUstream_flags CUStreamDefault = CU_STREAM_DEFAULT;
 CUsharedconfig CUSharedMemBankSizeEightByte = CU_SHARED_MEM_CONFIG_EIGHT_BYTE_BANK_SIZE;
 
+nvrtcResult ACC_RTC_SUCCESS = NVRTC_SUCCESS;
 cublasStatus_t ACC_BLAS_STATUS_SUCCESS = CUBLAS_STATUS_SUCCESS;
 cublasOperation_t ACC_BLAS_OP_N = CUBLAS_OP_N;
 cublasOperation_t ACC_BLAS_OP_T = CUBLAS_OP_T;

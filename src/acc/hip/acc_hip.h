@@ -104,6 +104,9 @@ using hipdevice = hipDevice_t;
 using hipDeviceProp = hipDeviceProp_t;
 using hipcontext = hipCtx_t;
 
+/* HIPRTC error status */
+extern hiprtcResult ACC_RTC_SUCCESS;
+
 /* HIPBLAS status and operations */
 extern hipblasStatus_t ACC_BLAS_STATUS_SUCCESS;
 extern hipblasOperation_t ACC_BLAS_OP_N;
